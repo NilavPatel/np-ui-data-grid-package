@@ -114,6 +114,41 @@
           }
         }
       }
+    },
+    "np-ui-data-grid": {
+      "projectType": "library",
+      "root": "projects/np-ui-data-grid",
+      "sourceRoot": "projects/np-ui-data-grid/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/np-ui-data-grid/tsconfig.lib.json",
+            "project": "projects/np-ui-data-grid/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/np-ui-data-grid/src/test.ts",
+            "tsConfig": "projects/np-ui-data-grid/tsconfig.spec.json",
+            "karmaConfig": "projects/np-ui-data-grid/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/np-ui-data-grid/tsconfig.lib.json",
+              "projects/np-ui-data-grid/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "np-ui-data-grid-package"
 }

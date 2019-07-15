@@ -1,0 +1,55 @@
+<div class="np-grid" [style.height.px]="height" [style.width.px]="width">
+    <div>
+        <table class="np-grid-table">
+            <thead>
+                <tr>
+                    <th class="np-grid-table-head" *ngFor="let column of _columns; let j = index">
+                        <span [innerHTML]="column.getCaption()"></span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let data of _currentViewData; let  i = index">
+                    <tr [id]="_rowIdPrefix + i">
+                        <td *ngFor="let column of _columns; let j = index" (click)="_onCellClick($event, column, data)">
+                            <ng-container *ngIf="!column.cellTemplate; else customTemplate">
+                                {{data[column.dataField]}}
+                            </ng-container>
+                            <ng-template #customTemplate [ngTemplateOutlet]="column.cellTemplate"
+                                [ngTemplateOutletContext]="{ row: data }">
+                            </ng-template>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <div class="np-pagination">
+            <div class="div-page-size">
+                <input type="number" [(ngModel)]="_pageSize" (blur)="_onPageSizeChange()"> of {{_total}}
+            </div>
+            <ul *ngIf="_pager.pages && _pager.pages.length">
+                <li>
+                    <input type="button" [disabled]="_pager.currentPage === 1" value="First"
+                        (click)="_getCurrentViewData(1)">
+                </li>
+                <li>
+                    <input type="button" [disabled]="_pager.currentPage === 1" value="Prev"
+                        (click)="_getCurrentViewData(_pager.currentPage - 1)">
+                </li>
+                <li *ngFor="let page of _pager.pages">
+                    <input type="button" [value]="page" (click)="_getCurrentViewData(page)"
+                        [ngClass]="{active:_pager.currentPage === page}"> </li>
+                <li>
+                    <input type="button" [disabled]="_pager.currentPage === _pager.totalPages" value="Next"
+                        (click)="_getCurrentViewData(_pager.currentPage + 1)">
+                </li>
+                <li>
+                    <input type="button" [disabled]="_pager.currentPage === _pager.totalPages" value="Last"
+                        (click)="_getCurrentViewData(_pager.totalPages)">
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

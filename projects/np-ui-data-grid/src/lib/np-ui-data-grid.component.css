@@ -1,0 +1,25 @@
+.np-grid {
+    overflow: auto;
+}
+
+.np-pagination ul {
+    list-style: none !important;
+    float: right;
+}
+
+.np-pagination ul li {
+    display: inline;
+    padding: 2px;
+}
+
+.div-page-size {
+    float: left;
+}
+
+.div-page-size input {
+    width: 50px;
+}
+
+.active {
+    background-color: gray
+}

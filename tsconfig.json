@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "np-ui-data-grid": [
+        "dist/np-ui-data-grid"
+      ],
+      "np-ui-data-grid/*": [
+        "dist/np-ui-data-grid/*"
+      ]
+    }
   }
 }
