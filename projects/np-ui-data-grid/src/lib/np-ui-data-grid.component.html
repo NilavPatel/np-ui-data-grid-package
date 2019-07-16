@@ -2,8 +2,8 @@
     <div>
         <table class="np-grid-table">
             <thead>
-                <tr>
-                    <th class="np-grid-table-head" *ngFor="let column of _columns; let j = index">
+                <tr class="np-grid-header-row">
+                    <th *ngFor="let column of _columns; let j = index">
                         <span [innerHTML]="column.getCaption()" (click)="_onSort(column)"></span>
                         <span class="float-right"
                             [ngClass]="{'sort-asc': column.sortDirection === 'asc', 'sort-desc': column.sortDirection === 'desc'}"
@@ -12,6 +12,25 @@
                         <span *ngIf="multiColumnSortEnable && column.sortDirection"
                             (click)="_removeSortingFromColumn(column)" title="Remove sorting"
                             class="remove-icon float-right">X</span>
+                    </th>
+                </tr>
+                <tr class="np-grid-header-row-filter">
+                    <th *ngFor="let column of _columns; let j = index">
+                        <div *ngIf="column.filterEnabled">
+                            <select [(ngModel)]="column.filterType" (change)="_onFilter()" class="filter-type-select">
+                                <option *ngFor="let filterType of _filterTypes | filterTypesPipe: column.dataType"
+                                    [ngValue]="filterType.name" [innerText]="filterType.text"></option>
+                            </select>
+                            <input type="text" [(ngModel)]="column.filterString" (input)="_onFilter()"
+                                class="filter-input" placeholder="search..." *ngIf="column.dataType == 'string'">
+                            <input type="number" [(ngModel)]="column.filterString" (input)="_onFilter()"
+                                class="filter-input" placeholder="search..." *ngIf="column.dataType == 'number'">
+                            <input type="date" [(ngModel)]="column.filterString" (input)="_onFilter()"
+                                class="filter-input" placeholder="search..." *ngIf="column.dataType == 'date'">
+                            <input type="hidden" [(ngModel)]="column.filterString" *ngIf="column.dataType == 'boolean'">
+                            <span title="Remove filter" (click)="_removeFilterStringFromColumn(column)"
+                                class="float-right">X</span>
+                        </div>
                     </th>
                 </tr>
             </thead>

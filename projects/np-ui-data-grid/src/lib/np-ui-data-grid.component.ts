@@ -3,6 +3,7 @@ import { NpColumn } from './models/column.model';
 import { NpDataSource, CustomStore } from './models/data-source.model';
 import { NpPagerService, Pager } from './services/np-ui-pager.service';
 import * as _ from 'lodash';
+import { NpConstants } from './models/constants';
 
 @Component({
   selector: 'np-ui-data-grid',
@@ -27,16 +28,21 @@ export class NpUiDataGridComponent implements OnInit {
 
   _total: number;
 
+  _filterTypes: any[];
+
   // set grid height
   @Input() height: number;
   // set grid width
   @Input() width: number;
 
   @Input() multiColumnSortEnable: boolean;
-  _sortColumnList: any[] = [];
+  _sortColumnList: any[];
 
   constructor(private pagerService: NpPagerService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
+    this._sortColumnList = [];
+    this._filterTypes = NpConstants.filterTypes();
+
   }
 
   ngOnInit() {
@@ -60,7 +66,7 @@ export class NpUiDataGridComponent implements OnInit {
       this._pager = this.pagerService.getPager(this._total, currentPageNumber, this._pager.pageSize);
       this._dataSource.load(this._pager.currentPage, this._pager.pageSize, this._sortColumnList).then((store: CustomStore) => {
         this._currentViewData = store.data;
-        this._total = store.total;        
+        this._total = store.total;
       }).catch(error => {
         console.error(error);
       });

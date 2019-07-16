@@ -1,5 +1,18 @@
 .np-grid {
     overflow: auto;
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.np-grid-table {
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+.np-grid-table td, .np-grid-table th {
+    padding: 5px;    
+    border: 1px solid lightgray;
 }
 
 .np-pagination ul {
@@ -39,4 +52,20 @@ th a.sort-by-asc, th a.sort-by-desc {
     content: '\25bc';
     padding: 2px;
     cursor: pointer;
+}
+
+.filter-type-select {
+    height: 25px;
+    width: 85%;
+    margin: 2px;
+    float: left;
+    padding: 2px;
+}
+
+.filter-input {
+    height: 25px;
+    width: 85%;
+    margin: 2px;
+    float: left;
+    padding: 2px;
 }
