@@ -4,7 +4,14 @@
             <thead>
                 <tr>
                     <th class="np-grid-table-head" *ngFor="let column of _columns; let j = index">
-                        <span [innerHTML]="column.getCaption()"></span>
+                        <span [innerHTML]="column.getCaption()" (click)="_onSort(column)"></span>
+                        <span class="float-right"
+                            [ngClass]="{'sort-asc': column.sortDirection === 'asc', 'sort-desc': column.sortDirection === 'desc'}"
+                            (click)="_onSort(column)">
+                        </span>
+                        <span *ngIf="multiColumnSortEnable && column.sortDirection"
+                            (click)="_removeSortingFromColumn(column)" title="Remove sorting"
+                            class="remove-icon float-right">X</span>
                     </th>
                 </tr>
             </thead>
@@ -27,7 +34,11 @@
     <div>
         <div class="np-pagination">
             <div class="div-page-size">
-                <input type="number" [(ngModel)]="_pageSize" (blur)="_onPageSizeChange()"> of {{_total}}
+                <select [(ngModel)]="_pager.pageSize" (change)="_onPageSizeChange()">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                </select> of {{_total}}
             </div>
             <ul *ngIf="_pager.pages && _pager.pages.length">
                 <li>

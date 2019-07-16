@@ -1,5 +1,6 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { NpColumn, NpDataSource, CustomStore } from 'projects/np-ui-data-grid/src/public-api';
+import { NpDataSource, CustomStore } from 'projects/np-ui-data-grid/src/public-api';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-root',
@@ -29,18 +30,17 @@ export class AppComponent {
       { dataField: "Active", visible: true, width: 150, caption: "Is Active?", dataType: "boolean", filterEnabled: true, },
       { visible: true, width: 100, cellTemplate: this.actionButtonsTemplate }];
 
-      /** for client side grid */
+    /** for client side grid */
     this.gridDataSource = new NpDataSource();
     this.gridDataSource.isServerOperations = false;
     this.gridDataSource.data = this.data;
-    this.gridDataSource.total = this.data.length;
 
     /** for server side grid */
     this.gridDataSource1 = new NpDataSource();
     this.gridDataSource1.isServerOperations = true;
-    this.gridDataSource1.load = function (pageNumber, pageSize) {
+    this.gridDataSource1.load = function (pageNumber, pageSize, sortColumns) {
       return new Promise((resolve, reject) => {
-        var data = that._fetchDataApi(pageNumber, pageSize);
+        var data = that._fetchDataApi(pageNumber, pageSize, sortColumns);
         var result = new CustomStore();
         result.data = data;
         result.total = 1000;
@@ -63,10 +63,16 @@ export class AppComponent {
     }
   }
 
-  _fetchDataApi(pageNumber: number, pageSize: number) {
+  _fetchDataApi(pageNumber: number, pageSize: number, sortColumns: any[]) {
+
+    var data2 = this.data;
+    sortColumns.forEach(element => {
+      data2 = _.orderBy(data2, element.column, element.sortDirection === 'asc' ? 'asc' : 'desc');
+    });
+
     let startIndex = (pageNumber - 1) * pageSize;
     let endIndex = Math.min(startIndex + pageSize - 1, 1000 - 1);
-    return this.data.slice(startIndex, endIndex + 1);
+    return data2.slice(startIndex, endIndex + 1);
   }
 
   _getDataList(count: number) {

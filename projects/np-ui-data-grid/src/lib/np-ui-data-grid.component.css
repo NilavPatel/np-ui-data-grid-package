@@ -23,3 +23,20 @@
 .active {
     background-color: gray
 }
+
+th a.sort-by-asc, th a.sort-by-desc {
+    padding-right: 18px;
+    position: relative;
+}
+
+.sort-asc:after {
+    content: '\25b2';
+    padding: 2px;
+    cursor: pointer;
+}
+
+.sort-desc:after {
+    content: '\25bc';
+    padding: 2px;
+    cursor: pointer;
+}

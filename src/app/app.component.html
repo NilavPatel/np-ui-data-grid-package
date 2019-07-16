@@ -1,8 +1,8 @@
 <h1>Client Side</h1>
-<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [height]="300" [width]="600"></np-ui-data-grid>
+<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [multiColumnSortEnable]=true></np-ui-data-grid>
 
 <h1>Server Side</h1>
-<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource1"></np-ui-data-grid>
+<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource1" [multiColumnSortEnable]=true></np-ui-data-grid>
 
 <ng-template #actionButtonsTemplate let-row="row">
   <button (click)="onActionClick(row,'Edit', $event)">Edit</button>

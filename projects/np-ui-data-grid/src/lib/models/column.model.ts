@@ -18,7 +18,8 @@ export class NpColumn {
         filterString: string;
         filterType: string;
         cellTemplate: TemplateRef<any>;
-        onCellClick: any; styleClass: string;
+        onCellClick: any;
+        styleClass: string;
     }) {
         this.dataField = item.dataField;
         this.dataType = item.dataType;

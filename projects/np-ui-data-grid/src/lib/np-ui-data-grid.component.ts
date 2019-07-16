@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { NpColumn } from './models/column.model';
 import { NpDataSource, CustomStore } from './models/data-source.model';
-import { NpPagerService } from './services/np-ui-pager.service';
+import { NpPagerService, Pager } from './services/np-ui-pager.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'np-ui-data-grid',
@@ -19,29 +20,34 @@ export class NpUiDataGridComponent implements OnInit {
   /**current view data */
   _currentViewData: any[];
 
-  _pager: any = {};
+  _pager: Pager;
 
   /**row id prefix, used in generating unique ids for rows */
   _rowIdPrefix: string = "row_";
-
-  _pageSize: number = 10;
 
   _total: number;
 
   // set grid height
   @Input() height: number;
-
   // set grid width
   @Input() width: number;
 
-  constructor(private pagerService: NpPagerService) { }
+  @Input() multiColumnSortEnable: boolean;
+  _sortColumnList: any[] = [];
+
+  constructor(private pagerService: NpPagerService) {
+    this._pager = this.pagerService.getPager(0, 1, 10);
+  }
 
   ngOnInit() {
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.dataSource != undefined) {
-      this._dataSource = this.dataSource;
+      this._dataSource = new NpDataSource();
+      this._dataSource.data = this.dataSource.data;
+      this._dataSource.isServerOperations = this.dataSource.isServerOperations;
+      this._dataSource.load = this.dataSource.load;
       this._getCurrentViewData(1);
     }
     if (changes.columns != undefined) {
@@ -51,15 +57,15 @@ export class NpUiDataGridComponent implements OnInit {
 
   _getCurrentViewData(currentPageNumber: number) {
     if (this._dataSource.isServerOperations) {
-      this._dataSource.load(currentPageNumber, this._pageSize).then((store: CustomStore) => {
+      this._pager = this.pagerService.getPager(this._total, currentPageNumber, this._pager.pageSize);
+      this._dataSource.load(this._pager.currentPage, this._pager.pageSize, this._sortColumnList).then((store: CustomStore) => {
         this._currentViewData = store.data;
-        this._total = store.total;
-        this._pager = this.pagerService.getPager(this._total, currentPageNumber, this._pageSize);
+        this._total = store.total;        
       }).catch(error => {
         console.error(error);
       });
     } else {
-      this._pager = this.pagerService.getPager(this._dataSource.total, currentPageNumber, this._pageSize);
+      this._pager = this.pagerService.getPager(this._dataSource.data.length, currentPageNumber, this._pager.pageSize);
       this._currentViewData = this._dataSource.data.slice(this._pager.startIndex, this._pager.endIndex + 1);
       this._total = this._dataSource.data.length;
     }
@@ -75,12 +81,75 @@ export class NpUiDataGridComponent implements OnInit {
   }
 
   _onPageSizeChange() {
-    this._getCurrentViewData(this._pager.currentPage);
+    this._getCurrentViewData(1);
   }
 
   _onCellClick($event: any, column: NpColumn, data: any) {
     if (column.onCellClick != undefined) {
       column.onCellClick($event, column, data)
     }
+  }
+
+  _onSort(column: NpColumn) {
+    if (!column.sortEnabled) {
+      return;
+    }
+
+    var sortOrder = column.sortDirection && column.sortDirection === 'asc' ? 'desc' : 'asc';
+    if (!this.multiColumnSortEnable) {
+      this._removeAllSorting();
+    }
+    column.sortDirection = sortOrder;
+
+    if (this.multiColumnSortEnable) {
+      // order by multiple column using loadash
+      _.remove(this._sortColumnList, function (element) {
+        return element.column === column.getCaption();
+      });
+    }
+    this._sortColumnList.push({ column: column.dataField, sortDirection: column.sortDirection });
+
+    if (this.dataSource.isServerOperations) {
+      this.dataSource.load(1, this._pager.pageSize, this._sortColumnList).then((store: CustomStore) => {
+        this._currentViewData = store.data;
+        this._total = store.total;
+        this._pager = this.pagerService.getPager(this._total, this._pager.currentPage, this._pager.pageSize);
+      }).catch(error => {
+        console.error(error);
+      });
+    } else {
+      this._sortDataSource();
+      this._getCurrentViewData(1);
+    }
+  }
+
+  _sortDataSource() {
+    this._sortColumnList.forEach(element => {
+      this._dataSource.data = _.orderBy(this._dataSource.data, element.column, element.sortDirection === 'asc' ? 'asc' : 'desc');
+    });
+  }
+
+  _removeAllSorting() {
+    this._columns.forEach(element => {
+      element.sortDirection = null;
+    });
+    this._sortColumnList = [];
+  }
+
+  _removeSortingFromColumn(column: NpColumn) {
+    column.sortDirection = null;
+    _.remove(this._sortColumnList, function (element) { return element.column === column.dataField });
+    if (!this.dataSource.isServerOperations) {
+      this._resetDataSource();
+      this._sortColumnList.forEach(element => {
+        this._dataSource.data = _.orderBy(this._dataSource.data, element.column, element.sortDirection === 'asc' ? 'asc' : 'desc');
+      });
+    }
+    this._getCurrentViewData(1);
+    return;
+  }
+
+  _resetDataSource() {
+    this._dataSource.data = this.dataSource.data;
   }
 }
