@@ -38,11 +38,12 @@ export class NpUiDataGridComponent implements OnInit {
   @Input() multiColumnSortEnable: boolean;
   _sortColumnList: any[];
 
+  _filterColumnList: any[];
+
   constructor(private pagerService: NpPagerService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
     this._sortColumnList = [];
     this._filterTypes = NpConstants.filterTypes();
-
   }
 
   ngOnInit() {
@@ -147,6 +148,7 @@ export class NpUiDataGridComponent implements OnInit {
     _.remove(this._sortColumnList, function (element) { return element.column === column.dataField });
     if (!this.dataSource.isServerOperations) {
       this._resetDataSource();
+      this._filterDataSource();
       this._sortColumnList.forEach(element => {
         this._dataSource.data = _.orderBy(this._dataSource.data, element.column, element.sortDirection === 'asc' ? 'asc' : 'desc');
       });
@@ -157,5 +159,86 @@ export class NpUiDataGridComponent implements OnInit {
 
   _resetDataSource() {
     this._dataSource.data = this.dataSource.data;
+  }
+
+  _onFilter() {
+    this._filterColumnList = [];
+    this._columns.forEach(element => {
+      if (element.dataType == 'boolean' && element.filterType && element.filterType.length > 0) {
+        element.filterString = "true";
+      }
+      if (element.filterType && element.filterType.length > 0 && element.filterString && element.filterString.toString().length > 0) {
+        this._filterColumnList.push({ column: element.dataField, filterString: element.filterString, filterType: element.filterType });
+      }
+    });
+    if (this.dataSource.isServerOperations) {
+      //TODO
+    } else {
+      this._filterDataSource();
+      this._sortDataSource();
+      this._getCurrentViewData(1);
+    }
+  }
+
+  _filterDataSource() {
+    var data = this.dataSource.data;
+    this._filterColumnList.forEach(element => {
+      if (element.filterType == "startWith") {
+        data = _.filter(data, function (a) {
+          return _.startsWith(a[element.column].toLowerCase(), element.filterString.toLowerCase());
+        });
+      } else if (element.filterType == "endWith") {
+        data = _.filter(data, function (a) {
+          return _.endsWith(a[element.column].toLowerCase(), element.filterString.toLowerCase());
+        });
+      } else if (element.filterType == "contains") {
+        data = _.filter(data, function (a) {
+          return a[element.column].toLowerCase().indexOf(element.filterString.toLowerCase()) !== -1;
+        });
+      } else if (element.filterType == "greaterThan") {
+        data = _.filter(data, function (a) {
+          return a[element.column] > parseInt(element.filterString);
+        });
+      } else if (element.filterType == "lessThan") {
+        data = _.filter(data, function (a) {
+          return a[element.column] < parseInt(element.filterString);
+        });
+      } else if (element.filterType == "equals") {
+        data = _.filter(data, function (a) {
+          return a[element.column] === parseInt(element.filterString);
+        });
+      } else if (element.filterType == "true") {
+        data = _.filter(data, function (a) {
+          return a[element.column] == true;
+        });
+      } else if (element.filterType == "false") {
+        data = _.filter(data, function (a) {
+          return a[element.column] == false;
+        });
+      } else if (element.filterType == "dateLessThan") {
+        data = _.filter(data, function (a) {
+          return a[element.column] < new Date(element.filterString);
+        });
+      } else if (element.filterType == "dateGreaterThan") {
+        data = _.filter(data, function (a) {
+          return a[element.column] > new Date(element.filterString);
+        });
+      } else if (element.filterType == "dateEquals") {
+        data = _.filter(this._dataSource, function (a) {
+          return a[element.column] == new Date(element.filterString);
+        });
+      } else {
+        data = _.filter(this.dataSource.data, function (a) { return a[element.column] == element.filterString });
+      }
+    });
+    this._dataSource.data = data;
+    this._total = data.length;
+  }
+
+  _removeFilterStringFromColumn(column: NpColumn) {
+    column.filterString = null;
+    column.filterType = null;
+    _.remove(this._filterColumnList, function (element) { return element.column === column.dataField });
+    this._onFilter();
   }
 }
