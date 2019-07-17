@@ -44,6 +44,7 @@ export class NpUiDataGridComponent implements OnInit {
     this._pager = this.pagerService.getPager(0, 1, 10);
     this._sortColumnList = [];
     this._filterTypes = NpConstants.filterTypes();
+    this._filterColumnList = [];
   }
 
   ngOnInit() {
@@ -63,9 +64,10 @@ export class NpUiDataGridComponent implements OnInit {
   }
 
   _getCurrentViewData(currentPageNumber: number) {
+    debugger;
     if (this._dataSource.isServerOperations) {
       this._pager = this.pagerService.getPager(this._total, currentPageNumber, this._pager.pageSize);
-      this._dataSource.load(this._pager.currentPage, this._pager.pageSize, this._sortColumnList).then((store: CustomStore) => {
+      this._dataSource.load(this._pager.currentPage, this._pager.pageSize, this._sortColumnList, this._filterColumnList).then((store: CustomStore) => {
         this._currentViewData = store.data;
         this._total = store.total;
       }).catch(error => {
@@ -87,7 +89,7 @@ export class NpUiDataGridComponent implements OnInit {
     return;
   }
 
-  _onPageSizeChange() {
+  _onPageSizeChange() {    
     this._getCurrentViewData(1);
   }
 
@@ -109,15 +111,14 @@ export class NpUiDataGridComponent implements OnInit {
     column.sortDirection = sortOrder;
 
     if (this.multiColumnSortEnable) {
-      // order by multiple column using loadash
       _.remove(this._sortColumnList, function (element) {
-        return element.column === column.getCaption();
+        return element.column === column.dataField;
       });
     }
     this._sortColumnList.push({ column: column.dataField, sortDirection: column.sortDirection });
 
     if (this.dataSource.isServerOperations) {
-      this.dataSource.load(1, this._pager.pageSize, this._sortColumnList).then((store: CustomStore) => {
+      this.dataSource.load(1, this._pager.pageSize, this._sortColumnList, this._filterColumnList).then((store: CustomStore) => {
         this._currentViewData = store.data;
         this._total = store.total;
         this._pager = this.pagerService.getPager(this._total, this._pager.currentPage, this._pager.pageSize);
@@ -172,7 +173,13 @@ export class NpUiDataGridComponent implements OnInit {
       }
     });
     if (this.dataSource.isServerOperations) {
-      //TODO
+      this.dataSource.load(1, this._pager.pageSize, this._sortColumnList, this._filterColumnList).then((store: CustomStore) => {
+        this._currentViewData = store.data;
+        this._total = store.total;
+        this._pager = this.pagerService.getPager(this._total, this._pager.currentPage, this._pager.pageSize);
+      }).catch(error => {
+        console.error(error);
+      });
     } else {
       this._filterDataSource();
       this._sortDataSource();
@@ -237,8 +244,7 @@ export class NpUiDataGridComponent implements OnInit {
 
   _removeFilterStringFromColumn(column: NpColumn) {
     column.filterString = null;
-    column.filterType = null;
-    _.remove(this._filterColumnList, function (element) { return element.column === column.dataField });
+    column.filterType = null;    
     this._onFilter();
   }
 }

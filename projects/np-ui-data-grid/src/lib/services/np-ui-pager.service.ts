@@ -1,6 +1,7 @@
 export class NpPagerService {
     getPager(totalItems: number, currentPage: number = 1, pageSize: number = 10): Pager {
         // calculate total pages
+        pageSize = parseInt(pageSize.toString());
         let totalPages = Math.ceil(totalItems / pageSize);
 
         // ensure current page isn't out of range
