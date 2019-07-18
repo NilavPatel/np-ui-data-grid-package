@@ -30,12 +30,8 @@ export class NpConstants {
             forDataType: "number"
         },
         {
-            name: "true",
-            text: "True",
-            forDataType: "boolean"
-        }, {
-            name: "false",
-            text: "False",
+            name: "equals",
+            text: "=",
             forDataType: "boolean"
         },
         {

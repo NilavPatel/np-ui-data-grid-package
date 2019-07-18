@@ -17,17 +17,22 @@
                 <tr class="np-grid-header-row-filter">
                     <th *ngFor="let column of _columns; let j = index">
                         <div *ngIf="column.filterEnabled">
-                            <select [(ngModel)]="column.filterType" (change)="_onFilter()" class="filter-type-select">
+                            <select [(ngModel)]="column.filterType" (change)="_onFilter(column, false)"
+                                class="filter-type-select">
                                 <option *ngFor="let filterType of _filterTypes | filterTypesPipe: column.dataType"
                                     [ngValue]="filterType.name" [innerText]="filterType.text"></option>
                             </select>
-                            <input type="text" [(ngModel)]="column.filterString" (input)="_onFilter()"
+                            <input type="text" [(ngModel)]="column.filterString" (input)="_onFilter(column, false)"
                                 class="filter-input" placeholder="search..." *ngIf="column.dataType == 'string'">
-                            <input type="number" [(ngModel)]="column.filterString" (input)="_onFilter()"
+                            <input type="number" [(ngModel)]="column.filterString" (input)="_onFilter(column, false)"
                                 class="filter-input" placeholder="search..." *ngIf="column.dataType == 'number'">
-                            <input type="date" [(ngModel)]="column.filterString" (input)="_onFilter()"
+                            <input type="date" [(ngModel)]="column.filterString" (input)="_onFilter(column, false)"
                                 class="filter-input" placeholder="search..." *ngIf="column.dataType == 'date'">
-                            <input type="hidden" [(ngModel)]="column.filterString" *ngIf="column.dataType == 'boolean'">
+                            <select [(ngModel)]="column.filterString" *ngIf="column.dataType == 'boolean'"
+                                (change)="_onFilter(column, false)" class="filter-type-select">
+                                <option value="true">True</option>
+                                <option value="false">False</option>
+                            </select>
                             <span title="Remove filter" (click)="_removeFilterStringFromColumn(column)"
                                 class="float-right">X</span>
                         </div>

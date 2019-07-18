@@ -38,12 +38,12 @@ export class AppComponent {
     /** for server side grid */
     this.gridDataSource1 = new NpDataSource();
     this.gridDataSource1.isServerOperations = true;
-    this.gridDataSource1.load = function (pageNumber, pageSize, sortColumns) {
+    this.gridDataSource1.load = function (pageNumber, pageSize, sortColumns, filterColumns) {
       return new Promise((resolve, reject) => {
-        var data = that._fetchDataApi(pageNumber, pageSize, sortColumns);
+        var data = that._fetchDataApi(pageNumber, pageSize, sortColumns, filterColumns);
         var result = new CustomStore();
-        result.data = data;
-        result.total = 1000;
+        result.data = data.data;
+        result.total = data.total;
         resolve(result)
       });
     }
@@ -63,16 +63,23 @@ export class AppComponent {
     }
   }
 
-  _fetchDataApi(pageNumber: number, pageSize: number, sortColumns: any[]) {
+  _fetchDataApi(pageNumber: number, pageSize: number, sortColumns: any[], filterColumns: any[]) {
 
     var data2 = this.data;
-    sortColumns.forEach(element => {
-      data2 = _.orderBy(data2, element.column, element.sortDirection === 'asc' ? 'asc' : 'desc');
-    });
+
+    if (filterColumns && filterColumns.length > 0) {
+      data2 = this._filterDataSource(data2, filterColumns);
+    }
+
+    if (sortColumns && sortColumns.length > 0) {
+      sortColumns.forEach(element => {
+        data2 = _.orderBy(data2, element.column, element.sortDirection === 'asc' ? 'asc' : 'desc');
+      });
+    }
 
     let startIndex = (pageNumber - 1) * pageSize;
     let endIndex = Math.min(startIndex + pageSize - 1, 1000 - 1);
-    return data2.slice(startIndex, endIndex + 1);
+    return { data: data2.slice(startIndex, endIndex + 1), total: data2.length };
   }
 
   _getDataList(count: number) {
@@ -96,5 +103,62 @@ export class AppComponent {
         BirthDate: new Date()
       }
     }
+  }
+
+  _filterDataSource(data, filterColumns) {
+    filterColumns.forEach(element => {
+      if (element.filterType == "startWith") {
+        data = _.filter(data, function (a) {
+          return _.startsWith(a[element.column].toLowerCase(), element.filterString.toLowerCase());
+        });
+      } else if (element.filterType == "endWith") {
+        data = _.filter(data, function (a) {
+          return _.endsWith(a[element.column].toLowerCase(), element.filterString.toLowerCase());
+        });
+      } else if (element.filterType == "contains") {
+        data = _.filter(data, function (a) {
+          return a[element.column].toLowerCase().indexOf(element.filterString.toLowerCase()) !== -1;
+        });
+      } else if (element.filterType == "greaterThan") {
+        data = _.filter(data, function (a) {
+          return a[element.column] > parseInt(element.filterString);
+        });
+      } else if (element.filterType == "lessThan") {
+        data = _.filter(data, function (a) {
+          return a[element.column] < parseInt(element.filterString);
+        });
+      } else if (element.filterType == "equals") {
+        if (element.dataType == "boolean") {
+          if (element.filterString == "true") {
+            data = _.filter(data, function (a) {
+              return a[element.column] == true;
+            });
+          } else {
+            data = _.filter(data, function (a) {
+              return a[element.column] == false;
+            });
+          }
+        } else {
+          data = _.filter(data, function (a) {
+            return a[element.column] === parseInt(element.filterString);
+          });
+        }
+      } else if (element.filterType == "dateLessThan") {
+        data = _.filter(data, function (a) {
+          return a[element.column] < new Date(element.filterString);
+        });
+      } else if (element.filterType == "dateGreaterThan") {
+        data = _.filter(data, function (a) {
+          return a[element.column] > new Date(element.filterString);
+        });
+      } else if (element.filterType == "dateEquals") {
+        data = _.filter(data, function (a) {
+          return a[element.column] == new Date(element.filterString);
+        });
+      } else {
+        data = _.filter(data, function (a) { return a[element.column] == element.filterString });
+      }
+    });
+    return data;
   }
 }

@@ -64,7 +64,6 @@ export class NpUiDataGridComponent implements OnInit {
   }
 
   _getCurrentViewData(currentPageNumber: number) {
-    debugger;
     if (this._dataSource.isServerOperations) {
       this._pager = this.pagerService.getPager(this._total, currentPageNumber, this._pager.pageSize);
       this._dataSource.load(this._pager.currentPage, this._pager.pageSize, this._sortColumnList, this._filterColumnList).then((store: CustomStore) => {
@@ -89,7 +88,7 @@ export class NpUiDataGridComponent implements OnInit {
     return;
   }
 
-  _onPageSizeChange() {    
+  _onPageSizeChange() {
     this._getCurrentViewData(1);
   }
 
@@ -162,14 +161,15 @@ export class NpUiDataGridComponent implements OnInit {
     this._dataSource.data = this.dataSource.data;
   }
 
-  _onFilter() {
+  _onFilter(column: NpColumn, isForceFilter: boolean) {
+    if (!isForceFilter && (column.filterString == undefined || column.filterString == null || column.filterString.length == 0
+      || column.filterType == undefined || column.filterType == null || column.filterType.length == 0)) {
+      return;
+    }
     this._filterColumnList = [];
     this._columns.forEach(element => {
-      if (element.dataType == 'boolean' && element.filterType && element.filterType.length > 0) {
-        element.filterString = "true";
-      }
       if (element.filterType && element.filterType.length > 0 && element.filterString && element.filterString.toString().length > 0) {
-        this._filterColumnList.push({ column: element.dataField, filterString: element.filterString, filterType: element.filterType });
+        this._filterColumnList.push({ column: element.dataField, filterString: element.filterString, filterType: element.filterType, dataType: element.dataType });
       }
     });
     if (this.dataSource.isServerOperations) {
@@ -211,17 +211,21 @@ export class NpUiDataGridComponent implements OnInit {
           return a[element.column] < parseInt(element.filterString);
         });
       } else if (element.filterType == "equals") {
-        data = _.filter(data, function (a) {
-          return a[element.column] === parseInt(element.filterString);
-        });
-      } else if (element.filterType == "true") {
-        data = _.filter(data, function (a) {
-          return a[element.column] == true;
-        });
-      } else if (element.filterType == "false") {
-        data = _.filter(data, function (a) {
-          return a[element.column] == false;
-        });
+        if (element.dataType == "boolean") {
+          if (element.filterString == "true") {
+            data = _.filter(data, function (a) {
+              return a[element.column] == true;
+            });
+          } else {
+            data = _.filter(data, function (a) {
+              return a[element.column] == false;
+            });
+          }
+        } else {
+          data = _.filter(data, function (a) {
+            return a[element.column] === parseInt(element.filterString);
+          });
+        }
       } else if (element.filterType == "dateLessThan") {
         data = _.filter(data, function (a) {
           return a[element.column] < new Date(element.filterString);
@@ -231,11 +235,11 @@ export class NpUiDataGridComponent implements OnInit {
           return a[element.column] > new Date(element.filterString);
         });
       } else if (element.filterType == "dateEquals") {
-        data = _.filter(this._dataSource, function (a) {
+        data = _.filter(data, function (a) {
           return a[element.column] == new Date(element.filterString);
         });
       } else {
-        data = _.filter(this.dataSource.data, function (a) { return a[element.column] == element.filterString });
+        data = _.filter(data, function (a) { return a[element.column] == element.filterString });
       }
     });
     this._dataSource.data = data;
@@ -244,7 +248,7 @@ export class NpUiDataGridComponent implements OnInit {
 
   _removeFilterStringFromColumn(column: NpColumn) {
     column.filterString = null;
-    column.filterType = null;    
-    this._onFilter();
+    column.filterType = null;
+    this._onFilter(column, true);
   }
 }
