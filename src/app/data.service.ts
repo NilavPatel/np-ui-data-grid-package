@@ -1,0 +1,21 @@
+import { Injectable } from '@angular/core';
+import * as _ from 'lodash';
+import { HttpClient} from '@angular/common/http';
+
+@Injectable({
+    providedIn: "root"
+})
+export class DataService {
+
+    constructor(private httpClient: HttpClient) {
+
+    }
+
+    getAll() {
+        return this.httpClient.get('/getAll');
+    }
+
+    getDataUsingLoadOptions(loadOptions) {
+        return this.httpClient.post('/getDataUsingLoadOptions', loadOptions);
+    }
+}

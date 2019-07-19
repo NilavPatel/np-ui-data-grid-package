@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, TemplateRef } from '@angular/core';
 import { NpColumn } from './models/column.model';
 import { NpDataSource, CustomStore } from './models/data-source.model';
 import { NpPagerService, Pager } from './services/np-ui-pager.service';
@@ -40,6 +40,13 @@ export class NpUiDataGridComponent implements OnInit {
 
   _filterColumnList: any[];
 
+  _enableMasterChild: boolean = false;
+  @Input() masterChildTemplate: TemplateRef<any>;
+
+  @Input() singleSelectEnable: boolean = false;
+
+  @Input() multiSelectEnable: boolean = false;
+
   constructor(private pagerService: NpPagerService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
     this._sortColumnList = [];
@@ -48,10 +55,13 @@ export class NpUiDataGridComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.masterChildTemplate != undefined && this.masterChildTemplate != null) {
+      this._enableMasterChild = true;
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.dataSource != undefined) {
+    if (changes.dataSource.currentValue != undefined) {
       this._dataSource = new NpDataSource();
       this._dataSource.data = this.dataSource.data;
       this._dataSource.isServerOperations = this.dataSource.isServerOperations;
@@ -250,5 +260,9 @@ export class NpUiDataGridComponent implements OnInit {
     column.filterString = null;
     column.filterType = null;
     this._onFilter(column, true);
+  }
+
+  _openMasterChild(row) {
+    row.isOpen = !row.isOpen;
   }
 }

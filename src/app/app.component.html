@@ -1,8 +1,10 @@
 <h1>Client Side</h1>
-<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [multiColumnSortEnable]=true></np-ui-data-grid>
+<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [multiColumnSortEnable]=true
+  [masterChildTemplate]="masterChildTemplate"></np-ui-data-grid>
 
 <h1>Server Side</h1>
-<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource1" [multiColumnSortEnable]=true></np-ui-data-grid>
+<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource1" [multiColumnSortEnable]=true
+  [masterChildTemplate]="masterChildTemplate"></np-ui-data-grid>
 
 <ng-template #actionButtonsTemplate let-row="row">
   <button (click)="onActionClick(row,'Edit', $event)">Edit</button>
@@ -11,4 +13,12 @@
 
 <ng-template #birthDateColumnTemplate let-row="row">
   {{row.BirthDate | date:'dd/MM/yyyy'}}
+</ng-template>
+
+<ng-template #masterChildTemplate let-row="row">
+  <span><b>Name:</b>{{row.FirstName}} {{row.LastName}}</span>
+  <br>
+  <span><b>Age:</b>{{row.Age}} years</span>
+  <br>
+  <span><b>Birth Date:</b>{{row.BirthDate | date:'dd/MM/yyyy'}}</span>
 </ng-template>

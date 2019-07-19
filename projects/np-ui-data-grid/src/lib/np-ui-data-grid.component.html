@@ -3,6 +3,7 @@
         <table class="np-grid-table">
             <thead>
                 <tr class="np-grid-header-row">
+                    <th *ngIf="_enableMasterChild" width="20px;"></th>
                     <th *ngFor="let column of _columns; let j = index">
                         <span [innerHTML]="column.getCaption()" (click)="_onSort(column)"></span>
                         <span class="float-right"
@@ -15,6 +16,7 @@
                     </th>
                 </tr>
                 <tr class="np-grid-header-row-filter">
+                    <th *ngIf="_enableMasterChild" width="20px;"></th>
                     <th *ngFor="let column of _columns; let j = index">
                         <div *ngIf="column.filterEnabled">
                             <select [(ngModel)]="column.filterType" (change)="_onFilter(column, false)"
@@ -29,7 +31,7 @@
                             <input type="date" [(ngModel)]="column.filterString" (input)="_onFilter(column, false)"
                                 class="filter-input" placeholder="search..." *ngIf="column.dataType == 'date'">
                             <select [(ngModel)]="column.filterString" *ngIf="column.dataType == 'boolean'"
-                                (change)="_onFilter(column, false)" class="filter-type-select">
+                                (change)="_onFilter(column, false)" class="filter-input">
                                 <option value="true">True</option>
                                 <option value="false">False</option>
                             </select>
@@ -42,6 +44,10 @@
             <tbody>
                 <ng-container *ngFor="let data of _currentViewData; let  i = index">
                     <tr [id]="_rowIdPrefix + i">
+                        <td *ngIf="_enableMasterChild" class="align-center">
+                            <a *ngIf="!data.isOpen" (click)="_openMasterChild(data)">[+]</a>
+                            <a *ngIf="data.isOpen" (click)="_openMasterChild(data)">[-]</a>
+                        </td>
                         <td *ngFor="let column of _columns; let j = index" (click)="_onCellClick($event, column, data)">
                             <ng-container *ngIf="!column.cellTemplate; else customTemplate">
                                 {{data[column.dataField]}}
@@ -51,7 +57,20 @@
                             </ng-template>
                         </td>
                     </tr>
+                    <tr [id]="_rowIdPrefix + (data[_key] ? data[_key]: i) + '_details'"
+                        *ngIf="_enableMasterChild && data.isOpen">
+                        <td [attr.colspan]="_columns.length + (singleSelectEnabled || multiSelectEnabled ? 1 : 0) + 1">
+                            <ng-container *ngTemplateOutlet="masterChildTemplate;context:{ row: data }">
+                            </ng-container>
+                        </td>
+                    </tr>
                 </ng-container>
+                <tr *ngIf="_currentViewData && _currentViewData.length == 0 && !_showLoader">
+                    <td
+                        [attr.colspan]="_columns.length + (_enableMasterChild ? 1 : 0) + (singleSelectEnabled || multiSelectEnabled ? 1:0)">
+                        No data avaialable
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

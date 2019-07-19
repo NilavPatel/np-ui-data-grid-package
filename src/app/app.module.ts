@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { NpUiDataGridModule } from 'projects/np-ui-data-grid/src/public-api';
+import { fakeBackendProvider } from './FakeBackendInterceptor';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -10,9 +12,13 @@ import { NpUiDataGridModule } from 'projects/np-ui-data-grid/src/public-api';
   ],
   imports: [
     BrowserModule,
-    NpUiDataGridModule
+    NpUiDataGridModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [    
+    // provider used to create fake backend
+    fakeBackendProvider
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
