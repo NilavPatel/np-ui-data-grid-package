@@ -49,6 +49,8 @@ export class NpUiDataGridComponent implements OnInit {
 
   @Input() isStickyHeader: boolean = false;
 
+  _showLoader: boolean = false;
+
   constructor(private pagerService: NpPagerService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
     this._sortColumnList = [];
@@ -78,7 +80,9 @@ export class NpUiDataGridComponent implements OnInit {
   _getCurrentViewData(currentPageNumber: number) {
     if (this._dataSource.isServerOperations) {
       this._pager = this.pagerService.getPager(this._total, currentPageNumber, this._pager.pageSize);
+      this._showLoader = true;
       this._dataSource.load(this._pager.currentPage, this._pager.pageSize, this._sortColumnList, this._filterColumnList).then((store: CustomStore) => {
+        this._showLoader = false;
         this._currentViewData = store.data;
         this._total = store.total;
       }).catch(error => {
@@ -267,4 +271,13 @@ export class NpUiDataGridComponent implements OnInit {
   _openMasterChild(row) {
     row.isOpen = !row.isOpen;
   }
+
+  showLoader() {
+    this._showLoader = true;
+  }
+
+  hideLoader() {
+    this._showLoader = false;
+  }
+
 }
