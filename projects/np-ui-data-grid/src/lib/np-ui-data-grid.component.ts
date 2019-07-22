@@ -43,13 +43,20 @@ export class NpUiDataGridComponent implements OnInit {
   _enableMasterChild: boolean = false;
   @Input() masterChildTemplate: TemplateRef<any>;
 
+  @Input() isStickyHeader: boolean = false;
+
+  _showLoader: boolean = false;
+
   @Input() singleSelectEnable: boolean = false;
 
   @Input() multiSelectEnable: boolean = false;
 
-  @Input() isStickyHeader: boolean = false;
+  _selectedRowKeys: any[] = [];
 
-  _showLoader: boolean = false;
+  @Input() key: string;
+  _key: string;
+
+  _isAllSelected: boolean;
 
   constructor(private pagerService: NpPagerService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
@@ -61,6 +68,11 @@ export class NpUiDataGridComponent implements OnInit {
   ngOnInit() {
     if (this.masterChildTemplate != undefined && this.masterChildTemplate != null) {
       this._enableMasterChild = true;
+    }
+    if (this.key && this.key != null && this.key.length > 0) {
+      this._key = this.key;
+    } else {
+      this._key = this._columns[0].dataField;
     }
   }
 
@@ -85,6 +97,14 @@ export class NpUiDataGridComponent implements OnInit {
         this._showLoader = false;
         this._currentViewData = store.data;
         this._total = store.total;
+        if (this._isAllSelected) {
+          var that = this;
+          this._currentViewData.forEach(function (element) {
+            if (that._selectedRowKeys.indexOf(element[that._key]) == -1) {
+              that._selectedRowKeys.push(element[that._key]);
+            }
+          });
+        }
       }).catch(error => {
         console.error(error);
       });
@@ -131,7 +151,8 @@ export class NpUiDataGridComponent implements OnInit {
       });
     }
     this._sortColumnList.push({ column: column.dataField, sortDirection: column.sortDirection });
-
+    this._selectedRowKeys = [];
+    this._isAllSelected = false;
     if (this.dataSource.isServerOperations) {
       this.dataSource.load(1, this._pager.pageSize, this._sortColumnList, this._filterColumnList).then((store: CustomStore) => {
         this._currentViewData = store.data;
@@ -188,6 +209,8 @@ export class NpUiDataGridComponent implements OnInit {
         this._filterColumnList.push({ column: element.dataField, filterString: element.filterString, filterType: element.filterType, dataType: element.dataType });
       }
     });
+    this._selectedRowKeys = [];
+    this._isAllSelected = false;
     if (this.dataSource.isServerOperations) {
       this.dataSource.load(1, this._pager.pageSize, this._sortColumnList, this._filterColumnList).then((store: CustomStore) => {
         this._currentViewData = store.data;
@@ -280,4 +303,49 @@ export class NpUiDataGridComponent implements OnInit {
     this._showLoader = false;
   }
 
+  _onSelectAll(event: { currentTarget: { checked: any; }; }) {
+    if (this.singleSelectEnable) {
+      return;
+    }
+    if (event.currentTarget.checked) {
+      if (this._dataSource.isServerOperations) {
+        this._selectedRowKeys = [];
+        var that = this;
+        this._currentViewData.forEach(function (element) {
+          that._selectedRowKeys.push(element[that._key]);
+        });
+      } else {
+        this._selectedRowKeys = [];
+        var that = this;
+        this._dataSource.data.forEach(function (element) {
+          that._selectedRowKeys.push(element[that._key]);
+        });
+      }
+    } else {
+      this._selectedRowKeys = [];
+    }
+  }
+
+  _onSelectRow(keyValue: any, event: { currentTarget: { checked: any; }; }) {
+    if (this.singleSelectEnable) {
+      this._selectedRowKeys = [];
+      this._selectedRowKeys.push(keyValue);
+      return;
+    }
+    if (event.currentTarget.checked) {
+      this._selectedRowKeys.push(keyValue);
+    } else {
+      _.remove(this._selectedRowKeys, function (n) {
+        return n == keyValue
+      });
+    }
+  }
+
+  _isSelected(keyValue: any) {
+    return this._selectedRowKeys.indexOf(keyValue) > -1;
+  }
+
+  getSelectedRowKeys() {
+    return this._selectedRowKeys;
+  }
 }

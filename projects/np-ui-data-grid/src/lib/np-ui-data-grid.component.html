@@ -1,5 +1,5 @@
 <div class="np-grid" [style.height.px]="height" [style.width.px]="width">
-    <div class="np-loader" *ngIf="_showLoader || true">
+    <div class="np-loader" *ngIf="_showLoader">
         <div class="loader"></div>
     </div>
     <div [style.height.px]="height - 52" style="overflow:auto">
@@ -7,6 +7,11 @@
             <thead>
                 <tr class="np-grid-header-row">
                     <th *ngIf="_enableMasterChild" width="20px;" [ngClass]="{'np-sticky-header' : isStickyHeader}"></th>
+                    <th *ngIf="singleSelectEnable || multiSelectEnable" width="20px;"
+                        [ngClass]="{'np-sticky-header' : isStickyHeader}">
+                        <input class="row-selection-input" type="checkbox" *ngIf="multiSelectEnable"
+                            (change)="_onSelectAll($event)" [(ngModel)]="_isAllSelected" name="chkAllSelected">
+                    </th>
                     <th *ngFor="let column of _columns; let j = index"
                         [ngClass]="{'np-sticky-header' : isStickyHeader}">
                         <span [innerHTML]="column.getCaption()" (click)="_onSort(column)"></span>
@@ -22,6 +27,8 @@
                 <tr class="np-grid-header-row-filter">
                     <th *ngIf="_enableMasterChild" width="20px;"
                         [ngClass]="{'np-sticky-header-filter' : isStickyHeader}"></th>
+                    <th *ngIf="singleSelectEnable || multiSelectEnable" width="20px;"
+                        [ngClass]="{'np-sticky-header-filter' : isStickyHeader}"> </th>
                     <th *ngFor="let column of _columns; let j = index"
                         [ngClass]="{'np-sticky-header-filter' : isStickyHeader}">
                         <div *ngIf="column.filterEnabled">
@@ -54,6 +61,10 @@
                             <a *ngIf="!data.isOpen" (click)="_openMasterChild(data)">[+]</a>
                             <a *ngIf="data.isOpen" (click)="_openMasterChild(data)">[-]</a>
                         </td>
+                        <td *ngIf="singleSelectEnable || multiSelectEnable" width="20px;">
+                            <input type="checkbox" [checked]="_isSelected(data[_key])"
+                                (change)="_onSelectRow(data[_key],$event)">
+                        </td>
                         <td *ngFor="let column of _columns; let j = index" (click)="_onCellClick($event, column, data)">
                             <ng-container *ngIf="!column.cellTemplate; else customTemplate">
                                 {{data[column.dataField]}}
@@ -63,8 +74,7 @@
                             </ng-template>
                         </td>
                     </tr>
-                    <tr [id]="_rowIdPrefix + (data[_key] ? data[_key]: i) + '_details'"
-                        *ngIf="_enableMasterChild && data.isOpen">
+                    <tr [id]="_rowIdPrefix + i + '_child'" *ngIf="_enableMasterChild && data.isOpen">
                         <td [attr.colspan]="_columns.length + (singleSelectEnabled || multiSelectEnabled ? 1 : 0) + 1">
                             <ng-container *ngTemplateOutlet="masterChildTemplate;context:{ row: data }">
                             </ng-container>
