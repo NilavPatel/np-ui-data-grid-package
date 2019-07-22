@@ -47,6 +47,8 @@ export class NpUiDataGridComponent implements OnInit {
 
   @Input() multiSelectEnable: boolean = false;
 
+  @Input() isStickyHeader: boolean = false;
+
   constructor(private pagerService: NpPagerService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
     this._sortColumnList = [];

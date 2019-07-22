@@ -1,18 +1,25 @@
 .np-grid {
-    overflow: auto;
-    border-collapse: collapse;
     width: 100%;
     table-layout: fixed;
+    overflow: hidden;    
 }
 
 .np-grid-table {
-    border-collapse: collapse;
+    border-collapse: separate;
     border-spacing: 0px;
+    width: 100%;
+    border-right: 1px solid lightgray;
 }
 
 .np-grid-table td, .np-grid-table th {
-    padding: 5px;    
-    border: 1px solid lightgray;
+    background-color: white;
+    padding: 5px;
+    border-bottom: 1px solid lightgray;
+    border-left: 1px solid lightgray;
+}
+
+.np-grid {
+    border-top: 1px solid lightgray;
 }
 
 .np-pagination ul {
@@ -68,4 +75,38 @@ th a.sort-by-asc, th a.sort-by-desc {
     margin: 2px;
     float: left;
     padding: 2px;
+}
+
+.np-grid-header-row {
+    height: 50px;
+    overflow: auto;
+}
+
+.np-grid-header-row-filter {
+    height: 80px;
+    overflow: auto;
+}
+
+.np-pagination {
+    height: 50px;
+    overflow: auto;
+    border: 1px solid lightgray;
+}
+
+.np-pagination .div-page-size {
+    margin: 10px;
+}
+
+.np-pagination ul {
+    margin: 10px;
+}
+
+.np-sticky-header {
+    position: sticky;
+    top: 0px;
+}
+
+.np-sticky-header-filter {
+    position: sticky;
+    top: 50px;
 }
