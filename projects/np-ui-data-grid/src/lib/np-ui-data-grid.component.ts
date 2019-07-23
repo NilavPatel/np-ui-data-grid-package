@@ -153,11 +153,13 @@ export class NpUiDataGridComponent implements OnInit {
     this._sortColumnList.push({ column: column.dataField, sortDirection: column.sortDirection });
     this._selectedRowKeys = [];
     this._isAllSelected = false;
-    if (this.dataSource.isServerOperations) {
-      this.dataSource.load(1, this._pager.pageSize, this._sortColumnList, this._filterColumnList).then((store: CustomStore) => {
+    if (this._dataSource.isServerOperations) {
+      this._showLoader = true;
+      this._dataSource.load(1, this._pager.pageSize, this._sortColumnList, this._filterColumnList).then((store: CustomStore) => {
+        this._showLoader = false;
         this._currentViewData = store.data;
         this._total = store.total;
-        this._pager = this.pagerService.getPager(this._total, this._pager.currentPage, this._pager.pageSize);
+        this._pager = this.pagerService.getPager(this._total, 1, this._pager.pageSize);
       }).catch(error => {
         console.error(error);
       });
@@ -183,7 +185,7 @@ export class NpUiDataGridComponent implements OnInit {
   _removeSortingFromColumn(column: NpColumn) {
     column.sortDirection = null;
     _.remove(this._sortColumnList, function (element) { return element.column === column.dataField });
-    if (!this.dataSource.isServerOperations) {
+    if (!this._dataSource.isServerOperations) {
       this._resetDataSource();
       this._filterDataSource();
       this._sortColumnList.forEach(element => {
@@ -211,11 +213,13 @@ export class NpUiDataGridComponent implements OnInit {
     });
     this._selectedRowKeys = [];
     this._isAllSelected = false;
-    if (this.dataSource.isServerOperations) {
-      this.dataSource.load(1, this._pager.pageSize, this._sortColumnList, this._filterColumnList).then((store: CustomStore) => {
+    if (this._dataSource.isServerOperations) {
+      this._showLoader = true;
+      this._dataSource.load(1, this._pager.pageSize, this._sortColumnList, this._filterColumnList).then((store: CustomStore) => {
+        this._showLoader = false;
         this._currentViewData = store.data;
         this._total = store.total;
-        this._pager = this.pagerService.getPager(this._total, this._pager.currentPage, this._pager.pageSize);
+        this._pager = this.pagerService.getPager(this._total, 1, this._pager.pageSize);
       }).catch(error => {
         console.error(error);
       });

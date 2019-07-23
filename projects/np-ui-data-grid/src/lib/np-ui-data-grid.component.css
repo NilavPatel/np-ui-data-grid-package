@@ -5,6 +5,7 @@
 }
 
 .np-grid-table {
+    table-layout: fixed;
     border-collapse: separate;
     border-spacing: 0px;
     width: 100%;
@@ -13,7 +14,7 @@
 
 .np-grid-table td {
     background-color: white;
-    padding: 5px;
+    padding: 5px 10px;
     border-bottom: 1px solid lightgray;
     border-left: 1px solid lightgray;
 }
@@ -68,22 +69,6 @@ th a.sort-by-asc, th a.sort-by-desc {
     cursor: pointer;
 }
 
-.filter-type-select {
-    height: 25px;
-    width: 85%;
-    margin: 2px;
-    float: left;
-    padding: 2px;
-}
-
-.filter-input {
-    height: 25px;
-    width: 85%;
-    margin: 2px;
-    float: left;
-    padding: 2px;
-}
-
 .np-grid-header-row {
     height: 50px;
     overflow: auto;
@@ -121,6 +106,24 @@ th a.sort-by-asc, th a.sort-by-desc {
     z-index: 1002;
 }
 
+.np-button {
+    height: 30px;
+    background-color: white;
+    border: 1px solid lightgray;
+}
+
+.div-page-size select {
+    height: 30px;
+}
+
+.np-button:hover {
+    cursor: pointer;
+}
+
+.np-button.active {
+    background-color: lightgray;
+}
+
 .loader {
     border: 5px solid #f3f3f3;
     -webkit-animation: spin 1s linear infinite;
@@ -139,6 +142,59 @@ th a.sort-by-asc, th a.sort-by-desc {
     overflow: show;
     margin: auto;
     top: 50% !important;
+}
+
+input[type="checkbox"] {
+    height: 15px;
+    width: 15px;
+}
+
+.child-toggle-link:hover {
+    cursor: pointer;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.remove-icon {
+    cursor: pointer;
+}
+
+.filter-type-group {
+    width: 100%;
+}
+
+.filter-type {
+    width: 85%;
+    display: inline-block;
+}
+
+.filter-remove {
+    width: 15%;
+    text-align: center;
+    min-height: 25px;
+    display: inline-block;
+}
+
+.filter-type select {
+    min-height: 25px;
+    width: 100%;
+}
+
+.filter-text {
+    width: 100%;
+    overflow: hidden;
+}
+
+.filter-text input, .filter-text select {
+    min-height: 25px;
+    float: left;
+    width: 95%;
+}
+
+.txt-center{
+    text-align: center;
 }
 
 @keyframes spin {
