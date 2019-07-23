@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges, TemplateRef } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, TemplateRef, EventEmitter, Output } from '@angular/core';
 import { NpColumn } from './models/column.model';
 import { NpDataSource, CustomStore } from './models/data-source.model';
 import { NpPagerService, Pager } from './services/np-ui-pager.service';
@@ -57,6 +57,8 @@ export class NpUiDataGridComponent implements OnInit {
   _key: string;
 
   _isAllSelected: boolean;
+
+  @Output() onRowClick: EventEmitter<any> = new EventEmitter();
 
   constructor(private pagerService: NpPagerService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
@@ -295,16 +297,8 @@ export class NpUiDataGridComponent implements OnInit {
     this._onFilter(column, true);
   }
 
-  _openMasterChild(row) {
+  _openMasterChild(row: any) {
     row.isOpen = !row.isOpen;
-  }
-
-  showLoader() {
-    this._showLoader = true;
-  }
-
-  hideLoader() {
-    this._showLoader = false;
   }
 
   _onSelectAll(event: { currentTarget: { checked: any; }; }) {
@@ -312,21 +306,29 @@ export class NpUiDataGridComponent implements OnInit {
       return;
     }
     if (event.currentTarget.checked) {
-      if (this._dataSource.isServerOperations) {
-        this._selectedRowKeys = [];
-        var that = this;
-        this._currentViewData.forEach(function (element) {
-          that._selectedRowKeys.push(element[that._key]);
-        });
-      } else {
-        this._selectedRowKeys = [];
-        var that = this;
-        this._dataSource.data.forEach(function (element) {
-          that._selectedRowKeys.push(element[that._key]);
-        });
-      }
+      this._selectAll();
+    } else {
+      this._deSelectAll();
+    }
+  }
+
+  _deSelectAll() {
+    this._selectedRowKeys = [];
+  }
+
+  _selectAll() {
+    if (this._dataSource.isServerOperations) {
+      this._selectedRowKeys = [];
+      var that = this;
+      this._currentViewData.forEach(function (element) {
+        that._selectedRowKeys.push(element[that._key]);
+      });
     } else {
       this._selectedRowKeys = [];
+      var that = this;
+      this._dataSource.data.forEach(function (element) {
+        that._selectedRowKeys.push(element[that._key]);
+      });
     }
   }
 
@@ -349,7 +351,134 @@ export class NpUiDataGridComponent implements OnInit {
     return this._selectedRowKeys.indexOf(keyValue) > -1;
   }
 
+  _rowClick = function (event: any, data: any) {
+    if (this.onRowClick) {
+      event.data = data;
+      this.onRowClick.emit(event);
+    }
+  };
+
+  /**
+   * get selected row keys array
+   */
   getSelectedRowKeys() {
     return this._selectedRowKeys;
+  }
+
+  /**
+   * reset all
+   */
+  reset() {
+    this._filterColumnList = [];
+    this._sortColumnList = [];
+    this._selectedRowKeys = [];
+    this._isAllSelected = false;
+    if (this._dataSource.isServerOperations) {
+      this._getCurrentViewData(1);
+    }
+    else {
+      this._dataSource.data = this.dataSource.data;
+      this._getCurrentViewData(1);
+    }
+  }
+
+  /**
+   * select all rows
+   */
+  selectAll() {
+    this._selectAll()
+  }
+
+  /**
+   * de select all rows
+   */
+  deSelectAll() {
+    this._deSelectAll();
+  }
+
+  /**
+   * show loader
+   */
+  showLoader() {
+    this._showLoader = true;
+  }
+
+  /**
+   * hide loader
+   */
+  hideLoader() {
+    this._showLoader = false;
+  }
+
+  /**
+   * hide column by index
+   * @param idx index number of column
+   */
+  hideColumnByIndex(idx: number) {
+    this._columns[idx].visible = false;
+  }
+
+  /**
+   * show column by index
+   * @param idx index number of column
+   */
+  showColumnByIndex(idx: number) {
+    this._columns[idx].visible = true;
+  }
+
+  /**
+   * hide column by data field
+   * @param dataField dataField value of column
+   */
+  hideColumnByDataField(dataField: string) {
+    this._columns.forEach(function (element) {
+      if (element.dataField == dataField) {
+        element.visible = false;
+      }
+    });
+  }
+
+  /**
+   * show column by data field
+   * @param dataField dataField value of column
+   */
+  showColumnByDataField(dataField: string) {
+    this._columns.forEach(function (element) {
+      if (element.dataField == dataField) {
+        element.visible = true;
+      }
+    });
+  }
+
+  /**
+   * go to page
+   * @param pageNumber page number
+   */
+  goToPage(pageNumber: number) {
+    this._getCurrentViewData(pageNumber);
+  }
+
+  /**
+   * sort by column
+   * @param dataField dataField value of column
+   * @param direction desc | asc
+   */
+  sortByColumn(dataField: string, direction: string) {
+    var sortColumn = _.find(this._columns, function (element: NpColumn) { return element.dataField === dataField });
+    sortColumn.sortDirection = direction == "desc" ? "desc" : "asc";
+    this._onSort(sortColumn);
+  }
+
+  /**
+   * filter by column 
+   * @param dataField dataField value of column
+   * @param keyword search keyword
+   * @param type startWith | endWith | contains | greaterThan | lessThan | equals | dateLessThan | dateGreaterThan | dateEquals
+   */
+  filterByColumn(dataField: string, keyword: string, type: string) {
+    var filterColumn = _.find(this._columns, function (element: NpColumn) { return element.dataField === dataField });
+    filterColumn.filterString = keyword;
+    filterColumn.filterType = type;
+    this._onFilter(filterColumn, true);
   }
 }

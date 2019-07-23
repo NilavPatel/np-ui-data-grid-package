@@ -67,7 +67,7 @@
             </thead>
             <tbody>
                 <ng-container *ngFor="let data of _currentViewData; let  i = index">
-                    <tr [id]="_rowIdPrefix + i">
+                    <tr [id]="_rowIdPrefix + i" (click)="_rowClick($event,data)">
                         <td *ngIf="_enableMasterChild" class="txt-center">
                             <a *ngIf="!data.isOpen" (click)="_openMasterChild(data)" class="child-toggle-link">[+]</a>
                             <a *ngIf="data.isOpen" (click)="_openMasterChild(data)" class="child-toggle-link">[-]</a>
