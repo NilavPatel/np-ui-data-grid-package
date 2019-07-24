@@ -124,26 +124,6 @@ th a.sort-by-asc, th a.sort-by-desc {
     background-color: lightgray;
 }
 
-.loader {
-    border: 5px solid #f3f3f3;
-    -webkit-animation: spin 1s linear infinite;
-    animation: spin 1s linear infinite;
-    border-top: 5px solid #555;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-}
-
-.np-loader {
-    position: relative;
-    z-index: 1003;
-    height: 0px;
-    width: 0px;
-    overflow: show;
-    margin: auto;
-    top: 50% !important;
-}
-
 input[type="checkbox"] {
     height: 15px;
     width: 15px;
@@ -193,13 +173,34 @@ input[type="checkbox"] {
     width: 95%;
 }
 
-.txt-center{
+.txt-center {
     text-align: center;
 }
 
-@keyframes spin {
+.np-loader {
+    width: 56px;
+    height: 56px;
+    border: 8px solid lightgray;
+    border-top-color: black;
+    border-bottom-color: black;
+    border-radius: 50%;
+    position: sticky;
+    animation: loader-rotate 1s linear infinite;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-delay: 0s;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+    animation-fill-mode: none;
+    animation-play-state: running;
+    animation-name: loader-rotate;
+    top: 50%;
+    margin: -72px auto 0;
+}
+
+@keyframes loader-rotate {
     0% {
-        transform: rotate(0deg);
+        transform: rotate(0);
     }
     100% {
         transform: rotate(360deg);

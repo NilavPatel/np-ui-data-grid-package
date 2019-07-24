@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, SimpleChanges, TemplateRef, EventEmitter, Output } from '@angular/core';
-import { NpColumn } from './models/column.model';
-import { NpDataSource, CustomStore } from './models/data-source.model';
+import { Column } from './models/column.model';
+import { DataSource, CustomStore } from './models/data-source.model';
 import { NpPagerService, Pager } from './services/np-ui-pager.service';
 import * as _ from 'lodash';
-import { NpConstants } from './models/constants';
+import { Constants, FilterTypes, DataTypes } from './models/constants';
 
 @Component({
   selector: 'np-ui-data-grid',
@@ -12,11 +12,11 @@ import { NpConstants } from './models/constants';
 })
 export class NpUiDataGridComponent implements OnInit {
 
-  @Input() columns: NpColumn[];
-  _columns: NpColumn[];
+  @Input() columns: Column[];
+  _columns: Column[];
 
-  @Input() dataSource: NpDataSource;
-  _dataSource: NpDataSource;
+  @Input() dataSource: DataSource;
+  _dataSource: DataSource;
 
   /**current view data */
   _currentViewData: any[];
@@ -28,7 +28,7 @@ export class NpUiDataGridComponent implements OnInit {
 
   _total: number;
 
-  _filterTypes: any[];
+  _filtersList: any[];
 
   // set grid height
   @Input() height: number;
@@ -60,10 +60,12 @@ export class NpUiDataGridComponent implements OnInit {
 
   @Output() onRowClick: EventEmitter<any> = new EventEmitter();
 
+  _dataTypes = DataTypes;
+
   constructor(private pagerService: NpPagerService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
     this._sortColumnList = [];
-    this._filterTypes = NpConstants.filterTypes();
+    this._filtersList = Constants.filters();
     this._filterColumnList = [];
   }
 
@@ -80,7 +82,7 @@ export class NpUiDataGridComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.dataSource.currentValue != undefined) {
-      this._dataSource = new NpDataSource();
+      this._dataSource = new DataSource();
       this._dataSource.data = this.dataSource.data;
       this._dataSource.isServerOperations = this.dataSource.isServerOperations;
       this._dataSource.load = this.dataSource.load;
@@ -120,7 +122,7 @@ export class NpUiDataGridComponent implements OnInit {
   _setColumns() {
     var result = [];
     this.columns.forEach(element => {
-      result.push(new NpColumn(element));
+      result.push(new Column(element));
     });
     this._columns = result;
     return;
@@ -130,13 +132,13 @@ export class NpUiDataGridComponent implements OnInit {
     this._getCurrentViewData(1);
   }
 
-  _onCellClick($event: any, column: NpColumn, data: any) {
+  _onCellClick($event: any, column: Column, data: any) {
     if (column.onCellClick != undefined) {
       column.onCellClick($event, column, data)
     }
   }
 
-  _onSort(column: NpColumn) {
+  _onSort(column: Column) {
     if (!column.sortEnabled) {
       return;
     }
@@ -184,7 +186,7 @@ export class NpUiDataGridComponent implements OnInit {
     this._sortColumnList = [];
   }
 
-  _removeSortingFromColumn(column: NpColumn) {
+  _removeSortingFromColumn(column: Column) {
     column.sortDirection = null;
     _.remove(this._sortColumnList, function (element) { return element.column === column.dataField });
     if (!this._dataSource.isServerOperations) {
@@ -202,14 +204,15 @@ export class NpUiDataGridComponent implements OnInit {
     this._dataSource.data = this.dataSource.data;
   }
 
-  _onFilter(column: NpColumn, isForceFilter: boolean) {
+  _onFilter(column: Column, isForceFilter: boolean) {
     if (!isForceFilter && (column.filterString == undefined || column.filterString == null || column.filterString.length == 0
-      || column.filterType == undefined || column.filterType == null || column.filterType.length == 0)) {
+      || column.filterType == undefined || column.filterType == null)) {
       return;
     }
     this._filterColumnList = [];
     this._columns.forEach(element => {
-      if (element.filterType && element.filterType.length > 0 && element.filterString && element.filterString.toString().length > 0) {
+      if (element.filterType != undefined && element.filterType != null
+        && element.filterString && element.filterString.toString().length > 0) {
         this._filterColumnList.push({ column: element.dataField, filterString: element.filterString, filterType: element.filterType, dataType: element.dataType });
       }
     });
@@ -235,28 +238,40 @@ export class NpUiDataGridComponent implements OnInit {
   _filterDataSource() {
     var data = this.dataSource.data;
     this._filterColumnList.forEach(element => {
-      if (element.filterType == "startWith") {
+      if (element.filterType == FilterTypes.StartWith) {
         data = _.filter(data, function (a) {
           return _.startsWith(a[element.column].toLowerCase(), element.filterString.toLowerCase());
         });
-      } else if (element.filterType == "endWith") {
+      } else if (element.filterType == FilterTypes.EndWith) {
         data = _.filter(data, function (a) {
           return _.endsWith(a[element.column].toLowerCase(), element.filterString.toLowerCase());
         });
-      } else if (element.filterType == "contains") {
+      } else if (element.filterType == FilterTypes.Contains) {
         data = _.filter(data, function (a) {
           return a[element.column].toLowerCase().indexOf(element.filterString.toLowerCase()) !== -1;
         });
-      } else if (element.filterType == "greaterThan") {
-        data = _.filter(data, function (a) {
-          return a[element.column] > parseInt(element.filterString);
-        });
-      } else if (element.filterType == "lessThan") {
-        data = _.filter(data, function (a) {
-          return a[element.column] < parseInt(element.filterString);
-        });
-      } else if (element.filterType == "equals") {
-        if (element.dataType == "boolean") {
+      } else if (element.filterType == FilterTypes.GreaterThan) {
+        if (element.dataType == DataTypes.number) {
+          data = _.filter(data, function (a) {
+            return a[element.column] > parseInt(element.filterString);
+          });
+        } else if (element.dataType == DataTypes.date) {
+          data = _.filter(data, function (a) {
+            return a[element.column] > new Date(element.filterString);
+          });
+        }
+      } else if (element.filterType == FilterTypes.LessThan) {
+        if (element.dataType == DataTypes.number) {
+          data = _.filter(data, function (a) {
+            return a[element.column] < parseInt(element.filterString);
+          });
+        } else if (element.dataType == DataTypes.date) {
+          data = _.filter(data, function (a) {
+            return a[element.column] < new Date(element.filterString);
+          });
+        }
+      } else if (element.filterType == FilterTypes.Equals) {
+        if (element.dataType == DataTypes.boolean) {
           if (element.filterString == "true") {
             data = _.filter(data, function (a) {
               return a[element.column] == true;
@@ -266,32 +281,22 @@ export class NpUiDataGridComponent implements OnInit {
               return a[element.column] == false;
             });
           }
-        } else {
+        } else if (element.dataType == DataTypes.number) {
           data = _.filter(data, function (a) {
             return a[element.column] === parseInt(element.filterString);
           });
+        } else if (element.dataType == DataTypes.date) {
+          data = _.filter(data, function (a) {
+            return a[element.column] == new Date(element.filterString);
+          });
         }
-      } else if (element.filterType == "dateLessThan") {
-        data = _.filter(data, function (a) {
-          return a[element.column] < new Date(element.filterString);
-        });
-      } else if (element.filterType == "dateGreaterThan") {
-        data = _.filter(data, function (a) {
-          return a[element.column] > new Date(element.filterString);
-        });
-      } else if (element.filterType == "dateEquals") {
-        data = _.filter(data, function (a) {
-          return a[element.column] == new Date(element.filterString);
-        });
-      } else {
-        data = _.filter(data, function (a) { return a[element.column] == element.filterString });
       }
     });
     this._dataSource.data = data;
     this._total = data.length;
   }
 
-  _removeFilterStringFromColumn(column: NpColumn) {
+  _removeFilterStringFromColumn(column: Column) {
     column.filterString = null;
     column.filterType = null;
     this._onFilter(column, true);
@@ -464,7 +469,7 @@ export class NpUiDataGridComponent implements OnInit {
    * @param direction desc | asc
    */
   sortByColumn(dataField: string, direction: string) {
-    var sortColumn = _.find(this._columns, function (element: NpColumn) { return element.dataField === dataField });
+    var sortColumn = _.find(this._columns, function (element: Column) { return element.dataField === dataField });
     sortColumn.sortDirection = direction == "desc" ? "desc" : "asc";
     this._onSort(sortColumn);
   }
@@ -473,10 +478,10 @@ export class NpUiDataGridComponent implements OnInit {
    * filter by column 
    * @param dataField dataField value of column
    * @param keyword search keyword
-   * @param type startWith | endWith | contains | greaterThan | lessThan | equals | dateLessThan | dateGreaterThan | dateEquals
+   * @param type FilterTypes
    */
-  filterByColumn(dataField: string, keyword: string, type: string) {
-    var filterColumn = _.find(this._columns, function (element: NpColumn) { return element.dataField === dataField });
+  filterByColumn(dataField: string, keyword: string, type: FilterTypes) {
+    var filterColumn = _.find(this._columns, function (element: Column) { return element.dataField === dataField });
     filterColumn.filterString = keyword;
     filterColumn.filterType = type;
     this._onFilter(filterColumn, true);

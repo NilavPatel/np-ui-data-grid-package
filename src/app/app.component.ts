@@ -1,5 +1,5 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { NpDataSource, CustomStore } from 'projects/np-ui-data-grid/src/public-api';
+import { DataSource, CustomStore, DataTypes } from 'projects/np-ui-data-grid/src/public-api';
 import { DataService } from './data.service';
 
 @Component({
@@ -10,39 +10,38 @@ import { DataService } from './data.service';
 export class AppComponent {
 
   gridColumns: any[];
-  gridDataSource: NpDataSource;
-  gridDataSource1: NpDataSource;
+  gridDataSource: DataSource;
+  gridDataSource1: DataSource;
   @ViewChild("actionButtonsTemplate", { static: true }) actionButtonsTemplate: TemplateRef<any>;
   @ViewChild("birthDateColumnTemplate", { static: true }) birthDateColumnTemplate: TemplateRef<any>;
 
   constructor(private dataService: DataService) {
-
   }
 
   ngOnInit() {
     var that = this;
 
     this.gridColumns = [
-      { dataField: "Id", visible: true, width: 100, caption: "Id", dataType: "number", sortEnabled: true, filterEnabled: true, onCellClick: this.cellClicked },
-      { dataField: "FirstName", visible: true, width: 150, caption: "First Name", dataType: "string", sortEnabled: true, filterEnabled: true },
-      { dataField: "LastName", visible: true, width: 150, caption: "Last Name", dataType: "string" },
-      { dataField: "BirthDate", visible: true, width: 150, caption: "Birth Date", dataType: "date", filterEnabled: true, cellTemplate: this.birthDateColumnTemplate },
-      { dataField: "Age", visible: true, width: 100, dataType: "number", sortEnabled: true, filterEnabled: true, styleClass: "color-red" },
-      { dataField: "Active", visible: true, width: 150, caption: "Is Active?", dataType: "boolean", filterEnabled: true, },
+      { dataField: "Id", visible: true, width: 100, caption: "Id", dataType: DataTypes.number, sortEnabled: true, filterEnabled: true, onCellClick: this.cellClicked },
+      { dataField: "FirstName", visible: true, width: 150, caption: "First Name", dataType: DataTypes.string, sortEnabled: true, filterEnabled: true },
+      { dataField: "LastName", visible: true, width: 150, caption: "Last Name", dataType: DataTypes.string },
+      { dataField: "BirthDate", visible: true, width: 150, caption: "Birth Date", dataType: DataTypes.date, filterEnabled: true, cellTemplate: this.birthDateColumnTemplate },
+      { dataField: "Age", visible: true, width: 100, dataType: DataTypes.number, sortEnabled: true, filterEnabled: true, styleClass: "color-red" },
+      { dataField: "Active", visible: true, width: 150, caption: "Is Active?", dataType: DataTypes.boolean, filterEnabled: true, },
       { visible: true, width: 100, cellTemplate: this.actionButtonsTemplate }];
 
     this.dataService.getAll().subscribe((data: any) => {
       /** for client side grid */
-      this.gridDataSource = new NpDataSource();
+      this.gridDataSource = new DataSource();
       this.gridDataSource.data = data;
     });
 
     /** for server side grid */
-    this.gridDataSource1 = new NpDataSource();
+    this.gridDataSource1 = new DataSource();
     this.gridDataSource1.isServerOperations = true;
     this.gridDataSource1.load = function (pageNumber, pageSize, sortColumns, filterColumns) {
       return new Promise((resolve, reject) => {
-        var reqBody = {pageNumber:pageNumber, pageSize:pageSize, sortColumns:sortColumns, filterColumns:filterColumns}
+        var reqBody = { pageNumber: pageNumber, pageSize: pageSize, sortColumns: sortColumns, filterColumns: filterColumns }
         that.dataService.getDataUsingLoadOptions(reqBody).subscribe((data: any) => {
           var result = new CustomStore();
           result.data = data.data;

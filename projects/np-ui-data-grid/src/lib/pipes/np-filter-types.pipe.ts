@@ -4,7 +4,7 @@ import { Injectable, Pipe, PipeTransform } from '@angular/core';
 })
 @Injectable()
 export class NpFilterTypesPipe implements PipeTransform {
-    transform(filterTypes: any[], args: string): any {
-        return filterTypes.filter(filterType => filterType.forDataType.toLowerCase() === args.toLowerCase());
+    transform(filterList: any[], args: string): any {
+        return filterList.filter(filterType => filterType.forDataType === args);
     }
 }

@@ -1,51 +1,67 @@
-export class NpConstants {
-    static filterTypes(): any[] {
+export class Constants {
+    static filters(): any[] {
         return [{
-            name: "startWith",
+            name: FilterTypes.StartWith,
             text: "Start with",
-            forDataType: "string"
+            forDataType: DataTypes.string
         },
         {
-            name: "endWith",
+            name: FilterTypes.EndWith,
             text: "End with",
-            forDataType: "string"
+            forDataType: DataTypes.string
         },
         {
-            name: "contains",
+            name: FilterTypes.Contains,
             text: "Contains",
-            forDataType: "string"
+            forDataType: DataTypes.string
         },
         {
-            name: "greaterThan",
+            name: FilterTypes.GreaterThan,
             text: ">",
-            forDataType: "number"
+            forDataType: DataTypes.number
         },
         {
-            name: "lessThan",
+            name: FilterTypes.LessThan,
             text: "<",
-            forDataType: "number"
+            forDataType: DataTypes.number
         }, {
-            name: "equals",
+            name: FilterTypes.Equals,
             text: "=",
-            forDataType: "number"
+            forDataType: DataTypes.number
         },
         {
-            name: "equals",
+            name: FilterTypes.Equals,
             text: "=",
-            forDataType: "boolean"
+            forDataType: DataTypes.boolean
         },
         {
-            name: "dateLessThan",
+            name: FilterTypes.GreaterThan,
             text: "<",
-            forDataType: "date"
+            forDataType: DataTypes.date
         }, {
-            name: "dateGreaterThan",
+            name: FilterTypes.LessThan,
             text: ">",
-            forDataType: "date"
+            forDataType: DataTypes.date
         }, {
-            name: "dateEquals",
+            name: FilterTypes.Equals,
             text: "=",
-            forDataType: "date"
+            forDataType: DataTypes.date
         }];
     }
+}
+
+export enum FilterTypes {
+    StartWith,
+    EndWith,
+    Contains,
+    GreaterThan,
+    LessThan,
+    Equals
+}
+
+export enum DataTypes {
+    number,
+    string,
+    date,
+    boolean
 }

@@ -1,14 +1,15 @@
 import { TemplateRef } from "@angular/core";
+import { FilterTypes, DataTypes } from './constants';
 
 /**
  * grid column class
  */
-export class NpColumn {
+export class Column {
 
     /**constructor */
     constructor(item: {
         dataField: string;
-        dataType: string;
+        dataType: DataTypes;
         visible: boolean;
         width: number;
         caption: string;
@@ -16,13 +17,13 @@ export class NpColumn {
         sortEnabled: boolean;
         filterEnabled: boolean;
         filterString: string;
-        filterType: string;
+        filterType: FilterTypes;
         cellTemplate: TemplateRef<any>;
         onCellClick: any;
         styleClass: string;
     }) {
         this.dataField = item.dataField;
-        this.dataType = item.dataType;
+        this.dataType = item.dataType == undefined || item.dataType == null ? DataTypes.string : item.dataType;
         this.visible = item.visible;
         this.width = item.width;
         this.caption = item.caption;
@@ -37,13 +38,13 @@ export class NpColumn {
     }
 
     public dataField: string;
-    public dataType: string; // possible data types are string, number, boolean, date
+    public dataType: DataTypes;
     public visible: boolean;
     public width: number;
     public caption: string;
     public sortDirection: string;
     public filterString: string;
-    public filterType: string;
+    public filterType: FilterTypes;
     public sortEnabled: boolean;
     public filterEnabled: boolean;
     public cellTemplate: TemplateRef<any>;
@@ -57,7 +58,7 @@ export class NpColumn {
 
     /**get data type of column */
     public getDataType() {
-        return this.dataType ? this.dataType : "string";
+        return this.dataType ? this.dataType : DataTypes.string;
     }
 
     /**get sorting class */

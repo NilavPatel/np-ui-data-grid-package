@@ -1,7 +1,5 @@
 <div class="np-grid" [style.height.px]="height" [style.width.px]="width">
-    <div class="np-loader" *ngIf="_showLoader">
-        <div class="loader"></div>
-    </div>
+    <div *ngIf="_showLoader" class="np-loader"> </div>
     <div [style.height.px]="height - 52" style="overflow:auto">
         <table class="np-grid-table">
             <thead>
@@ -38,7 +36,7 @@
                                 <div class="filter-type">
                                     <select [(ngModel)]="column.filterType" (change)="_onFilter(column, false)">
                                         <option
-                                            *ngFor="let filterType of _filterTypes | filterTypesPipe: column.dataType"
+                                            *ngFor="let filterType of _filtersList | filterTypesPipe: column.dataType"
                                             [ngValue]="filterType.name" [innerText]="filterType.text"></option>
                                     </select>
                                 </div>
@@ -49,13 +47,13 @@
                             </div>
                             <div class="filter-text">
                                 <input type="text" [(ngModel)]="column.filterString" (input)="_onFilter(column, false)"
-                                    placeholder="search..." *ngIf="column.dataType == 'string'">
+                                    placeholder="search..." *ngIf="column.dataType == _dataTypes.string">
                                 <input type="number" [(ngModel)]="column.filterString"
                                     (input)="_onFilter(column, false)" placeholder="search..."
-                                    *ngIf="column.dataType == 'number'">
+                                    *ngIf="column.dataType == _dataTypes.number">
                                 <input type="date" [(ngModel)]="column.filterString" (input)="_onFilter(column, false)"
-                                    placeholder="search..." *ngIf="column.dataType == 'date'">
-                                <select [(ngModel)]="column.filterString" *ngIf="column.dataType == 'boolean'"
+                                    placeholder="search..." *ngIf="column.dataType == _dataTypes.date">
+                                <select [(ngModel)]="column.filterString" *ngIf="column.dataType == _dataTypes.boolean"
                                     (change)="_onFilter(column, false)">
                                     <option value="true">True</option>
                                     <option value="false">False</option>
