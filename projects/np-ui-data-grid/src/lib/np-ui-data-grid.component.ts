@@ -3,7 +3,7 @@ import { Column } from './models/column.model';
 import { DataSource, CustomStore } from './models/data-source.model';
 import { NpPagerService, Pager } from './services/np-ui-pager.service';
 import * as _ from 'lodash';
-import { Constants, FilterTypes, DataTypes } from './models/constants';
+import { Constants, FilterTypes, DataTypes, SortDirections } from './models/constants';
 
 @Component({
   selector: 'np-ui-data-grid',
@@ -139,11 +139,12 @@ export class NpUiDataGridComponent implements OnInit {
   }
 
   _onSort(column: Column) {
+
     if (!column.sortEnabled) {
       return;
     }
 
-    var sortOrder = column.sortDirection && column.sortDirection === 'asc' ? 'desc' : 'asc';
+    var sortOrder = column.sortDirection == SortDirections.Descending ? SortDirections.Ascending : SortDirections.Descending;
     if (!this.multiColumnSortEnable) {
       this._removeAllSorting();
     }
@@ -175,7 +176,7 @@ export class NpUiDataGridComponent implements OnInit {
 
   _sortDataSource() {
     this._sortColumnList.forEach(element => {
-      this._dataSource.data = _.orderBy(this._dataSource.data, element.column, element.sortDirection === 'asc' ? 'asc' : 'desc');
+      this._dataSource.data = _.orderBy(this._dataSource.data, element.column, element.sortDirection === SortDirections.Ascending ? 'asc' : 'desc');
     });
   }
 
@@ -193,7 +194,7 @@ export class NpUiDataGridComponent implements OnInit {
       this._resetDataSource();
       this._filterDataSource();
       this._sortColumnList.forEach(element => {
-        this._dataSource.data = _.orderBy(this._dataSource.data, element.column, element.sortDirection === 'asc' ? 'asc' : 'desc');
+        this._dataSource.data = _.orderBy(this._dataSource.data, element.column, element.sortDirection === SortDirections.Ascending ? 'asc' : 'desc');
       });
     }
     this._getCurrentViewData(1);
@@ -468,9 +469,9 @@ export class NpUiDataGridComponent implements OnInit {
    * @param dataField dataField value of column
    * @param direction desc | asc
    */
-  sortByColumn(dataField: string, direction: string) {
+  sortByColumn(dataField: string, direction: SortDirections) {
     var sortColumn = _.find(this._columns, function (element: Column) { return element.dataField === dataField });
-    sortColumn.sortDirection = direction == "desc" ? "desc" : "asc";
+    sortColumn.sortDirection = direction;
     this._onSort(sortColumn);
   }
 

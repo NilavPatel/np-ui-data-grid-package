@@ -1,6 +1,6 @@
 <div class="np-grid" [style.height.px]="height" [style.width.px]="width">
-    <div *ngIf="_showLoader" class="np-loader"> </div>
-    <div [style.height.px]="height - 52" style="overflow:auto">
+    <div *ngIf="_showLoader" class="np-loader"></div>
+    <div [style.height.px]="height - 52" style="overflow:auto" [ngClass]="{'locked': _showLoader}">
         <table class="np-grid-table">
             <thead>
                 <tr class="np-grid-header-row">
@@ -16,10 +16,10 @@
                         <span [innerHTML]="column.getCaption()" (click)="_onSort(column)"
                             [ngClass]="{'cursor-pointer': column.sortEnabled}"></span>
                         <span class="float-right"
-                            [ngClass]="{'sort-asc': column.sortDirection === 'asc', 'sort-desc': column.sortDirection === 'desc'}"
+                            [ngClass]="{'sort-asc': column.sortDirection === 0, 'sort-desc': column.sortDirection === 1}"
                             (click)="_onSort(column)">
                         </span>
-                        <span *ngIf="multiColumnSortEnable && column.sortDirection"
+                        <span *ngIf="multiColumnSortEnable && column.sortDirection != null"
                             (click)="_removeSortingFromColumn(column)" title="Remove sorting"
                             class="remove-icon float-right">X</span>
                     </th>
@@ -99,7 +99,7 @@
             </tbody>
         </table>
     </div>
-    <div>
+    <div [ngClass]="{'locked': _showLoader}">
         <div class="np-pagination">
             <div class="div-page-size">
                 <select [(ngModel)]="_pager.pageSize" (change)="_onPageSizeChange()">

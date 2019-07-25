@@ -80,7 +80,7 @@ th a.sort-by-asc, th a.sort-by-desc {
 }
 
 .np-pagination {
-    height: 50px;
+    min-height: 50px;
     overflow: auto;
     border: 1px solid lightgray;
     background-color: white;
@@ -196,6 +196,12 @@ input[type="checkbox"] {
     animation-name: loader-rotate;
     top: 50%;
     margin: -72px auto 0;
+    z-index: 9999;
+}
+
+.locked {
+    pointer-events: none;
+    opacity: 0.5;
 }
 
 @keyframes loader-rotate {

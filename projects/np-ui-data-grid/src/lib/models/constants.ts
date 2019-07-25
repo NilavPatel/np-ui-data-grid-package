@@ -65,3 +65,8 @@ export enum DataTypes {
     date,
     boolean
 }
+
+export enum SortDirections {
+    Ascending,
+    Descending
+}

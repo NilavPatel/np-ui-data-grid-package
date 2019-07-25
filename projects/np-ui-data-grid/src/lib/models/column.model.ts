@@ -1,5 +1,5 @@
 import { TemplateRef } from "@angular/core";
-import { FilterTypes, DataTypes } from './constants';
+import { FilterTypes, DataTypes, SortDirections } from './constants';
 
 /**
  * grid column class
@@ -13,7 +13,7 @@ export class Column {
         visible: boolean;
         width: number;
         caption: string;
-        sortDirection: string;
+        sortDirection: SortDirections;
         sortEnabled: boolean;
         filterEnabled: boolean;
         filterString: string;
@@ -42,7 +42,7 @@ export class Column {
     public visible: boolean;
     public width: number;
     public caption: string;
-    public sortDirection: string;
+    public sortDirection: SortDirections;
     public filterString: string;
     public filterType: FilterTypes;
     public sortEnabled: boolean;
@@ -63,10 +63,10 @@ export class Column {
 
     /**get sorting class */
     public getSortingClass() {
-        if (this.sortDirection && this.sortDirection === "asc") {
+        if (this.sortDirection == SortDirections.Ascending) {
             return "sort-by-asc"
         }
-        if (this.sortDirection && this.sortDirection === "desc") {
+        if (this.sortDirection == SortDirections.Descending) {
             return "sort-by-desc"
         }
     }

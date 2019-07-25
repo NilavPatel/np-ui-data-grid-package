@@ -3,13 +3,14 @@ import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTT
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 import * as _ from 'lodash';
+import { SortDirections } from 'projects/np-ui-data-grid/src/public-api';
 
 let data: any[];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
-        
-    constructor(){
+
+    constructor() {
         data = this._getDataList(1000);
     }
 
@@ -71,7 +72,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             if (loadOptions.sortColumns && loadOptions.sortColumns.length > 0) {
                 loadOptions.sortColumns.forEach(element => {
-                    data2 = _.orderBy(data2, element.column, element.sortDirection === 'asc' ? 'asc' : 'desc');
+                    data2 = _.orderBy(data2, element.column, element.sortDirection === SortDirections.Ascending ? 'asc' : 'desc');
                 });
             }
 
