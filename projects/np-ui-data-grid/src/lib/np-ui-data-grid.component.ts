@@ -62,6 +62,8 @@ export class NpUiDataGridComponent implements OnInit {
 
   _dataTypes = DataTypes;
 
+  @Input() tableId: string;
+
   constructor(private pagerService: NpPagerService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
     this._sortColumnList = [];
@@ -486,5 +488,17 @@ export class NpUiDataGridComponent implements OnInit {
     filterColumn.filterString = keyword;
     filterColumn.filterType = type;
     this._onFilter(filterColumn, true);
+  }
+
+  getTotalRows() {
+    return this._pager.totalItems;
+  }
+
+  getCurrentPageNumber() {
+    return this._pager.currentPage;
+  }
+
+  getPageSize() {
+    return this._pager.pageSize;
   }
 }

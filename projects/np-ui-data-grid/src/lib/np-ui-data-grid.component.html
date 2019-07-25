@@ -1,4 +1,4 @@
-<div class="np-grid" [style.height.px]="height" [style.width.px]="width">
+<div class="np-grid" [style.height.px]="height" [style.width.px]="width" [id]="tableId">
     <div *ngIf="_showLoader" class="np-loader"></div>
     <div [style.height.px]="height - 52" style="overflow:auto" [ngClass]="{'locked': _showLoader}">
         <table class="np-grid-table">
