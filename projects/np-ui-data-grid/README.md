@@ -1,4 +1,4 @@
-# np-grid 
+# np-ui-data-grid
 
 Angular Version ~8.0.0
 lodash Version 4.17.14 or newer
