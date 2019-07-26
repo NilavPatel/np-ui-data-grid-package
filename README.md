@@ -5,6 +5,8 @@ lodash Version 4.17.14 or newer
 
 ### Demo is given in git repository /src/app/...
 
+![image login](https://github.com/NilavPatel/np-ui-data-grid-package/blob/master/src/assets/images/image1.png)
+
 ````
 npm i np-ui-data-grid
 ````
