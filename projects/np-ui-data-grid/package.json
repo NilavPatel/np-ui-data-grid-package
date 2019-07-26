@@ -1,9 +1,19 @@
 {
   "name": "np-ui-data-grid",
-  "version": "0.0.1",
+  "version": "0.0.3",
+  "author": {
+    "name": "nilav patel",
+    "email": "nilavpatel1992@gmail.com",
+    "url": "http://nilavpatel.github.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NilavPatel/np-ui-data-grid-package.git"
+  },
+  "private": false,
   "peerDependencies": {
-    "@angular/common": "^8.0.3",
-    "@angular/core": "^8.0.3",
+    "@angular/common": "^8.0.0",
+    "@angular/core": "^8.0.0",
     "lodash": "^4.17.14"
   }
 }

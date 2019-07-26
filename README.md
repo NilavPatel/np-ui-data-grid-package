@@ -1,11 +1,17 @@
 # np-grid 
 
 Angular Version ~8.0.0
-lodash Version 4.17.11 or newer
+lodash Version 4.17.14 or newer
+
+### Demo is given in git repository /src/app/...
+
+````
+npm i np-ui-data-grid
+````
 
 ## features
 ````
-1. Max row handling limit upto 10,00,000 in client side
+1. Maximum row handling capacity is upto 10,00,000 in client side mode
 2. Client/Server side paging
 3. Client/Server side filtering
 4. Client/Server side sorting
