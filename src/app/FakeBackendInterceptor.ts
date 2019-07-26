@@ -3,7 +3,7 @@ import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTT
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 import * as _ from 'lodash';
-import { SortDirections } from 'projects/np-ui-data-grid/src/public-api';
+import { SortDirections, DataTypes, FilterTypes } from 'projects/np-ui-data-grid/src/public-api';
 
 let data: any[];
 
@@ -87,28 +87,40 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function _filterDataSource(data, filterColumns) {
             filterColumns.forEach(element => {
-                if (element.filterType == "startWith") {
+                if (element.filterType == FilterTypes.StartWith) {
                     data = _.filter(data, function (a) {
                         return _.startsWith(a[element.column].toLowerCase(), element.filterString.toLowerCase());
                     });
-                } else if (element.filterType == "endWith") {
+                } else if (element.filterType == FilterTypes.EndWith) {
                     data = _.filter(data, function (a) {
                         return _.endsWith(a[element.column].toLowerCase(), element.filterString.toLowerCase());
                     });
-                } else if (element.filterType == "contains") {
+                } else if (element.filterType == FilterTypes.Contains) {
                     data = _.filter(data, function (a) {
                         return a[element.column].toLowerCase().indexOf(element.filterString.toLowerCase()) !== -1;
                     });
-                } else if (element.filterType == "greaterThan") {
-                    data = _.filter(data, function (a) {
-                        return a[element.column] > parseInt(element.filterString);
-                    });
-                } else if (element.filterType == "lessThan") {
-                    data = _.filter(data, function (a) {
-                        return a[element.column] < parseInt(element.filterString);
-                    });
-                } else if (element.filterType == "equals") {
-                    if (element.dataType == "boolean") {
+                } else if (element.filterType == FilterTypes.GreaterThan) {
+                    if (element.dataType == DataTypes.number) {
+                        data = _.filter(data, function (a) {
+                            return a[element.column] > parseInt(element.filterString);
+                        });
+                    } else if (element.dataType == DataTypes.date) {
+                        data = _.filter(data, function (a) {
+                            return a[element.column] > new Date(element.filterString);
+                        });
+                    }
+                } else if (element.filterType == FilterTypes.LessThan) {
+                    if (element.dataType == DataTypes.number) {
+                        data = _.filter(data, function (a) {
+                            return a[element.column] < parseInt(element.filterString);
+                        });
+                    } else if (element.dataType == DataTypes.date) {
+                        data = _.filter(data, function (a) {
+                            return a[element.column] < new Date(element.filterString);
+                        });
+                    }
+                } else if (element.filterType == FilterTypes.Equals) {
+                    if (element.dataType == DataTypes.boolean) {
                         if (element.filterString == "true") {
                             data = _.filter(data, function (a) {
                                 return a[element.column] == true;
@@ -118,25 +130,15 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                                 return a[element.column] == false;
                             });
                         }
-                    } else {
+                    } else if (element.dataType == DataTypes.number) {
                         data = _.filter(data, function (a) {
                             return a[element.column] === parseInt(element.filterString);
                         });
+                    } else if (element.dataType == DataTypes.date) {
+                        data = _.filter(data, function (a) {
+                            return a[element.column] == new Date(element.filterString);
+                        });
                     }
-                } else if (element.filterType == "dateLessThan") {
-                    data = _.filter(data, function (a) {
-                        return a[element.column] < new Date(element.filterString);
-                    });
-                } else if (element.filterType == "dateGreaterThan") {
-                    data = _.filter(data, function (a) {
-                        return a[element.column] > new Date(element.filterString);
-                    });
-                } else if (element.filterType == "dateEquals") {
-                    data = _.filter(data, function (a) {
-                        return a[element.column] == new Date(element.filterString);
-                    });
-                } else {
-                    data = _.filter(data, function (a) { return a[element.column] == element.filterString });
                 }
             });
             return data;

@@ -23,9 +23,6 @@ export class NpUiDataGridComponent implements OnInit {
 
   _pager: Pager;
 
-  /**row id prefix, used in generating unique ids for rows */
-  _rowIdPrefix: string = "row_";
-
   _total: number;
 
   _filtersList: any[];
@@ -52,6 +49,8 @@ export class NpUiDataGridComponent implements OnInit {
   @Input() multiSelectEnable: boolean = false;
 
   _selectedRowKeys: any[] = [];
+
+  _openRowKeys: any[] = [];
 
   @Input() key: string;
   _key: string;
@@ -159,6 +158,7 @@ export class NpUiDataGridComponent implements OnInit {
     }
     this._sortColumnList.push({ column: column.dataField, sortDirection: column.sortDirection });
     this._selectedRowKeys = [];
+    this._openRowKeys = [];
     this._isAllSelected = false;
     if (this._dataSource.isServerOperations) {
       this._showLoader = true;
@@ -220,6 +220,7 @@ export class NpUiDataGridComponent implements OnInit {
       }
     });
     this._selectedRowKeys = [];
+    this._openRowKeys = [];
     this._isAllSelected = false;
     if (this._dataSource.isServerOperations) {
       this._showLoader = true;
@@ -305,8 +306,13 @@ export class NpUiDataGridComponent implements OnInit {
     this._onFilter(column, true);
   }
 
-  _openMasterChild(row: any) {
-    row.isOpen = !row.isOpen;
+  _openMasterChild(keyValue: any) {
+    var idx = this._openRowKeys.indexOf(keyValue);
+    if (idx == -1) {
+      this._openRowKeys.push(keyValue)
+    } else {
+      _.remove(this._openRowKeys, function (a) { return a == keyValue });
+    }
   }
 
   _onSelectAll(event: { currentTarget: { checked: any; }; }) {
@@ -359,6 +365,10 @@ export class NpUiDataGridComponent implements OnInit {
     return this._selectedRowKeys.indexOf(keyValue) > -1;
   }
 
+  _isOpen(keyValue: any) {
+    return this._openRowKeys.indexOf(keyValue) > -1;
+  }
+
   _rowClick = function (event: any, data: any) {
     if (this.onRowClick) {
       event.data = data;
@@ -380,6 +390,7 @@ export class NpUiDataGridComponent implements OnInit {
     this._filterColumnList = [];
     this._sortColumnList = [];
     this._selectedRowKeys = [];
+    this._openRowKeys = [];
     this._isAllSelected = false;
     if (this._dataSource.isServerOperations) {
       this._getCurrentViewData(1);
@@ -500,5 +511,21 @@ export class NpUiDataGridComponent implements OnInit {
 
   getPageSize() {
     return this._pager.pageSize;
+  }
+
+  getTotalPages() {
+    return this._pager.totalPages;
+  }
+
+  closeAllChild() {
+    this._openRowKeys = [];
+  }
+
+  getFilterColumns() {
+    return this._filterColumnList;
+  }
+
+  getSortColumns() {
+    return this._sortColumnList;
   }
 }

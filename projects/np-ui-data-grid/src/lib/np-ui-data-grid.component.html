@@ -65,10 +65,10 @@
             </thead>
             <tbody>
                 <ng-container *ngFor="let data of _currentViewData; let  i = index">
-                    <tr [id]="_rowIdPrefix + i" (click)="_rowClick($event,data)">
+                    <tr id="row_{{i}}" (click)="_rowClick($event,data)">
                         <td *ngIf="_enableMasterChild" class="txt-center">
-                            <a *ngIf="!data.isOpen" (click)="_openMasterChild(data)" class="child-toggle-link">[+]</a>
-                            <a *ngIf="data.isOpen" (click)="_openMasterChild(data)" class="child-toggle-link">[-]</a>
+                            <a *ngIf="!_isOpen(data[_key])" (click)="_openMasterChild(data[_key])" class="child-toggle-link">[+]</a>
+                            <a *ngIf="_isOpen(data[_key])" (click)="_openMasterChild(data[_key])" class="child-toggle-link">[-]</a>
                         </td>
                         <td *ngIf="singleSelectEnable || multiSelectEnable" width="30px;" class="txt-center">
                             <input type="checkbox" [checked]="_isSelected(data[_key])"
@@ -83,7 +83,7 @@
                             </ng-template>
                         </td>
                     </tr>
-                    <tr [id]="_rowIdPrefix + i + '_child'" *ngIf="_enableMasterChild && data.isOpen">
+                    <tr id="row_{{i}}_child"  *ngIf="_enableMasterChild && _isOpen(data[_key])">
                         <td [attr.colspan]="_columns.length + (singleSelectEnable || multiSelectEnable ? 1 : 0) + 1">
                             <ng-container *ngTemplateOutlet="masterChildTemplate;context:{ row: data }">
                             </ng-container>

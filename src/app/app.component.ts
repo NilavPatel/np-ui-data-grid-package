@@ -1,5 +1,5 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { DataSource, CustomStore, DataTypes } from 'projects/np-ui-data-grid/src/public-api';
+import { DataSource, CustomStore, DataTypes, NpUiDataGridComponent } from 'projects/np-ui-data-grid/src/public-api';
 import { DataService } from './data.service';
 
 @Component({
@@ -14,6 +14,8 @@ export class AppComponent {
   gridDataSource1: DataSource;
   @ViewChild("actionButtonsTemplate", { static: true }) actionButtonsTemplate: TemplateRef<any>;
   @ViewChild("birthDateColumnTemplate", { static: true }) birthDateColumnTemplate: TemplateRef<any>;
+
+  @ViewChild("serverSideGrid", { static: true }) serverSideGrid: NpUiDataGridComponent;
 
   constructor(private dataService: DataService) {
   }
@@ -64,6 +66,15 @@ export class AppComponent {
     if (event == "Delete") {
       alert('Delete button click for row: ' + rowData.Id);
     }
+  }
+
+  closeAllChild(){
+    this.serverSideGrid.closeAllChild();
+  }
+
+  getSelectedRowKeys(){
+    var keys = this.serverSideGrid.getSelectedRowKeys();
+    alert(keys);
   }
 
 }

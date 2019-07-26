@@ -5,12 +5,12 @@ lodash Version 4.17.11 or newer
 
 ## features
 ````
-1. max row handling limit upto 10,00,000
-2. client/server side paging
-3. client/server side filtering
-4. client/server side sorting
-5. row selection
-6. master-child row section
+1. Max row handling limit upto 10,00,000 in client side
+2. Client/Server side paging
+3. Client/Server side filtering
+4. Client/Server side sorting
+5. Single and Multiple row selection
+6. Master-child row section
 ````
 
 ### How to add grid component in to page
@@ -61,13 +61,13 @@ lodash Version 4.17.11 or newer
 6.  [key] 
     give primary column dataField as key. (default first column will be taken as key).
 
-7. [tableId]
+7.  [tableId]
     set html attribute id to component
 
-8. [multiSelectEnable]=true OR [singleSelectEnable]=true
+8.  [multiSelectEnable]=true OR [singleSelectEnable]=true
     Will show checkboxes in first column to select single/multiple rows.
 
-9. [masterChildTemplate]="masterChildTemplate"
+9.  [masterChildTemplate]="masterChildTemplate"
     Pass TemplateRef<any> type object to above attribute to dispay master child grid.
     if masterChildTemplate is passed then +, - icons will be displayed to open/close child view.
 
@@ -83,7 +83,7 @@ lodash Version 4.17.11 or newer
 
 ### Apis
 ````
-2.  goToPage(pageNumber: number)
+1.  goToPage(pageNumber: number)
     set page given in argument as current page
 
 2.  getSelectedRowKeys()
@@ -98,13 +98,13 @@ lodash Version 4.17.11 or newer
 5.  filterByColumn(dataField: string, keyword: string, type: FilterTypes)
     filter by column name and keyword. Keyword will be based on datatype of column.
 
-6. selectAll()
+6.  selectAll()
     select all rows
 
-7. deSelectAll()
+7.  deSelectAll()
     deselect all rows
 
-8. showLoader()
+8.  showLoader()
     show loader icon into grid UI
 
 9. hideLoader()
@@ -122,12 +122,24 @@ lodash Version 4.17.11 or newer
 13. showColumnByDataField(dataField: string)
     hide column by field value
 
-14. getTotalRows
+14. getTotalRows()
     returns total rows count.
 
-15. getCurrentPageNumber
+15. getCurrentPageNumber()
     returns current page number.
 
-16. getPageSize
+16. getPageSize()
     returns page size.
+
+17. getTotalPages()
+    returns number of total pages in grid
+
+18. closeAllChild()
+    close all open childs
+
+19. getFilterColumns()
+    get filter columns list
+
+20. getSortColumns()
+    get sort columns list
 ````

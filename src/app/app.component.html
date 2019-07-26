@@ -4,8 +4,8 @@
   [multiSelectEnable]="true" [tableId]="'tblClientSide'"></np-ui-data-grid>
 
 <h1>Server Side</h1>
-<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource1" [masterChildTemplate]="masterChildTemplate"
-  [singleSelectEnable]="true"></np-ui-data-grid>
+<np-ui-data-grid #serverSideGrid [columns]="gridColumns" [dataSource]="gridDataSource1"
+  [masterChildTemplate]="masterChildTemplate" [singleSelectEnable]="true"></np-ui-data-grid>
 
 <ng-template #actionButtonsTemplate let-row="row">
   <button (click)="onActionClick(row,'Edit', $event)">Edit</button>
@@ -23,3 +23,8 @@
   <br>
   <span><b>Birth Date:</b>{{row.BirthDate | date:'dd/MM/yyyy'}}</span>
 </ng-template>
+
+<div class="btn-group">
+  <button type="button" (click)="closeAllChild()">Close All Childs</button>
+  <button type="button" (click)="getSelectedRowKeys()">Get Selected Row Keys</button>
+</div>
