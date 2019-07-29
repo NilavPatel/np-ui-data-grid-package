@@ -1,11 +1,11 @@
 # np-ui-data-grid
 
-Angular Version ~8.0.0
+Angular Version 8.0.0 or newer, 
 lodash Version 4.17.14 or newer
 
 ### Demo is given in git repository /src/app/...
 
-![image login](https://github.com/NilavPatel/np-ui-data-grid-package/blob/master/src/assets/images/image1.png)
+![image login](https://raw.githubusercontent.com/NilavPatel/np-ui-data-grid-package/master/src/assets/images/image1.png)
 
 ````
 npm i np-ui-data-grid

@@ -1,19 +1,20 @@
 {
-  "name": "np-ui-data-grid",
-  "version": "0.0.3",
-  "author": {
-    "name": "nilav patel",
-    "email": "nilavpatel1992@gmail.com",
-    "url": "http://nilavpatel.github.io"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/NilavPatel/np-ui-data-grid-package.git"
-  },
-  "private": false,
-  "peerDependencies": {
-    "@angular/common": "^8.0.0",
-    "@angular/core": "^8.0.0",
-    "lodash": "^4.17.14"
-  }
+    "name": "np-ui-data-grid",
+    "version": "1.0.1",
+    "author": {
+        "name": "nilav patel",
+        "email": "nilavpatel1992@gmail.com",
+        "url": "http://nilavpatel.github.io"
+    },
+    "keywords": ["angular", "angular 8", "table", "data grid", "data table", "custom components"],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/NilavPatel/np-ui-data-grid-package.git"
+    },
+    "private": false,
+    "peerDependencies": {
+        "@angular/common": "^8.0.0",
+        "@angular/core": "^8.0.0",
+        "lodash": "^4.17.14"
+    }
 }
