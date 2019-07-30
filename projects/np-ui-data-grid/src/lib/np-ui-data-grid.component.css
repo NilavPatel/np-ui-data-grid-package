@@ -235,6 +235,11 @@ input[type="checkbox"] {
     border-right: 1px solid lightgray;
 }
 
+.no-data-message{
+    padding:10px;
+    text-align: center;    
+}
+
 @keyframes loader-rotate {
     0% {
         transform: rotate(0);

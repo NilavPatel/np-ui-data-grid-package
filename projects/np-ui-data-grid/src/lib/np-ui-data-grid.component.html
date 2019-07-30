@@ -105,14 +105,11 @@
                         </td>
                     </tr>
                 </ng-container>
-                <tr *ngIf="_currentViewData && _currentViewData.length == 0 && !_showLoader">
-                    <td
-                        [attr.colspan]="_columns.length + (_enableMasterChild ? 1 : 0) + (singleSelectEnable || multiSelectEnable ? 1:0)">
-                        No data avaialable
-                    </td>
-                </tr>
             </tbody>
         </table>
+        <div *ngIf="_currentViewData && _currentViewData.length == 0 && !_showLoader" class="no-data-message">
+            No data avaialable.
+        </div>
     </div>
     <div [ngClass]="{'locked': _showLoader}">
         <div class="np-pagination">
