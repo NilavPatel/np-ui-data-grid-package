@@ -1,5 +1,5 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { DataSource, CustomStore, DataTypes, NpUiDataGridComponent } from 'projects/np-ui-data-grid/src/public-api';
+import { DataSource, CustomStore, DataTypes, NpUiDataGridComponent, SortDirections } from 'projects/np-ui-data-grid/src/public-api';
 import { DataService } from './data.service';
 
 @Component({
@@ -86,7 +86,14 @@ export class AppComponent {
     } else {
       this.serverSideGrid.hideColumnByIndex(1);
     }
+  }
 
+  changeColumns() {
+    var columns = this.serverSideGrid.getColumns();
+    columns[1].visible = false;
+    columns[2].visible = false;
+    columns[0].sortDirection = SortDirections.Descending;    
+    this.serverSideGrid.setColumns(columns);
   }
 
 }

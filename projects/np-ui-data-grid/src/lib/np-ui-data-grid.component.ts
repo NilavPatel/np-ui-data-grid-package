@@ -379,6 +379,14 @@ export class NpUiDataGridComponent implements OnInit {
     }
   };
 
+  _onColumnChoosing(col: Column) {
+    col.visible = !col.visible;
+  }
+
+  _toggleColumnChooser() {
+    this._isOpenColumnChooser = !this._isOpenColumnChooser;
+  }
+
   /**
    * get selected row keys array
    */
@@ -402,14 +410,6 @@ export class NpUiDataGridComponent implements OnInit {
       this._dataSource.data = this.dataSource.data;
       this._getCurrentViewData(1);
     }
-  }
-
-  _onColumnChoosing(col: Column) {
-    col.visible = !col.visible;
-  }
-
-  _toggleColumnChooser() {
-    this._isOpenColumnChooser = !this._isOpenColumnChooser;
   }
 
   /**
@@ -512,31 +512,85 @@ export class NpUiDataGridComponent implements OnInit {
     this._onFilter(filterColumn, true);
   }
 
+  /**
+   * get total row count
+   */
   getTotalRows() {
     return this._pager.totalItems;
   }
 
+  /**
+   * get current page number
+   */
   getCurrentPageNumber() {
     return this._pager.currentPage;
   }
 
+  /**
+   * get page size
+   */
   getPageSize() {
     return this._pager.pageSize;
   }
 
+  /**
+   * get total pages number
+   */
   getTotalPages() {
     return this._pager.totalPages;
   }
 
+  /**
+   * close all childs
+   */
   closeAllChild() {
     this._openRowKeys = [];
   }
 
+  /**
+   * get filter column list
+   */
   getFilterColumns() {
     return this._filterColumnList;
   }
 
+  /**
+   * get sort column list
+   */
   getSortColumns() {
     return this._sortColumnList;
+  }
+
+  /**
+   * get column list
+   */
+  getColumns() {
+    return this._columns;
+  }
+
+  /**
+   * set column list
+   * @param columns 
+   */
+  setColumns(columns: Column[]) {
+    this._columns = columns;
+    this._filterColumnList = [];
+    this._columns.forEach(element => {
+      if (element.filterType != undefined && element.filterType != null
+        && element.filterString && element.filterString.toString().length > 0) {
+        this._filterColumnList.push({ column: element.dataField, filterString: element.filterString, filterType: element.filterType, dataType: element.dataType });
+      }
+    });
+    this._sortColumnList = [];
+    this._columns.forEach(element => {
+      if (element.sortEnabled && element.sortDirection != null) {
+        this._sortColumnList.push({ column: element.dataField, sortDirection: element.sortDirection });
+      }
+    });
+    if (!this._dataSource.isServerOperations) {
+      this._filterDataSource();
+      this._sortDataSource();
+    }
+    this._getCurrentViewData(1);
   }
 }

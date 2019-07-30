@@ -5,7 +5,7 @@ lodash Version 4.17.14 or newer
 
 ### Demo is given in git repository /src/app/...
 
-![image login](https://github.com/NilavPatel/np-ui-data-grid-package/blob/master/src/assets/images/image1.png)
+![image login](https://raw.githubusercontent.com/NilavPatel/np-ui-data-grid-package/master/src/assets/images/image1.png)
 
 ````
 npm i np-ui-data-grid
@@ -19,6 +19,7 @@ npm i np-ui-data-grid
 4. Client/Server side sorting
 5. Single and Multiple row selection
 6. Master-child row section
+7. Get/Set Column configurations
 ````
 
 ### How to add grid component in to page
@@ -85,7 +86,7 @@ npm i np-ui-data-grid
 11. [showColumnChooser]=true/false
     want to show button for column chooser or not.
     if set to true then on top of the data grid one button is avalable, where list of columns will be shown with Check boxes.
-    On selecting check boxes columns will be show/hide.    
+    On selecting check boxes columns will be show/hide.
 ````
 
 ### Methods
@@ -155,4 +156,10 @@ npm i np-ui-data-grid
 
 20. getSortColumns()
     get sort columns list
+
+21. getColumns()
+    get columns list with current configurations
+
+22. setColumns(columns: Column[])
+    set columns configurations to data grid.
 ````

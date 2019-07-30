@@ -19,6 +19,7 @@ npm i np-ui-data-grid
 4. Client/Server side sorting
 5. Single and Multiple row selection
 6. Master-child row section
+7. Get/Set Column configurations
 ````
 
 ### How to add grid component in to page
@@ -155,4 +156,10 @@ npm i np-ui-data-grid
 
 20. getSortColumns()
     get sort columns list
+
+21. getColumns()
+    get columns list with current configurations
+
+22. setColumns(columns: Column[])
+    set columns configurations to data grid.
 ````
