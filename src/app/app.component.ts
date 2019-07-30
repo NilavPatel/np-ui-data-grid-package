@@ -17,6 +17,8 @@ export class AppComponent {
 
   @ViewChild("serverSideGrid", { static: true }) serverSideGrid: NpUiDataGridComponent;
 
+  _toggleColumn: boolean = true;
+
   constructor(private dataService: DataService) {
   }
 
@@ -68,13 +70,23 @@ export class AppComponent {
     }
   }
 
-  closeAllChild(){
+  closeAllChild() {
     this.serverSideGrid.closeAllChild();
   }
 
-  getSelectedRowKeys(){
+  getSelectedRowKeys() {
     var keys = this.serverSideGrid.getSelectedRowKeys();
     alert(keys);
+  }
+
+  toggleFirstColumn() {
+    this._toggleColumn = !this._toggleColumn;
+    if (this._toggleColumn) {
+      this.serverSideGrid.showColumnByIndex(1);
+    } else {
+      this.serverSideGrid.hideColumnByIndex(1);
+    }
+
   }
 
 }

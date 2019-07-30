@@ -1,6 +1,17 @@
 <div class="np-grid" [style.height.px]="height" [style.width.px]="width" [id]="tableId">
     <div *ngIf="_showLoader" class="np-loader"></div>
-    <div [style.height.px]="height - 52" style="overflow:auto" [ngClass]="{'locked': _showLoader}">
+    <div class="toolbar" *ngIf="showColumnChooser">
+        <button type="button" class="column-chooser" *ngIf="showColumnChooser" (click)="_toggleColumnChooser()">Column
+            Chooser</button>
+        <div class="column-chooser-content" *ngIf="showColumnChooser"
+            [ngClass]="{'column-chooser-content-open':_isOpenColumnChooser}">
+            <div *ngFor="let column of _columns; let j = index">
+                <label><input type="checkbox" [checked]="column.visible"
+                        (change)="_onColumnChoosing(column)">{{column.getCaption()}}</label>
+            </div>
+        </div>
+    </div>
+    <div [style.height.px]="height - 82" style="overflow:auto" [ngClass]="{'locked': _showLoader}">
         <table class="np-grid-table">
             <thead>
                 <tr class="np-grid-header-row">
@@ -11,7 +22,8 @@
                         <input class="row-selection-input" type="checkbox" *ngIf="multiSelectEnable"
                             (change)="_onSelectAll($event)" [(ngModel)]="_isAllSelected" name="chkAllSelected">
                     </th>
-                    <th *ngFor="let column of _columns; let j = index" [ngClass]="{'np-sticky-header' : isStickyHeader}"
+                    <th *ngFor="let column of _columns; let j = index"
+                        [ngClass]="{'np-sticky-header' : isStickyHeader,'hidden': column.visible == false}"
                         [style.width.px]="column.width">
                         <span [innerHTML]="column.getCaption()" (click)="_onSort(column)"
                             [ngClass]="{'cursor-pointer': column.sortEnabled}"></span>
@@ -30,7 +42,7 @@
                     <th *ngIf="singleSelectEnable || multiSelectEnable" width="30px;"
                         [ngClass]="{'np-sticky-header-filter' : isStickyHeader}" class="txt-center"> </th>
                     <th *ngFor="let column of _columns; let j = index"
-                        [ngClass]="{'np-sticky-header-filter' : isStickyHeader}">
+                        [ngClass]="{'np-sticky-header-filter' : isStickyHeader,'hidden': column.visible == false}">
                         <div *ngIf="column.filterEnabled">
                             <div class="filter-type-group">
                                 <div class="filter-type">
@@ -67,14 +79,17 @@
                 <ng-container *ngFor="let data of _currentViewData; let  i = index">
                     <tr id="row_{{i}}" (click)="_rowClick($event,data)">
                         <td *ngIf="_enableMasterChild" class="txt-center">
-                            <a *ngIf="!_isOpen(data[_key])" (click)="_openMasterChild(data[_key])" class="child-toggle-link">[+]</a>
-                            <a *ngIf="_isOpen(data[_key])" (click)="_openMasterChild(data[_key])" class="child-toggle-link">[-]</a>
+                            <a *ngIf="!_isOpen(data[_key])" (click)="_openMasterChild(data[_key])"
+                                class="child-toggle-link">[+]</a>
+                            <a *ngIf="_isOpen(data[_key])" (click)="_openMasterChild(data[_key])"
+                                class="child-toggle-link">[-]</a>
                         </td>
                         <td *ngIf="singleSelectEnable || multiSelectEnable" width="30px;" class="txt-center">
                             <input type="checkbox" [checked]="_isSelected(data[_key])"
                                 (change)="_onSelectRow(data[_key],$event)">
                         </td>
-                        <td *ngFor="let column of _columns; let j = index" (click)="_onCellClick($event, column, data)">
+                        <td *ngFor="let column of _columns; let j = index" (click)="_onCellClick($event, column, data)"
+                            [ngClass]="{'hidden': column.visible == false}">
                             <ng-container *ngIf="!column.cellTemplate; else customTemplate">
                                 {{data[column.dataField]}}
                             </ng-container>
@@ -83,7 +98,7 @@
                             </ng-template>
                         </td>
                     </tr>
-                    <tr id="row_{{i}}_child"  *ngIf="_enableMasterChild && _isOpen(data[_key])">
+                    <tr id="row_{{i}}_child" *ngIf="_enableMasterChild && _isOpen(data[_key])">
                         <td [attr.colspan]="_columns.length + (singleSelectEnable || multiSelectEnable ? 1 : 0) + 1">
                             <ng-container *ngTemplateOutlet="masterChildTemplate;context:{ row: data }">
                             </ng-container>

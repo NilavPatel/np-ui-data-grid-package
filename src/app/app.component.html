@@ -1,7 +1,7 @@
 <h1>Client Side</h1>
 <np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [multiColumnSortEnable]=true
   [masterChildTemplate]="masterChildTemplate" [height]="400" [width]="1000" [isStickyHeader]="true"
-  [multiSelectEnable]="true" [tableId]="'tblClientSide'"></np-ui-data-grid>
+  [multiSelectEnable]="true" [tableId]="'tblClientSide'" [showColumnChooser]="true"></np-ui-data-grid>
 
 <h1>Server Side</h1>
 <np-ui-data-grid #serverSideGrid [columns]="gridColumns" [dataSource]="gridDataSource1"
@@ -27,4 +27,5 @@
 <div class="btn-group">
   <button type="button" (click)="closeAllChild()">Close All Childs</button>
   <button type="button" (click)="getSelectedRowKeys()">Get Selected Row Keys</button>
+  <button type="button" (click)="toggleFirstColumn()">Toggle 1st column</button>
 </div>

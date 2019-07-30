@@ -63,6 +63,9 @@ export class NpUiDataGridComponent implements OnInit {
 
   @Input() tableId: string;
 
+  @Input() showColumnChooser: String;
+  _isOpenColumnChooser: boolean = false;
+
   constructor(private pagerService: NpPagerService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
     this._sortColumnList = [];
@@ -399,6 +402,14 @@ export class NpUiDataGridComponent implements OnInit {
       this._dataSource.data = this.dataSource.data;
       this._getCurrentViewData(1);
     }
+  }
+
+  _onColumnChoosing(col: Column) {
+    col.visible = !col.visible;
+  }
+
+  _toggleColumnChooser() {
+    this._isOpenColumnChooser = !this._isOpenColumnChooser;
   }
 
   /**

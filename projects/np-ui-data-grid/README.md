@@ -81,6 +81,11 @@ npm i np-ui-data-grid
 
 10. [isStickyHeader]=true
     If true then header will stick on top when scroll grid vertically.
+
+11. [showColumnChooser]=true/false
+    want to show button for column chooser or not.
+    if set to true then on top of the data grid one button is avalable, where list of columns will be shown with Check boxes.
+    On selecting check boxes columns will be show/hide.
 ````
 
 ### Methods
@@ -119,10 +124,10 @@ npm i np-ui-data-grid
     hide loader icon from grid UI
 
 10. showColumnByIndex(idx: number)
-    show column by index value
+    show column by index value. Start with index 0.
 
 11. hideColumnByIndex(idx: number)
-    hide column by index value
+    hide column by index value. Start with index 0.
 
 12. hideColumnByDataField(dataField: string)
     show column by field value
