@@ -1,32 +1,30 @@
 <h1>Client Side</h1>
-<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [multiColumnSortEnable]=true
-  [masterChildTemplate]="masterChildTemplate" [height]="400" [width]="1000" [isStickyHeader]="true"
-  [multiSelectEnable]="true" [tableId]="'tblClientSide'" [showColumnChooser]="true"></np-ui-data-grid>
+<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [multiColumnSortEnable]=true [masterChildTemplate]="masterChildTemplate" [height]="600" [width]="1000" [isStickyHeader]="true" [multiSelectEnable]="true" [tableId]="'tblClientSide'"
+    [showColumnChooser]="true"></np-ui-data-grid>
 
 <h1>Server Side</h1>
-<np-ui-data-grid #serverSideGrid [columns]="gridColumns" [dataSource]="gridDataSource1"
-  [masterChildTemplate]="masterChildTemplate" [singleSelectEnable]="true"></np-ui-data-grid>
+<np-ui-data-grid #serverSideGrid [columns]="gridColumns" [dataSource]="gridDataSource1" [masterChildTemplate]="masterChildTemplate" [singleSelectEnable]="true"></np-ui-data-grid>
 
 <ng-template #actionButtonsTemplate let-row="row">
-  <button (click)="onActionClick(row,'Edit', $event)">Edit</button>
-  <button (click)="onActionClick(row,'Delete', $event)">Delete</button>
+    <button (click)="onActionClick(row,'Edit', $event)">Edit</button>
+    <button (click)="onActionClick(row,'Delete', $event)">Delete</button>
 </ng-template>
 
 <ng-template #birthDateColumnTemplate let-row="row">
-  {{row.BirthDate | date:'dd/MM/yyyy'}}
+    {{row.BirthDate | date:'dd/MM/yyyy'}}
 </ng-template>
 
 <ng-template #masterChildTemplate let-row="row">
-  <span><b>Name:</b>{{row.FirstName}} {{row.LastName}}</span>
-  <br>
-  <span><b>Age:</b>{{row.Age}} years</span>
-  <br>
-  <span><b>Birth Date:</b>{{row.BirthDate | date:'dd/MM/yyyy'}}</span>
+    <span><b>Name:</b>{{row.FirstName}} {{row.LastName}}</span>
+    <br>
+    <span><b>Age:</b>{{row.Age}} years</span>
+    <br>
+    <span><b>Birth Date:</b>{{row.BirthDate | date:'dd/MM/yyyy'}}</span>
 </ng-template>
 
 <div class="btn-group">
-  <button type="button" (click)="closeAllChild()">Close All Childs</button>
-  <button type="button" (click)="getSelectedRowKeys()">Get Selected Row Keys</button>
-  <button type="button" (click)="toggleFirstColumn()">Toggle 1st column</button>
-  <button type="button" (click)="changeColumns()">Change Column list</button>
+    <button type="button" (click)="closeAllChild()">Close All Childs</button>
+    <button type="button" (click)="getSelectedRowKeys()">Get Selected Row Keys</button>
+    <button type="button" (click)="toggleFirstColumn()">Toggle 1st column</button>
+    <button type="button" (click)="changeColumns()">Change Column list</button>
 </div>

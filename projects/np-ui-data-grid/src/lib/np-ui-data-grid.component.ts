@@ -66,6 +66,8 @@ export class NpUiDataGridComponent implements OnInit {
   @Input() showColumnChooser: String;
   _isOpenColumnChooser: boolean = false;
 
+  _visibleColumnCount: number = 0;
+
   constructor(private pagerService: NpPagerService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
     this._sortColumnList = [];
@@ -129,7 +131,12 @@ export class NpUiDataGridComponent implements OnInit {
       result.push(new Column(element));
     });
     this._columns = result;
+    this._setColumnsCount();
     return;
+  }
+
+  _setColumnsCount() {
+    this._visibleColumnCount = _.filter(this._columns, function (element) { if (element.visible) { return element } }).length;
   }
 
   _onPageSizeChange() {
@@ -446,6 +453,7 @@ export class NpUiDataGridComponent implements OnInit {
    */
   hideColumnByIndex(idx: number) {
     this._columns[idx].visible = false;
+    this._setColumnsCount();
   }
 
   /**
@@ -454,6 +462,7 @@ export class NpUiDataGridComponent implements OnInit {
    */
   showColumnByIndex(idx: number) {
     this._columns[idx].visible = true;
+    this._setColumnsCount();
   }
 
   /**
@@ -466,6 +475,7 @@ export class NpUiDataGridComponent implements OnInit {
         element.visible = false;
       }
     });
+    this._setColumnsCount();
   }
 
   /**
@@ -478,6 +488,7 @@ export class NpUiDataGridComponent implements OnInit {
         element.visible = true;
       }
     });
+    this._setColumnsCount();
   }
 
   /**
@@ -592,5 +603,6 @@ export class NpUiDataGridComponent implements OnInit {
       this._sortDataSource();
     }
     this._getCurrentViewData(1);
+    this._setColumnsCount();
   }
 }

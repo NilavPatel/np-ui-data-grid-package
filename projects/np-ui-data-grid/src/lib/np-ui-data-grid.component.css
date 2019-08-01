@@ -52,7 +52,8 @@
     background-color: gray
 }
 
-th a.sort-by-asc, th a.sort-by-desc {
+th a.sort-by-asc,
+th a.sort-by-desc {
     padding-right: 18px;
     position: relative;
 }
@@ -127,6 +128,7 @@ th a.sort-by-asc, th a.sort-by-desc {
 input[type="checkbox"] {
     height: 15px;
     width: 15px;
+    cursor: pointer;
 }
 
 .child-toggle-link:hover {
@@ -167,7 +169,8 @@ input[type="checkbox"] {
     overflow: hidden;
 }
 
-.filter-text input, .filter-text select {
+.filter-text input,
+.filter-text select {
     min-height: 25px;
     float: left;
     width: 95%;
@@ -235,9 +238,17 @@ input[type="checkbox"] {
     border-right: 1px solid lightgray;
 }
 
-.no-data-message{
-    padding:10px;
-    text-align: center;    
+.no-data-message {
+    padding: 10px;
+    text-align: center;
+}
+
+.close {
+    float: right;
+}
+
+a {
+    cursor: pointer;
 }
 
 @keyframes loader-rotate {
