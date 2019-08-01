@@ -1,1 +1,52 @@
-/* You can add global styles to this file, and also import other style files */
+.btn-group {
+    padding: 10px 0px;
+}
+
+.btn-group button {
+    padding: 5px;
+    margin-right: 5px;
+}
+
+
+/* CSS to change desing of table start */
+
+.np-grid-table th,
+.np-pagination {
+    background-color: lightblue !important;
+}
+
+.np-grid-table td {
+    background-color: aliceblue !important;
+}
+
+.np-grid-table {
+    color: darkslategray !important;
+}
+
+.np-grid {
+    border-top: 1px solid darkslategray !important;
+}
+
+.np-grid-table {
+    border-right: 1px solid darkslategray !important;
+}
+
+.np-grid-table td,
+.np-grid-table th {
+    border-bottom: 1px solid darkslategray !important;
+    border-left: 1px solid darkslategray !important;
+}
+
+.toolbar {
+    background-color: lightblue !important;
+    border-bottom: 1px solid darkslategray !important;
+    border-left: 1px solid darkslategray !important;
+    border-right: 1px solid darkslategray !important;
+}
+
+.np-pagination {
+    border: 1px solid darkslategray;
+}
+
+
+/* CSS to change desing of table end */
