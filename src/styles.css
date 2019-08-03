@@ -31,6 +31,12 @@
     border-right: 1px solid darkslategray !important;
 }
 
+.np-pagination {
+    border-left: 1px solid darkslategray !important;
+    border-right: 1px solid darkslategray !important;
+    border-bottom: 1px solid darkslategray !important;
+}
+
 .np-grid-table td,
 .np-grid-table th {
     border-bottom: 1px solid darkslategray !important;
@@ -46,6 +52,11 @@
 
 .np-pagination {
     border: 1px solid darkslategray;
+}
+
+.np-loader {
+    border-top-color: lightblue !important;
+    border-bottom-color: lightblue !important;
 }
 
 

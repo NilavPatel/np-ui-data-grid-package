@@ -1,9 +1,14 @@
 # np-ui-data-grid
 
-Angular Version 8.0.0 or newer, 
+<img src="https://github.com/NilavPatel/Ng-Prime/blob/master/src/assets/images/logo-large.png" width="300" height="80">
+
+![image login](https://raw.githubusercontent.com/NilavPatel/np-ui-data-grid-package/master/src/assets/images/image1.png)
+
+Angular Version 8.0.0 or newer,   
 lodash Version 4.17.14 or newer
 
-### Demo is given in git repository /src/app/...
+### Demos are given in git repository /src/app/app.component.html...
+### CSS can be changed as per branding, check CSS at /src/app/style.css
 
 ![image login](https://raw.githubusercontent.com/NilavPatel/np-ui-data-grid-package/master/src/assets/images/image1.png)
 
@@ -11,7 +16,7 @@ lodash Version 4.17.14 or newer
 npm i np-ui-data-grid
 ````
 
-## features
+## Features
 ````
 1. Maximum row handling capacity is upto 10,00,000 in client side mode
 2. Client/Server side paging
