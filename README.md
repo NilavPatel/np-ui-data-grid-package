@@ -2,8 +2,6 @@
 
 <img src="https://github.com/NilavPatel/Ng-Prime/blob/master/src/assets/images/logo-large.png" width="300" height="80">
 
-![image login](https://raw.githubusercontent.com/NilavPatel/np-ui-data-grid-package/master/src/assets/images/image1.png)
-
 Angular Version 8.0.0 or newer,   
 lodash Version 4.17.14 or newer
 
