@@ -1,12 +1,13 @@
 {
     "name": "np-ui-data-grid",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "author": {
         "name": "nilav patel",
         "email": "nilavpatel1992@gmail.com",
         "url": "http://nilavpatel.github.io"
     },
     "keywords": ["angular", "angular 8", "table", "data grid", "data table", "custom components"],
+    "license": "MIT",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/NilavPatel/np-ui-data-grid-package.git"
