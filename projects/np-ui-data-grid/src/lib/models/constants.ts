@@ -36,11 +36,11 @@ export class Constants {
         },
         {
             name: FilterTypes.GreaterThan,
-            text: "<",
+            text: ">",
             forDataType: DataTypes.date
         }, {
             name: FilterTypes.LessThan,
-            text: ">",
+            text: "<",
             forDataType: DataTypes.date
         }, {
             name: FilterTypes.Equals,

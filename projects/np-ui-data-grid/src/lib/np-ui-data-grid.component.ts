@@ -271,7 +271,7 @@ export class NpUiDataGridComponent implements OnInit {
           });
         } else if (element.dataType == DataTypes.date) {
           data = _.filter(data, function (a) {
-            return a[element.column] > new Date(element.filterString);
+            return a[element.column].setHours(0,0,0,0) > new Date(element.filterString).setHours(0,0,0,0);
           });
         }
       } else if (element.filterType == FilterTypes.LessThan) {
@@ -281,7 +281,7 @@ export class NpUiDataGridComponent implements OnInit {
           });
         } else if (element.dataType == DataTypes.date) {
           data = _.filter(data, function (a) {
-            return a[element.column] < new Date(element.filterString);
+            return a[element.column].setHours(0,0,0,0) < new Date(element.filterString).setHours(0,0,0,0);
           });
         }
       } else if (element.filterType == FilterTypes.Equals) {
@@ -301,7 +301,7 @@ export class NpUiDataGridComponent implements OnInit {
           });
         } else if (element.dataType == DataTypes.date) {
           data = _.filter(data, function (a) {
-            return a[element.column] == new Date(element.filterString);
+            return a[element.column].setHours(0,0,0,0) == new Date(element.filterString).setHours(0,0,0,0);
           });
         }
       }
