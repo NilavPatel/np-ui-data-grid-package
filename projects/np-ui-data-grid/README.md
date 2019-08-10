@@ -91,12 +91,27 @@ npm i np-ui-data-grid
     want to show button for column chooser or not.
     if set to true then on top of the data grid one button is avalable, where list of columns will be shown with Check boxes.
     On selecting check boxes columns will be show/hide.
+
+12. [title]
+    give title to datagrid
+    type is string.
 ````
 
 ### Methods
 ````
-1.  onRowClick
-    bind on row click event
+1.  onRowClick( event )
+    bind on row click event.
+    event.data contains the data of clicked row.
+
+2.  onSelect ( event )
+    bind on row select event
+    fires when user select any row/ select all rows.
+    event.data contains the selected row key/keys.
+
+3.  onDeselect ( event )
+    bind on row de select event
+    fires when user de select any row or deselect all rows.
+    event.data contains the de selected row key/keys
 ````
 
 ### Apis

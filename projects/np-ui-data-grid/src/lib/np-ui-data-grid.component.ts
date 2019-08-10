@@ -57,6 +57,10 @@ export class NpUiDataGridComponent implements OnInit {
 
   _isAllSelected: boolean;
 
+  @Output() onSelect: EventEmitter<any> = new EventEmitter();
+
+  @Output() onDeselect: EventEmitter<any> = new EventEmitter();
+
   @Output() onRowClick: EventEmitter<any> = new EventEmitter();
 
   _dataTypes = DataTypes;
@@ -67,6 +71,8 @@ export class NpUiDataGridComponent implements OnInit {
   _isOpenColumnChooser: boolean = false;
 
   _visibleColumnCount: number = 0;
+
+  @Input() title: String = "";
 
   constructor(private pagerService: NpPagerService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
@@ -271,7 +277,7 @@ export class NpUiDataGridComponent implements OnInit {
           });
         } else if (element.dataType == DataTypes.date) {
           data = _.filter(data, function (a) {
-            return a[element.column].setHours(0,0,0,0) > new Date(element.filterString).setHours(0,0,0,0);
+            return a[element.column].setHours(0, 0, 0, 0) > new Date(element.filterString).setHours(0, 0, 0, 0);
           });
         }
       } else if (element.filterType == FilterTypes.LessThan) {
@@ -281,7 +287,7 @@ export class NpUiDataGridComponent implements OnInit {
           });
         } else if (element.dataType == DataTypes.date) {
           data = _.filter(data, function (a) {
-            return a[element.column].setHours(0,0,0,0) < new Date(element.filterString).setHours(0,0,0,0);
+            return a[element.column].setHours(0, 0, 0, 0) < new Date(element.filterString).setHours(0, 0, 0, 0);
           });
         }
       } else if (element.filterType == FilterTypes.Equals) {
@@ -301,7 +307,7 @@ export class NpUiDataGridComponent implements OnInit {
           });
         } else if (element.dataType == DataTypes.date) {
           data = _.filter(data, function (a) {
-            return a[element.column].setHours(0,0,0,0) == new Date(element.filterString).setHours(0,0,0,0);
+            return a[element.column].setHours(0, 0, 0, 0) == new Date(element.filterString).setHours(0, 0, 0, 0);
           });
         }
       }
@@ -325,14 +331,23 @@ export class NpUiDataGridComponent implements OnInit {
     }
   }
 
-  _onSelectAll(event: { currentTarget: { checked: any; }; }) {
+  _onSelectAll(event: any) {
     if (this.singleSelectEnable) {
       return;
     }
     if (event.currentTarget.checked) {
       this._selectAll();
+      if (this.onSelect != undefined) {
+        event.data = this._selectedRowKeys;
+        this.onSelect.emit(event);
+      }
     } else {
+      var deselectedRowKeys = this._selectedRowKeys;
       this._deSelectAll();
+      if (this.onDeselect != undefined) {
+        event.data = deselectedRowKeys;
+        this.onDeselect.emit(event);
+      }
     }
   }
 
@@ -356,18 +371,29 @@ export class NpUiDataGridComponent implements OnInit {
     }
   }
 
-  _onSelectRow(keyValue: any, event: { currentTarget: { checked: any; }; }) {
+  _onSelectRow(keyValue: any, event: any) {
     if (this.singleSelectEnable) {
       this._selectedRowKeys = [];
       this._selectedRowKeys.push(keyValue);
-      return;
+    } else {
+      if (event.currentTarget.checked) {
+        this._selectedRowKeys.push(keyValue);
+      } else {
+        _.remove(this._selectedRowKeys, function (n) {
+          return n == keyValue
+        });
+      }
     }
     if (event.currentTarget.checked) {
-      this._selectedRowKeys.push(keyValue);
+      if (this.onSelect != undefined) {
+        event.data = keyValue;
+        this.onSelect.emit(event);
+      }
     } else {
-      _.remove(this._selectedRowKeys, function (n) {
-        return n == keyValue
-      });
+      if (this.onDeselect != undefined) {
+        event.data = keyValue;
+        this.onDeselect.emit(event);
+      }
     }
   }
 

@@ -96,4 +96,12 @@ export class AppComponent {
     this.serverSideGrid.setColumns(columns);
   }
 
+  onSelectRow($event){
+    alert("selected rows:" + $event.data);
+  }
+
+  onDeselectRow($event){
+    alert("de selected rows:" + $event.data);
+  }
+
 }

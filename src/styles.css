@@ -59,5 +59,14 @@
     border-bottom-color: lightblue !important;
 }
 
+.np-grid-title {
+    padding: 5px;
+    font-weight: bolder;
+    background-color: lightblue !important;
+    border-bottom: 1px solid darkslategray !important;
+    border-left: 1px solid darkslategray !important;
+    border-right: 1px solid darkslategray !important;
+}
+
 
 /* CSS to change desing of table end */
