@@ -630,5 +630,7 @@ export class NpUiDataGridComponent implements OnInit {
     }
     this._getCurrentViewData(1);
     this._setColumnsCount();
+    this,this._selectedRowKeys = [];
+    this._openRowKeys = [];
   }
 }
