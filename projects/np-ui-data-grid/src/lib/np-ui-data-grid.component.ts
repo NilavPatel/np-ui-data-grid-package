@@ -414,6 +414,7 @@ export class NpUiDataGridComponent implements OnInit {
 
   _onColumnChoosing(col: Column) {
     col.visible = !col.visible;
+    this._setColumnsCount();
   }
 
   _toggleColumnChooser() {

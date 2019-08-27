@@ -140,7 +140,7 @@ npm i np-ui-data-grid
 8.  showLoader()
     show loader icon into grid UI
 
-9. hideLoader()
+9.  hideLoader()
     hide loader icon from grid UI
 
 10. showColumnByIndex(idx: number)
