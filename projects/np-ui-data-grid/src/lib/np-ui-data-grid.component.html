@@ -1,15 +1,26 @@
 <div class="np-grid" [style.height.px]="height" [style.width.px]="width" [id]="tableId">
     <div *ngIf="title.length > 0" class="np-grid-title">{{title}}</div>
     <div *ngIf="_showLoader" class="np-loader"></div>
-    <div class="toolbar" *ngIf="showColumnChooser">
-        <button type="button" class="column-chooser" *ngIf="showColumnChooser" (click)="_toggleColumnChooser()">Column
-            Chooser</button>
-        <div class="column-chooser-content" *ngIf="showColumnChooser" [ngClass]="{'column-chooser-content-open':_isOpenColumnChooser}">
-            <div><a class="close" (click)="_isOpenColumnChooser = false">X</a></div>
-            <div *ngFor="let column of _columns; let j = index">
-                <label><input type="checkbox" [checked]="column.visible"
-                        (change)="_onColumnChoosing(column)">{{column.getCaption()}}</label>
+    <div class="toolbar" *ngIf="showColumnChooser || enableStateStoring">
+        <div class="toolbar-item" *ngIf="showColumnChooser">
+            <button type="button" class="column-chooser" *ngIf="showColumnChooser" (click)="_toggleColumnChooser()">Column
+                Chooser</button>
+            <div class="column-chooser-content" *ngIf="showColumnChooser" [ngClass]="{'column-chooser-content-open':_isOpenColumnChooser}">
+                <div><a class="close" (click)="_isOpenColumnChooser = false">X</a></div>
+                <div *ngFor="let column of _columns; let j = index">
+                    <label><input type="checkbox" [checked]="column.visible"
+                            (change)="_onColumnChoosing(column)">{{column.getCaption()}}</label>
+                </div>
             </div>
+        </div>
+        <div class="toolbar-item np-state-store" *ngIf="enableStateStoring">
+            <select [(ngModel)]="_currentStateName" (change)="_loadState()">
+                <option value="">Default</option>
+                <option *ngFor="let state of _stateList" [ngValue]="state.name">{{state.name}}</option>
+            </select>
+            <button type="button" (click)="_saveState()" *ngIf="_currentStateName.length > 0">Save</button>
+            <button type="button" (click)="_deleteState()" *ngIf="_currentStateName.length > 0">Delete</button>
+            <button type="button" (click)="_addState()">Add</button>
         </div>
     </div>
     <div [style.height.px]="height - 82" style="overflow:auto" [ngClass]="{'locked': _showLoader}">
@@ -96,6 +107,7 @@
                     <option value="20">20</option>
                     <option value="50">50</option>
                 </select> of {{_total}}
+                <button type="button" class="np-button" (click)="_onRefresh()">Refresh</button>
             </div>
             <ul *ngIf="_pager.pages && _pager.pages.length">
                 <li>

@@ -1,9 +1,10 @@
 <h1>Client Side</h1>
-<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [multiColumnSortEnable]=true [masterChildTemplate]="masterChildTemplate" [height]="600" [width]="1000" [isStickyHeader]="true" [multiSelectEnable]="true" [tableId]="'tblClientSide'"
-    [showColumnChooser]="true"></np-ui-data-grid>
+<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [multiColumnSortEnable]=true [masterChildTemplate]="masterChildTemplate" [height]="600" [width]="1000" [isStickyHeader]="true" [enableStateStoring]="true" [multiSelectEnable]="true"
+    [tableId]="'tblClientSide'" [showColumnChooser]="true"></np-ui-data-grid>
 
 <h1>Server Side</h1>
-<np-ui-data-grid #serverSideGrid [columns]="gridColumns" [dataSource]="gridDataSource1" [masterChildTemplate]="masterChildTemplate" [singleSelectEnable]="true" [title]="'Server side data grid'" (onSelect)="onSelectRow($event)" (onDeselect)="onDeselectRow($event)">
+<np-ui-data-grid #serverSideGrid [columns]="gridColumns" [dataSource]="gridDataSource1" [masterChildTemplate]="masterChildTemplate" [singleSelectEnable]="true" [title]="'Server side data grid'" [enableStateStoring]="true" (onSelect)="onSelectRow($event)"
+    (onDeselect)="onDeselectRow($event)">
 </np-ui-data-grid>
 
 <ng-template #actionButtonsTemplate let-row="row">

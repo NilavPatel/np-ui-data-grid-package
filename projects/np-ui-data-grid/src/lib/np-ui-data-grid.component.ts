@@ -4,6 +4,7 @@ import { DataSource, CustomStore } from './models/data-source.model';
 import { NpPagerService, Pager } from './services/np-ui-pager.service';
 import * as _ from 'lodash';
 import { Constants, FilterTypes, DataTypes, SortDirections } from './models/constants';
+import { State } from './models/state.model';
 
 @Component({
   selector: 'np-ui-data-grid',
@@ -67,18 +68,26 @@ export class NpUiDataGridComponent implements OnInit {
 
   @Input() tableId: string;
 
-  @Input() showColumnChooser: String;
+  @Input() showColumnChooser: boolean;
   _isOpenColumnChooser: boolean = false;
 
   _visibleColumnCount: number = 0;
 
-  @Input() title: String = "";
+  @Input() title: string = "";
+
+  @Input() enableStateStoring: boolean;
+
+  _stateList: State[];
+
+  _currentStateName: string;
 
   constructor(private pagerService: NpPagerService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
     this._sortColumnList = [];
     this._filtersList = Constants.filters();
     this._filterColumnList = [];
+    this._stateList = [];
+    this._currentStateName = "";
   }
 
   ngOnInit() {
@@ -432,6 +441,7 @@ export class NpUiDataGridComponent implements OnInit {
    * reset all
    */
   reset() {
+    this._setColumns();
     this._filterColumnList = [];
     this._sortColumnList = [];
     this._selectedRowKeys = [];
@@ -603,7 +613,7 @@ export class NpUiDataGridComponent implements OnInit {
    * get column list
    */
   getColumns() {
-    return this._columns;
+    return this._getColumnsArray();
   }
 
   /**
@@ -631,7 +641,93 @@ export class NpUiDataGridComponent implements OnInit {
     }
     this._getCurrentViewData(1);
     this._setColumnsCount();
-    this,this._selectedRowKeys = [];
+    this, this._selectedRowKeys = [];
     this._openRowKeys = [];
+  }
+
+  _saveState() {
+    var columns = this._getColumnsArray();
+    var currentStateName = this._currentStateName;
+    this._stateList.forEach(function (element) {
+      if (element.name == currentStateName) {
+        element.columns = columns;
+        alert("Saved successfully.");
+      }
+    });
+  }
+
+  _addState() {
+    var name = prompt("Please enter state name", "");
+    if (name.length > 0) {
+      var columns = this._getColumnsArray();
+      this._stateList.push(new State(name, columns));
+      this._currentStateName = name;
+      alert("Saved successfully.");
+    } else {
+      alert("Name is required.")
+    }
+  }
+
+  _deleteState() {
+    var currentStateName = this._currentStateName;
+    _.remove(this._stateList, function (a) { if (a.name == currentStateName) { return true; } return false; });
+    if (this._stateList.length > 0) {
+      this._currentStateName = this._stateList[0].name;
+    } else {
+      this._currentStateName = "";
+    }
+    this._loadState();
+    alert("Deleted successfully.");
+  }
+
+  _loadState() {
+    var currentStateName = this._currentStateName;
+    if (currentStateName == "") {
+      this.reset();
+    }
+    var that = this;
+    this._stateList.forEach(function (element) {
+      if (element.name == currentStateName) {
+        var columns = [];
+        element.columns.forEach(function (col) {
+          columns.push(new Column(col));
+        });
+        that.setColumns(columns);
+      }
+    });
+  }
+
+  _getColumnsArray() {
+    var result = [];
+    this._columns.forEach(function (element) {
+      result.push(new Column(element));
+    });
+    return result;
+  }
+
+  /**
+   * get state list
+   */
+  getAllState() {
+    return this._stateList;
+  }
+
+  /**
+   * set state list
+   * @param states state array
+   */
+  setAllState(states: State[]) {
+    this._stateList = states;
+  }
+
+  /**
+   * refresh current view data only
+   */
+  refresh() {
+    this._onRefresh();
+  }
+
+  _onRefresh() {
+    this._getCurrentViewData(this._pager.currentPage);
   }
 }

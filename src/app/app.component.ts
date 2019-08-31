@@ -1,5 +1,5 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { DataSource, CustomStore, DataTypes, NpUiDataGridComponent, SortDirections } from 'projects/np-ui-data-grid/src/public-api';
+import { DataSource, CustomStore, DataTypes, NpUiDataGridComponent, SortDirections, FilterTypes, State } from 'projects/np-ui-data-grid/src/public-api';
 import { DataService } from './data.service';
 
 @Component({
@@ -54,6 +54,8 @@ export class AppComponent {
         });
       });
     }
+
+    this.setStateForServerSideGrid();
   }
 
   cellClicked(event: any, column: any, row: any) {
@@ -92,16 +94,29 @@ export class AppComponent {
     var columns = this.serverSideGrid.getColumns();
     columns[1].visible = false;
     columns[2].visible = false;
-    columns[0].sortDirection = SortDirections.Descending;    
+    columns[0].sortDirection = SortDirections.Descending;
     this.serverSideGrid.setColumns(columns);
   }
 
-  onSelectRow($event){
+  onSelectRow($event) {
     alert("selected rows:" + $event.data);
   }
 
-  onDeselectRow($event){
+  onDeselectRow($event) {
     alert("de selected rows:" + $event.data);
+  }
+
+  setStateForServerSideGrid() {
+    var columns = [
+      { dataField: "Id", visible: true, width: 100, caption: "Id", dataType: DataTypes.number, sortEnabled: true, filterEnabled: true, onCellClick: this.cellClicked },
+      { dataField: "FirstName", visible: true, width: 150, caption: "First Name", dataType: DataTypes.string, sortEnabled: true, filterEnabled: true },
+      { dataField: "LastName", visible: true, width: 150, caption: "Last Name", dataType: DataTypes.string },
+      { dataField: "BirthDate", visible: true, width: 150, caption: "Birth Date", dataType: DataTypes.date, filterEnabled: true, cellTemplate: this.birthDateColumnTemplate },
+      { dataField: "Age", visible: true, width: 100, dataType: DataTypes.number, sortEnabled: true, filterEnabled: true, styleClass: "color-red", filterString: "50", filterType: FilterTypes.GreaterThan },
+      { dataField: "Active", visible: true, width: 150, caption: "Is Active?", dataType: DataTypes.boolean, filterEnabled: true, },
+      { visible: true, width: 100, cellTemplate: this.actionButtonsTemplate }]
+    var state = new State("Age more than 50", columns);
+    this.serverSideGrid.setAllState([state]);
   }
 
 }

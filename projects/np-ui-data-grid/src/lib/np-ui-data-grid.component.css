@@ -257,6 +257,18 @@ a {
     border-right: 1px solid lightgray;
 }
 
+.toolbar-item {
+    display: inline;
+}
+
+.np-state-store {
+    float: right;
+}
+
+.np-state-store button {
+    margin-left: 5px;
+}
+
 @keyframes loader-rotate {
     0% {
         transform: rotate(0);

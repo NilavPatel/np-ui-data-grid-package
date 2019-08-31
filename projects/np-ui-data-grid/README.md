@@ -2,8 +2,10 @@
 
 <img src="https://raw.githubusercontent.com/NilavPatel/np-ui-data-grid-package/master/src/assets/images/logo-large.png" width="300" height="80">
 
+````
 Angular Version 8.0.0 or newer,   
-lodash Version 4.17.14 or newer
+lodash Version 4.17.14 or newer (if lodash is giving any refrence error then please install  @types/lodash)
+````
 
 ### Demos are given in git repository /src/app/app.component.html...
 ### [Demo](https://stackblitz.com/edit/np-ui-data-grid)
@@ -24,6 +26,7 @@ npm i np-ui-data-grid
 5. Single and Multiple row selection
 6. Master-child row section
 7. Get/Set Column configurations
+8. Store state of grid and change from dropdown
 ````
 
 ### How to add grid component in to page
@@ -95,6 +98,10 @@ npm i np-ui-data-grid
 12. [title]
     give title to datagrid
     type is string.
+
+13. [enableStateStoring]=true/false
+    enable state storing or not, default is false.
+    if state storing is enabled then only controls are visible for state storing.
 ````
 
 ### Methods
@@ -181,4 +188,14 @@ npm i np-ui-data-grid
 
 22. setColumns(columns: Column[])
     set columns configurations to data grid.
+
+23. getAllState()
+    get all state data which stored in data grid
+
+24. setAllState(states: State[])
+    set list of state to data grid.
+    parameter is array of State object.
+
+25. refresh()
+    refresh current view data only.
 ````
