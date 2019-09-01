@@ -9,7 +9,7 @@ import { State } from './models/state.model';
 @Component({
   selector: 'np-ui-data-grid',
   templateUrl: 'np-ui-data-grid.component.html',
-  styleUrls: ['np-ui-data-grid.component.css','css/np-font-embedded.css']
+  styleUrls: ['np-ui-data-grid.component.css']
 })
 export class NpUiDataGridComponent implements OnInit {
 
