@@ -273,6 +273,15 @@ a {
     text-align: right;
 }
 
+.font-no-margin::before {
+    margin: 0px !important;
+    width: 7px !important;
+}
+
+.np-grid-header {
+    padding: 0px 5px;
+}
+
 @keyframes loader-rotate {
     0% {
         transform: rotate(0);
