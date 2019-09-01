@@ -21,6 +21,7 @@ export class Column {
         cellTemplate: TemplateRef<any>;
         onCellClick: any;
         styleClass: string;
+        rightAlignText: boolean;
     }) {
         this.dataField = item.dataField;
         this.dataType = item.dataType == undefined || item.dataType == null ? DataTypes.string : item.dataType;
@@ -35,6 +36,7 @@ export class Column {
         this.cellTemplate = item.cellTemplate;
         this.onCellClick = item.onCellClick;
         this.styleClass = item.styleClass;
+        this.rightAlignText = item.rightAlignText;
     }
 
     public dataField: string;
@@ -50,6 +52,7 @@ export class Column {
     public cellTemplate: TemplateRef<any>;
     public onCellClick: any;
     public styleClass: string;
+    public rightAlignText: boolean;
 
     /**get caption for column */
     public getCaption() {

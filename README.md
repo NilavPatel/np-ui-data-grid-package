@@ -53,11 +53,13 @@ npm i np-ui-data-grid
         ...
     ]
     
-    1.1 type posible values string, number, boolean, date from 
-    1.2 dataField is name of the property from datasource array.
-    1.3 set sortEnabled and filterEnabled on column basis (default false)
-    1.4 cellTemplate : type of TemplateRef<any>, pass template to grid column, row data will be bind as let-row="row".
-    1.5 onCellClick Event : arguments click event, column which is clicked, row.
+    1.1 dataType property is for setting type of data. user DataTypes class to get possible values.( data types are string, number, boolean, date)
+    1.2 dataField is name of the property from datasource array. Needs to be same as it retrived in data source.
+    1.3 caption is for setting column header, if not set then dataField will be displayed as caption.
+    1.4 set sortEnabled and filterEnabled on column basis (default false)
+    1.5 cellTemplate : type of TemplateRef<any>, pass template to grid column, row data will be bind as let-row="row".
+    1.6 onCellClick Event : arguments click event, column which is clicked, row.
+    1.7 rightAlignText : boolean , to make text right aligned
 
 2.  [dataSource]
     dataSorce.data => Array of data (for client side only)

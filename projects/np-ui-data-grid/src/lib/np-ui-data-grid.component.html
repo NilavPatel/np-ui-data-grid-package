@@ -78,7 +78,7 @@
                         <td *ngIf="singleSelectEnable || multiSelectEnable" width="30px;" class="txt-center">
                             <input type="checkbox" [checked]="_isSelected(data[_key])" (change)="_onSelectRow(data[_key],$event)">
                         </td>
-                        <td *ngFor="let column of _columns; let j = index" (click)="_onCellClick($event, column, data)" [ngClass]="{'hidden': column.visible == false}">
+                        <td *ngFor="let column of _columns; let j = index" (click)="_onCellClick($event, column, data)" [ngClass]="{'hidden': column.visible == false, 'txt-right-align' : column.rightAlignText}" [class]="column.styleClass">
                             <ng-container *ngIf="!column.cellTemplate; else customTemplate">
                                 {{data[column.dataField]}}
                             </ng-container>

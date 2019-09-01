@@ -269,6 +269,10 @@ a {
     margin-left: 5px;
 }
 
+.txt-right-align {
+    text-align: right;
+}
+
 @keyframes loader-rotate {
     0% {
         transform: rotate(0);
