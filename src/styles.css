@@ -72,5 +72,9 @@
     border-right: 1px solid darkslategray !important;
 }
 
+.np-grid-selected td {
+    background-color: linen !important;
+}
+
 
 /* CSS to change desing of table end */

@@ -115,13 +115,12 @@ export class NpUiDataGridComponent implements OnInit {
   }
 
   _getCurrentViewData(currentPageNumber: number) {
-    if (this._dataSource.isServerOperations) {
-      this._pager = this.pagerService.getPager(this._total, currentPageNumber, this._pager.pageSize);
+    if (this._dataSource.isServerOperations) {      
       this._showLoader = true;
-      this._dataSource.load(this._pager.currentPage, this._pager.pageSize, this._sortColumnList, this._filterColumnList).then((store: CustomStore) => {
-        this._showLoader = false;
+      this._dataSource.load(currentPageNumber, this._pager.pageSize, this._sortColumnList, this._filterColumnList).then((store: CustomStore) => {
         this._currentViewData = store.data;
         this._total = store.total;
+        this._pager = this.pagerService.getPager(this._total, currentPageNumber, this._pager.pageSize);
         if (this._isAllSelected) {
           var that = this;
           this._currentViewData.forEach(function (element) {
@@ -130,6 +129,7 @@ export class NpUiDataGridComponent implements OnInit {
             }
           });
         }
+        this._showLoader = false;
       }).catch(error => {
         console.error(error);
       });
@@ -658,13 +658,14 @@ export class NpUiDataGridComponent implements OnInit {
 
   _addState() {
     var name = prompt("Please enter state name", "");
-    if (name.length > 0) {
+    if (name != undefined && name.length > 0) {
       var columns = this._getColumnsArray();
       this._stateList.push(new State(name, columns));
       this._currentStateName = name;
       alert("Saved successfully.");
-    } else {
-      alert("Name is required.")
+    }
+    if (name != undefined && name.length == 0) {
+      alert("Name is required.");
     }
   }
 

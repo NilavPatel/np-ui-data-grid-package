@@ -74,7 +74,7 @@
             </thead>
             <tbody>
                 <ng-container *ngFor="let data of _currentViewData; let  i = index">
-                    <tr id="row_{{i}}" (click)="_rowClick($event,data)">
+                    <tr id="row_{{i}}" (click)="_rowClick($event,data)" [ngClass]="{'np-grid-selected': _isSelected(data[_key])}">
                         <td *ngIf="_enableMasterChild" class="txt-center">
                             <a *ngIf="!_isOpen(data[_key])" (click)="_openMasterChild(data[_key])" class="child-toggle-link"><i class="demo-icon icon-plus"></i></a>
                             <a *ngIf="_isOpen(data[_key])" (click)="_openMasterChild(data[_key])" class="child-toggle-link"><i class="demo-icon icon-minus"></i></a>
