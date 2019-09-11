@@ -25,7 +25,7 @@
             <button type="button" title="Add state" (click)="_addState()"><i class="demo-icon icon-plus"></i></button>
         </div>
     </div>
-    <div [style.height.px]="height - 82" style="overflow:auto" [ngClass]="{'locked': _showLoader}">
+    <div [style.max-height.px]="height - 82" style="overflow:auto" [ngClass]="{'locked': _showLoader}">
         <table class="np-grid-table">
             <thead>
                 <tr class="np-grid-header-row">

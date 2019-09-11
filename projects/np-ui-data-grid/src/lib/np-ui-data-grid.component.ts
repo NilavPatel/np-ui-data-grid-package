@@ -382,8 +382,10 @@ export class NpUiDataGridComponent implements OnInit {
 
   _onSelectRow(keyValue: any, event: any) {
     if (this.singleSelectEnable) {
-      this._selectedRowKeys = [];
-      this._selectedRowKeys.push(keyValue);
+      this._selectedRowKeys = [];      
+      if (event.currentTarget.checked) {
+        this._selectedRowKeys.push(keyValue);
+      }
     } else {
       if (event.currentTarget.checked) {
         this._selectedRowKeys.push(keyValue);
