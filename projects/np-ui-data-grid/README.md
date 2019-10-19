@@ -11,11 +11,11 @@ lodash Version 4.17.14 or newer (if lodash is giving any refrence error then ple
 ### [Demo](https://stackblitz.com/edit/np-ui-data-grid)
 ### CSS can be changed as per branding, check CSS at /src/app/style.css
 
-![image login](https://raw.githubusercontent.com/NilavPatel/np-ui-data-grid-package/master/src/assets/images/image1.png)
-
 ````
 npm i np-ui-data-grid
 ````
+
+![image login](https://raw.githubusercontent.com/NilavPatel/np-ui-data-grid-package/master/src/assets/images/image1.png)
 
 ## Features
 ````

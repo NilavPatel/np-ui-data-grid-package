@@ -45,10 +45,10 @@
                     <th *ngIf="_enableMasterChild" width="30px;" [ngClass]="{'np-sticky-header-filter' : isStickyHeader}" class="txt-center"></th>
                     <th *ngIf="singleSelectEnable || multiSelectEnable" width="30px;" [ngClass]="{'np-sticky-header-filter' : isStickyHeader}" class="txt-center"> </th>
                     <th *ngFor="let column of _columns; let j = index" [ngClass]="{'np-sticky-header-filter' : isStickyHeader,'hidden': column.visible == false}">
-                        <div *ngIf="column.filterEnabled">
+                        <div class="filter-group" *ngIf="column.filterEnabled">
                             <div class="filter-type-group">
                                 <div class="filter-type">
-                                    <select [(ngModel)]="column.filterType" (change)="_onFilter(column, false)">
+                                    <select class="grid-control" [(ngModel)]="column.filterType" (change)="_onFilter(column, false)">
                                         <option
                                             *ngFor="let filterType of _filtersList | filterTypesPipe: column.dataType"
                                             [ngValue]="filterType.name" [innerText]="filterType.text"></option>
@@ -60,10 +60,10 @@
                                 </div>
                             </div>
                             <div class="filter-text">
-                                <input type="text" [(ngModel)]="column.filterString" (input)="_onFilter(column, false)" placeholder="search..." *ngIf="column.dataType == _dataTypes.string">
-                                <input type="number" [(ngModel)]="column.filterString" (input)="_onFilter(column, false)" placeholder="search..." *ngIf="column.dataType == _dataTypes.number">
-                                <input type="date" [(ngModel)]="column.filterString" (input)="_onFilter(column, false)" placeholder="search..." *ngIf="column.dataType == _dataTypes.date">
-                                <select [(ngModel)]="column.filterString" *ngIf="column.dataType == _dataTypes.boolean" (change)="_onFilter(column, false)">
+                                <input type="text" class="grid-control" [(ngModel)]="column.filterString" (input)="_onFilter(column, false)" placeholder="search..." *ngIf="column.dataType == _dataTypes.string">
+                                <input type="number" class="grid-control" [(ngModel)]="column.filterString" (input)="_onFilter(column, false)" placeholder="search..." *ngIf="column.dataType == _dataTypes.number">
+                                <input type="date" class="grid-control" [(ngModel)]="column.filterString" (input)="_onFilter(column, false)" placeholder="search..." *ngIf="column.dataType == _dataTypes.date">
+                                <select class="grid-control" [(ngModel)]="column.filterString" *ngIf="column.dataType == _dataTypes.boolean" (change)="_onFilter(column, false)">
                                     <option value="true">True</option>
                                     <option value="false">False</option>
                                 </select>
