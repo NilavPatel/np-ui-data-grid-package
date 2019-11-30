@@ -737,6 +737,13 @@ export class NpUiDataGridComponent implements OnInit {
     this._onRefresh();
   }
 
+  /**
+   * reset column configurations to initial state
+   */
+  resetColumns() {
+    this._onResetColumn();
+  }
+
   _onRefresh() {
     this._getCurrentViewData(this._pager.currentPage);
   }

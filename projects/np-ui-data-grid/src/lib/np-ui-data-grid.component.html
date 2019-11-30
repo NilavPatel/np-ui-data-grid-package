@@ -8,7 +8,7 @@
             <div class="column-chooser-content" *ngIf="showColumnChooser"
                 [ngClass]="{'column-chooser-content-open':_isOpenColumnChooser}">
                 <div>
-                    <button type="button" (click)="_onResetColumn()">Reset</button>
+                    <button type="button" (click)="_onResetColumn()"><i class="demo-icon icon-refresh"></i></button>
                     <a class="close" (click)="_isOpenColumnChooser = false"><i class="demo-icon icon-cancel"></i></a>
                 </div>
                 <div cdkDropList class="drag-list" (cdkDropListDropped)="_drop($event)">

@@ -26,7 +26,8 @@ npm i np-ui-data-grid
 5. Single and Multiple row selection
 6. Master-child row section
 7. Get/Set Column configurations
-8. Store state of grid and change from dropdown
+8. Store state of grid and change from dropdown (show/hide column, filters values and sorting is also saved in state).
+9. Column drag and drop
 ````
 
 ### How to add grid component in to page
@@ -96,6 +97,7 @@ npm i np-ui-data-grid
     want to show button for column chooser or not.
     if set to true then on top of the data grid one button is avalable, where list of columns will be shown with Check boxes.
     On selecting check boxes columns will be show/hide.
+    Column drag and drop is also given inside column chooser.
 
 12. [title]
     give title to datagrid
@@ -200,4 +202,7 @@ npm i np-ui-data-grid
 
 25. refresh()
     refresh current view data only.
+
+26. resetColumns()
+    reset column configurations to initial state
 ````
