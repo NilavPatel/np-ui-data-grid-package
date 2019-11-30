@@ -304,11 +304,11 @@ export class NpUiDataGridComponent implements OnInit {
         if (element.dataType == DataTypes.boolean) {
           if (element.filterString == "true") {
             data = _.filter(data, function (a) {
-              return a[element.column] == true;
+              return a[element.column] === true;
             });
           } else {
             data = _.filter(data, function (a) {
-              return a[element.column] == false;
+              return a[element.column] === false;
             });
           }
         } else if (element.dataType == DataTypes.number) {
@@ -366,15 +366,14 @@ export class NpUiDataGridComponent implements OnInit {
   }
 
   _selectAll() {
+    var that = this;
     if (this._dataSource.isServerOperations) {
-      this._selectedRowKeys = [];
-      var that = this;
+      this._selectedRowKeys = [];      
       this._currentViewData.forEach(function (element) {
         that._selectedRowKeys.push(element[that._key]);
       });
     } else {
-      this._selectedRowKeys = [];
-      var that = this;
+      this._selectedRowKeys = [];      
       this._dataSource.data.forEach(function (element) {
         that._selectedRowKeys.push(element[that._key]);
       });
