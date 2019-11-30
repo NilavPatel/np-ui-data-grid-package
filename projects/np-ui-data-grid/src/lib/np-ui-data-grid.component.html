@@ -3,13 +3,27 @@
     <div *ngIf="_showLoader" class="np-loader"></div>
     <div class="toolbar" *ngIf="showColumnChooser || enableStateStoring">
         <div class="toolbar-item" *ngIf="showColumnChooser">
-            <button type="button" title="Column Chooser" class="column-chooser" *ngIf="showColumnChooser" (click)="_toggleColumnChooser()"><i class="demo-icon icon-columns"></i></button>
-            <div class="column-chooser-content" *ngIf="showColumnChooser" [ngClass]="{'column-chooser-content-open':_isOpenColumnChooser}">
-                <div><a class="close" (click)="_isOpenColumnChooser = false"><i class="demo-icon icon-cancel"></i></a>
+            <button type="button" title="Column Chooser" class="column-chooser" *ngIf="showColumnChooser"
+                (click)="_toggleColumnChooser()"><i class="demo-icon icon-columns"></i></button>
+            <div class="column-chooser-content" *ngIf="showColumnChooser"
+                [ngClass]="{'column-chooser-content-open':_isOpenColumnChooser}">
+                <div>
+                    <button type="button" (click)="_onResetColumn()">Reset</button>
+                    <a class="close" (click)="_isOpenColumnChooser = false"><i class="demo-icon icon-cancel"></i></a>
                 </div>
-                <div *ngFor="let column of _columns; let j = index">
-                    <label><input type="checkbox" [checked]="column.visible"
-                            (change)="_onColumnChoosing(column)">{{column.getCaption()}}</label>
+                <div cdkDropList class="drag-list" (cdkDropListDropped)="_drop($event)">
+                    <div class="drag-box" *ngFor="let column of _columns; let j = index" cdkDrag>
+                        <label><input type="checkbox" [checked]="column.visible"
+                                (change)="_onColumnChoosing(column)">{{column.getCaption()}}</label>
+                        <div class="example-handle" cdkDragHandle>
+                            <svg width="16px" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+                                </path>
+                                <path d="M0 0h24v24H0z" fill="none"></path>
+                            </svg>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -29,26 +43,38 @@
         <table class="np-grid-table">
             <thead>
                 <tr class="np-grid-header-row">
-                    <th *ngIf="_enableMasterChild" width="30px;" [ngClass]="{'np-sticky-header' : isStickyHeader}" class="txt-center"></th>
-                    <th *ngIf="singleSelectEnable || multiSelectEnable" width="30px;" [ngClass]="{'np-sticky-header' : isStickyHeader}" class="txt-center">
-                        <input class="row-selection-input" type="checkbox" *ngIf="multiSelectEnable" (change)="_onSelectAll($event)" [(ngModel)]="_isAllSelected" name="chkAllSelected">
+                    <th *ngIf="_enableMasterChild" width="30px;" [ngClass]="{'np-sticky-header' : isStickyHeader}"
+                        class="txt-center"></th>
+                    <th *ngIf="singleSelectEnable || multiSelectEnable" width="30px;"
+                        [ngClass]="{'np-sticky-header' : isStickyHeader}" class="txt-center">
+                        <input class="row-selection-input" type="checkbox" *ngIf="multiSelectEnable"
+                            (change)="_onSelectAll($event)" [(ngModel)]="_isAllSelected" name="chkAllSelected">
                     </th>
-                    <th *ngFor="let column of _columns; let j = index" [ngClass]="{'np-sticky-header' : isStickyHeader,'hidden': column.visible == false}" [style.width.px]="column.width">
-                        <span [innerHTML]="column.getCaption()" (click)="_onSort(column)" [ngClass]="{'cursor-pointer': column.sortEnabled}" class="np-grid-header"></span>
-                        <a [ngClass]="{'icon-sort-up': column.sortDirection === 0, 'icon-sort-down': column.sortDirection === 1}" class="demo-icon" (click)="_onSort(column)">
+                    <th *ngFor="let column of _columns; let j = index"
+                        [ngClass]="{'np-sticky-header' : isStickyHeader,'hidden': column.visible == false}"
+                        [style.width.px]="column.width">
+                        <span [innerHTML]="column.getCaption()" (click)="_onSort(column)"
+                            [ngClass]="{'cursor-pointer': column.sortEnabled}" class="np-grid-header"></span>
+                        <a [ngClass]="{'icon-sort-up': column.sortDirection === 0, 'icon-sort-down': column.sortDirection === 1}"
+                            class="demo-icon" (click)="_onSort(column)">
                         </a>
-                        <a *ngIf="multiColumnSortEnable && column.sortDirection != null" (click)="_removeSortingFromColumn(column)" title="Remove sorting"><i
+                        <a *ngIf="multiColumnSortEnable && column.sortDirection != null"
+                            (click)="_removeSortingFromColumn(column)" title="Remove sorting"><i
                                 class="demo-icon icon-cancel"></i></a>
                     </th>
                 </tr>
                 <tr class="np-grid-header-row-filter">
-                    <th *ngIf="_enableMasterChild" width="30px;" [ngClass]="{'np-sticky-header-filter' : isStickyHeader}" class="txt-center"></th>
-                    <th *ngIf="singleSelectEnable || multiSelectEnable" width="30px;" [ngClass]="{'np-sticky-header-filter' : isStickyHeader}" class="txt-center"> </th>
-                    <th *ngFor="let column of _columns; let j = index" [ngClass]="{'np-sticky-header-filter' : isStickyHeader,'hidden': column.visible == false}">
+                    <th *ngIf="_enableMasterChild" width="30px;"
+                        [ngClass]="{'np-sticky-header-filter' : isStickyHeader}" class="txt-center"></th>
+                    <th *ngIf="singleSelectEnable || multiSelectEnable" width="30px;"
+                        [ngClass]="{'np-sticky-header-filter' : isStickyHeader}" class="txt-center"> </th>
+                    <th *ngFor="let column of _columns; let j = index"
+                        [ngClass]="{'np-sticky-header-filter' : isStickyHeader,'hidden': column.visible == false}">
                         <div class="filter-group" *ngIf="column.filterEnabled">
                             <div class="filter-type-group">
                                 <div class="filter-type">
-                                    <select class="grid-control" [(ngModel)]="column.filterType" (change)="_onFilter(column, false)">
+                                    <select class="grid-control" [(ngModel)]="column.filterType"
+                                        (change)="_onFilter(column, false)">
                                         <option
                                             *ngFor="let filterType of _filtersList | filterTypesPipe: column.dataType"
                                             [ngValue]="filterType.name" [innerText]="filterType.text"></option>
@@ -60,10 +86,17 @@
                                 </div>
                             </div>
                             <div class="filter-text">
-                                <input type="text" class="grid-control" [(ngModel)]="column.filterString" (input)="_onFilter(column, false)" placeholder="search..." *ngIf="column.dataType == _dataTypes.string">
-                                <input type="number" class="grid-control" [(ngModel)]="column.filterString" (input)="_onFilter(column, false)" placeholder="search..." *ngIf="column.dataType == _dataTypes.number">
-                                <input type="date" class="grid-control" [(ngModel)]="column.filterString" (input)="_onFilter(column, false)" placeholder="search..." *ngIf="column.dataType == _dataTypes.date">
-                                <select class="grid-control" [(ngModel)]="column.filterString" *ngIf="column.dataType == _dataTypes.boolean" (change)="_onFilter(column, false)">
+                                <input type="text" class="grid-control" [(ngModel)]="column.filterString"
+                                    (input)="_onFilter(column, false)" placeholder="search..."
+                                    *ngIf="column.dataType == _dataTypes.string">
+                                <input type="number" class="grid-control" [(ngModel)]="column.filterString"
+                                    (input)="_onFilter(column, false)" placeholder="search..."
+                                    *ngIf="column.dataType == _dataTypes.number">
+                                <input type="date" class="grid-control" [(ngModel)]="column.filterString"
+                                    (input)="_onFilter(column, false)" placeholder="search..."
+                                    *ngIf="column.dataType == _dataTypes.date">
+                                <select class="grid-control" [(ngModel)]="column.filterString"
+                                    *ngIf="column.dataType == _dataTypes.boolean" (change)="_onFilter(column, false)">
                                     <option value="true">True</option>
                                     <option value="false">False</option>
                                 </select>
@@ -74,24 +107,32 @@
             </thead>
             <tbody>
                 <ng-container *ngFor="let data of _currentViewData; let  i = index">
-                    <tr id="row_{{i}}" (click)="_rowClick($event,data)" [ngClass]="{'np-grid-selected': _isSelected(data[_key])}">
+                    <tr id="row_{{i}}" (click)="_rowClick($event,data)"
+                        [ngClass]="{'np-grid-selected': _isSelected(data[_key])}">
                         <td *ngIf="_enableMasterChild" class="txt-center">
-                            <a *ngIf="!_isOpen(data[_key])" (click)="_openMasterChild(data[_key])" class="child-toggle-link"><i class="demo-icon icon-plus"></i></a>
-                            <a *ngIf="_isOpen(data[_key])" (click)="_openMasterChild(data[_key])" class="child-toggle-link"><i class="demo-icon icon-minus"></i></a>
+                            <a *ngIf="!_isOpen(data[_key])" (click)="_openMasterChild(data[_key])"
+                                class="child-toggle-link"><i class="demo-icon icon-plus"></i></a>
+                            <a *ngIf="_isOpen(data[_key])" (click)="_openMasterChild(data[_key])"
+                                class="child-toggle-link"><i class="demo-icon icon-minus"></i></a>
                         </td>
                         <td *ngIf="singleSelectEnable || multiSelectEnable" width="30px;" class="txt-center">
-                            <input type="checkbox" [checked]="_isSelected(data[_key])" (change)="_onSelectRow(data[_key],$event)">
+                            <input type="checkbox" [checked]="_isSelected(data[_key])"
+                                (change)="_onSelectRow(data[_key],$event)">
                         </td>
-                        <td *ngFor="let column of _columns; let j = index" (click)="_onCellClick($event, column, data)" [ngClass]="{'hidden': column.visible == false, 'txt-right-align' : column.rightAlignText}" [class]="column.styleClass">
+                        <td *ngFor="let column of _columns; let j = index" (click)="_onCellClick($event, column, data)"
+                            [ngClass]="{'hidden': column.visible == false, 'txt-right-align' : column.rightAlignText}"
+                            [class]="column.styleClass">
                             <ng-container *ngIf="!column.cellTemplate; else customTemplate">
                                 {{data[column.dataField]}}
                             </ng-container>
-                            <ng-template #customTemplate [ngTemplateOutlet]="column.cellTemplate" [ngTemplateOutletContext]="{ row: data }">
+                            <ng-template #customTemplate [ngTemplateOutlet]="column.cellTemplate"
+                                [ngTemplateOutletContext]="{ row: data }">
                             </ng-template>
                         </td>
                     </tr>
                     <tr id="row_{{i}}_child" *ngIf="_enableMasterChild && _isOpen(data[_key])">
-                        <td [attr.colspan]="_visibleColumnCount + (singleSelectEnable || multiSelectEnable ? 1 : 0) + 1">
+                        <td
+                            [attr.colspan]="_visibleColumnCount + (singleSelectEnable || multiSelectEnable ? 1 : 0) + 1">
                             <ng-container *ngTemplateOutlet="masterChildTemplate;context:{ row: data }">
                             </ng-container>
                         </td>
@@ -116,22 +157,29 @@
             </div>
             <ul *ngIf="_pager.pages && _pager.pages.length">
                 <li>
-                    <button type="button" class="np-button" title="First page" [disabled]="_pager.currentPage === 1" (click)="_getCurrentViewData(1)"><i class="demo-icon icon-left font-no-margin"></i><i
+                    <button type="button" class="np-button" title="First page" [disabled]="_pager.currentPage === 1"
+                        (click)="_getCurrentViewData(1)"><i class="demo-icon icon-left font-no-margin"></i><i
                             class="demo-icon icon-left font-no-margin"></i></button>
                 </li>
                 <li>
-                    <button type="button" class="np-button" title="Prev page" [disabled]="_pager.currentPage === 1" (click)="_getCurrentViewData(_pager.currentPage - 1)"><i
+                    <button type="button" class="np-button" title="Prev page" [disabled]="_pager.currentPage === 1"
+                        (click)="_getCurrentViewData(_pager.currentPage - 1)"><i
                             class="demo-icon icon-left"></i></button>
                 </li>
                 <li *ngFor="let page of _pager.pages">
-                    <button type="button" class="np-button" (click)="_getCurrentViewData(page)" [ngClass]="{active:_pager.currentPage === page}">{{page}}</button>
+                    <button type="button" class="np-button" (click)="_getCurrentViewData(page)"
+                        [ngClass]="{active:_pager.currentPage === page}">{{page}}</button>
                 </li>
                 <li>
-                    <button type="button" title="Next page" class="np-button" [disabled]="_pager.currentPage === _pager.totalPages" (click)="_getCurrentViewData(_pager.currentPage + 1)"><i
+                    <button type="button" title="Next page" class="np-button"
+                        [disabled]="_pager.currentPage === _pager.totalPages"
+                        (click)="_getCurrentViewData(_pager.currentPage + 1)"><i
                             class="demo-icon icon-right"></i></button>
                 </li>
                 <li>
-                    <button type="button" title="Last page" class="np-button" [disabled]="_pager.currentPage === _pager.totalPages" (click)="_getCurrentViewData(_pager.totalPages)"><i
+                    <button type="button" title="Last page" class="np-button"
+                        [disabled]="_pager.currentPage === _pager.totalPages"
+                        (click)="_getCurrentViewData(_pager.totalPages)"><i
                             class="demo-icon icon-right font-no-margin"></i>
                         <i class="demo-icon icon-right font-no-margin"></i>
                     </button>

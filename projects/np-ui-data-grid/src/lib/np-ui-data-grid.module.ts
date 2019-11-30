@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NpPagerService } from './services/np-ui-pager.service';
 import { NpFilterTypesPipe } from './pipes/np-filter-types.pipe';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { NpFilterTypesPipe } from './pipes/np-filter-types.pipe';
   ],
   imports: [
     FormsModule,
-    BrowserModule
+    BrowserModule,
+    DragDropModule
   ],
   exports: [
     NpUiDataGridComponent

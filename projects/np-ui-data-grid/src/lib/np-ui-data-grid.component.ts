@@ -5,6 +5,7 @@ import { NpPagerService, Pager } from './services/np-ui-pager.service';
 import * as _ from 'lodash';
 import { Constants, FilterTypes, DataTypes, SortDirections } from './models/constants';
 import { State } from './models/state.model';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'np-ui-data-grid',
@@ -115,7 +116,7 @@ export class NpUiDataGridComponent implements OnInit {
   }
 
   _getCurrentViewData(currentPageNumber: number) {
-    if (this._dataSource.isServerOperations) {      
+    if (this._dataSource.isServerOperations) {
       this._showLoader = true;
       this._dataSource.load(currentPageNumber, this._pager.pageSize, this._sortColumnList, this._filterColumnList).then((store: CustomStore) => {
         this._currentViewData = store.data;
@@ -382,7 +383,7 @@ export class NpUiDataGridComponent implements OnInit {
 
   _onSelectRow(keyValue: any, event: any) {
     if (this.singleSelectEnable) {
-      this._selectedRowKeys = [];      
+      this._selectedRowKeys = [];
       if (event.currentTarget.checked) {
         this._selectedRowKeys.push(keyValue);
       }
@@ -430,6 +431,12 @@ export class NpUiDataGridComponent implements OnInit {
 
   _toggleColumnChooser() {
     this._isOpenColumnChooser = !this._isOpenColumnChooser;
+  }
+
+  _drop(event: CdkDragDrop<string[]>) {
+    this.showLoader();
+    moveItemInArray(this._columns, event.previousIndex, event.currentIndex);
+    this.hideLoader();
   }
 
   /**
@@ -732,5 +739,9 @@ export class NpUiDataGridComponent implements OnInit {
 
   _onRefresh() {
     this._getCurrentViewData(this._pager.currentPage);
+  }
+
+  _onResetColumn() {
+    this._setColumns();
   }
 }
