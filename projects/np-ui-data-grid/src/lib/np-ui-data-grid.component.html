@@ -8,8 +8,8 @@
             <div class="column-chooser-content" *ngIf="showColumnChooser"
                 [ngClass]="{'column-chooser-content-open':_isOpenColumnChooser}">
                 <div>
-                    <button type="button" (click)="_onResetColumn()"><i class="demo-icon icon-refresh"></i></button>
-                    <a class="close" (click)="_isOpenColumnChooser = false"><i class="demo-icon icon-cancel"></i></a>
+                    <button type="button" title="Reset All" (click)="_onResetColumn()"><i class="demo-icon icon-refresh"></i></button>
+                    <a class="close" title="Close" (click)="_isOpenColumnChooser = false"><i class="demo-icon icon-cancel"></i></a>
                 </div>
                 <div cdkDropList class="drag-list" (cdkDropListDropped)="_drop($event)">
                     <div class="drag-box" *ngFor="let column of _columns; let j = index" cdkDrag>

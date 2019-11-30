@@ -368,12 +368,12 @@ export class NpUiDataGridComponent implements OnInit {
   _selectAll() {
     var that = this;
     if (this._dataSource.isServerOperations) {
-      this._selectedRowKeys = [];      
+      this._selectedRowKeys = [];
       this._currentViewData.forEach(function (element) {
         that._selectedRowKeys.push(element[that._key]);
       });
     } else {
-      this._selectedRowKeys = [];      
+      this._selectedRowKeys = [];
       this._dataSource.data.forEach(function (element) {
         that._selectedRowKeys.push(element[that._key]);
       });
@@ -736,18 +736,11 @@ export class NpUiDataGridComponent implements OnInit {
     this._onRefresh();
   }
 
-  /**
-   * reset column configurations to initial state
-   */
-  resetColumns() {
-    this._onResetColumn();
-  }
-
   _onRefresh() {
     this._getCurrentViewData(this._pager.currentPage);
   }
 
   _onResetColumn() {
-    this._setColumns();
+    this.reset();
   }
 }

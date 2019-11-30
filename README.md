@@ -202,7 +202,4 @@ npm i np-ui-data-grid
 
 25. refresh()
     refresh current view data only.
-
-26. resetColumns()
-    reset column configurations to initial state
 ````
