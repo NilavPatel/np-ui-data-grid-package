@@ -3,8 +3,7 @@
 <img src="https://raw.githubusercontent.com/NilavPatel/np-ui-data-grid-package/master/src/assets/images/logo-large.png" width="300" height="80">
 
 ````
-Angular Version 8.0.0 or newer,   
-lodash Version 4.17.14 or newer (if lodash is giving any refrence error then please install  @types/lodash)
+Angular Version 8.0.0 or newer
 ````
 
 ### Demos are given in git repository /src/app/app.component.html...

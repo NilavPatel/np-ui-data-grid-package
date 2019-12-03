@@ -2,7 +2,6 @@ import { Component, OnInit, Input, SimpleChanges, TemplateRef, EventEmitter, Out
 import { Column } from './models/column.model';
 import { DataSource, CustomStore } from './models/data-source.model';
 import { NpPagerService, Pager } from './services/np-ui-pager.service';
-import * as _ from 'lodash';
 import { Constants, FilterTypes, DataTypes, SortDirections } from './models/constants';
 import { State } from './models/state.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -208,7 +207,7 @@ export class NpUiDataGridComponent implements OnInit {
 
   _sortDataSource() {
     this._sortColumnList.forEach(element => {
-      this._dataSource.data = _.orderBy(this._dataSource.data, element.column, element.sortDirection === SortDirections.Ascending ? 'asc' : 'desc');
+      this._dataSource.data = this._custSort(this._dataSource.data, element.column, element.sortDirection === SortDirections.Ascending ? 'asc' : 'desc');
     });
   }
 
@@ -234,7 +233,7 @@ export class NpUiDataGridComponent implements OnInit {
       this._resetDataSource();
       this._filterDataSource();
       this._sortColumnList.forEach(element => {
-        this._dataSource.data = _.orderBy(this._dataSource.data, element.column, element.sortDirection === SortDirections.Ascending ? 'asc' : 'desc');
+        this._dataSource.data = this._custSort(this._dataSource.data, element.column, element.sortDirection === SortDirections.Ascending ? 'asc' : 'desc');
       });
     }
     this._getCurrentViewData(1);
@@ -791,4 +790,20 @@ export class NpUiDataGridComponent implements OnInit {
   _custEndWith(value: string, searchVal: string) {
     return value.endsWith(searchVal)
   }
+
+  _custSort(arr: any[], ele: string, order: string) {
+    if (order == "desc") {
+      return arr.concat().sort(this._sortBy(ele));
+    } else {
+      return arr.concat().sort(this._sortByDesc(ele));
+    }
+  }
+
+  _sortBy = (key) => {
+    return (a, b) => (a[key] > b[key]) ? 1 : ((b[key] > a[key]) ? -1 : 0);
+  };
+
+  _sortByDesc = (key) => {
+    return (a, b) => (a[key] < b[key]) ? 1 : ((b[key] < a[key]) ? -1 : 0);
+  };
 }
