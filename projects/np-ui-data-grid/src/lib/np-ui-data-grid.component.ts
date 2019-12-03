@@ -178,9 +178,13 @@ export class NpUiDataGridComponent implements OnInit {
     column.sortDirection = sortOrder;
 
     if (this.multiColumnSortEnable) {
-      _.remove(this._sortColumnList, function (element) {
-        return element.column === column.dataField;
+      var list = [];
+      this._sortColumnList.forEach(function (element) {
+        if (element.column !== column.dataField) {
+          list.push(element);
+        }
       });
+      this._sortColumnList = list;
     }
     this._sortColumnList.push({ column: column.dataField, sortDirection: column.sortDirection });
     this._selectedRowKeys = [];
@@ -217,7 +221,15 @@ export class NpUiDataGridComponent implements OnInit {
 
   _removeSortingFromColumn(column: Column) {
     column.sortDirection = null;
-    _.remove(this._sortColumnList, function (element) { return element.column === column.dataField });
+
+    var list = [];
+    this._sortColumnList.forEach(function (element) {
+      if (element.column !== column.dataField) {
+        list.push(element);
+      }
+    });
+    this._sortColumnList = list;
+
     if (!this._dataSource.isServerOperations) {
       this._resetDataSource();
       this._filterDataSource();
@@ -337,7 +349,13 @@ export class NpUiDataGridComponent implements OnInit {
     if (idx == -1) {
       this._openRowKeys.push(keyValue)
     } else {
-      _.remove(this._openRowKeys, function (a) { return a == keyValue });
+      var list = [];
+      this._openRowKeys.forEach(function (element) {
+        if (element != keyValue) {
+          list.push(element);
+        }
+      });
+      this._openRowKeys = list;
     }
   }
 
@@ -390,9 +408,14 @@ export class NpUiDataGridComponent implements OnInit {
       if (event.currentTarget.checked) {
         this._selectedRowKeys.push(keyValue);
       } else {
-        _.remove(this._selectedRowKeys, function (n) {
-          return n == keyValue
+
+        var list = [];
+        this._selectedRowKeys.forEach(function (element) {
+          if (element != keyValue) {
+            list.push(element);
+          }
         });
+        this._selectedRowKeys = list;
       }
     }
     if (event.currentTarget.checked) {
@@ -679,7 +702,15 @@ export class NpUiDataGridComponent implements OnInit {
 
   _deleteState() {
     var currentStateName = this._currentStateName;
-    _.remove(this._stateList, function (a) { if (a.name == currentStateName) { return true; } return false; });
+
+    var list = [];
+    this._stateList.forEach(function (element) {
+      if (element.name != currentStateName) {
+        list.push(element);
+      }
+    });
+    this._stateList = list;
+    
     if (this._stateList.length > 0) {
       this._currentStateName = this._stateList[0].name;
     } else {
