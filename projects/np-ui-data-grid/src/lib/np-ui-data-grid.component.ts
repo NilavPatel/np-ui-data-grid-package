@@ -152,7 +152,7 @@ export class NpUiDataGridComponent implements OnInit {
   }
 
   _setColumnsCount() {
-    this._visibleColumnCount = _.filter(this._columns, function (element) { if (element.visible) { return element } }).length;
+    this._visibleColumnCount = this._custFilter(this._columns, function (element) { if (element.visible) { return element } }).length;
   }
 
   _onPageSizeChange() {
@@ -281,54 +281,54 @@ export class NpUiDataGridComponent implements OnInit {
     var data = this.dataSource.data;
     this._filterColumnList.forEach(element => {
       if (element.filterType == FilterTypes.StartWith) {
-        data = _.filter(data, function (a) {
+        data = this._custFilter(data, function (a) {
           return _.startsWith(a[element.column].toLowerCase(), element.filterString.toLowerCase());
         });
       } else if (element.filterType == FilterTypes.EndWith) {
-        data = _.filter(data, function (a) {
+        data = this._custFilter(data, function (a) {
           return _.endsWith(a[element.column].toLowerCase(), element.filterString.toLowerCase());
         });
       } else if (element.filterType == FilterTypes.Contains) {
-        data = _.filter(data, function (a) {
+        data = this._custFilter(data, function (a) {
           return a[element.column].toLowerCase().indexOf(element.filterString.toLowerCase()) !== -1;
         });
       } else if (element.filterType == FilterTypes.GreaterThan) {
         if (element.dataType == DataTypes.number) {
-          data = _.filter(data, function (a) {
+          data = this._custFilter(data, function (a) {
             return a[element.column] > parseInt(element.filterString);
           });
         } else if (element.dataType == DataTypes.date) {
-          data = _.filter(data, function (a) {
+          data = this._custFilter(data, function (a) {
             return a[element.column].setHours(0, 0, 0, 0) > new Date(element.filterString).setHours(0, 0, 0, 0);
           });
         }
       } else if (element.filterType == FilterTypes.LessThan) {
         if (element.dataType == DataTypes.number) {
-          data = _.filter(data, function (a) {
+          data = this._custFilter(data, function (a) {
             return a[element.column] < parseInt(element.filterString);
           });
         } else if (element.dataType == DataTypes.date) {
-          data = _.filter(data, function (a) {
+          data = this._custFilter(data, function (a) {
             return a[element.column].setHours(0, 0, 0, 0) < new Date(element.filterString).setHours(0, 0, 0, 0);
           });
         }
       } else if (element.filterType == FilterTypes.Equals) {
         if (element.dataType == DataTypes.boolean) {
           if (element.filterString == "true") {
-            data = _.filter(data, function (a) {
+            data = this._custFilter(data, function (a) {
               return a[element.column] === true;
             });
           } else {
-            data = _.filter(data, function (a) {
+            data = this._custFilter(data, function (a) {
               return a[element.column] === false;
             });
           }
         } else if (element.dataType == DataTypes.number) {
-          data = _.filter(data, function (a) {
+          data = this._custFilter(data, function (a) {
             return a[element.column] === parseInt(element.filterString);
           });
         } else if (element.dataType == DataTypes.date) {
-          data = _.filter(data, function (a) {
+          data = this._custFilter(data, function (a) {
             return a[element.column].setHours(0, 0, 0, 0) == new Date(element.filterString).setHours(0, 0, 0, 0);
           });
         }
@@ -710,7 +710,7 @@ export class NpUiDataGridComponent implements OnInit {
       }
     });
     this._stateList = list;
-    
+
     if (this._stateList.length > 0) {
       this._currentStateName = this._stateList[0].name;
     } else {
@@ -773,5 +773,9 @@ export class NpUiDataGridComponent implements OnInit {
 
   _onResetColumn() {
     this.reset();
+  }
+
+  _custFilter(arr: any[], fun: any) {
+    return arr.filter(fun);
   }
 }
