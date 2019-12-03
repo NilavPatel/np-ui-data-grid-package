@@ -279,14 +279,15 @@ export class NpUiDataGridComponent implements OnInit {
 
   _filterDataSource() {
     var data = this.dataSource.data;
+    var that = this;
     this._filterColumnList.forEach(element => {
       if (element.filterType == FilterTypes.StartWith) {
         data = this._custFilter(data, function (a) {
-          return _.startsWith(a[element.column].toLowerCase(), element.filterString.toLowerCase());
+          return that._custStartWith(a[element.column].toLowerCase(), element.filterString.toLowerCase());
         });
       } else if (element.filterType == FilterTypes.EndWith) {
         data = this._custFilter(data, function (a) {
-          return _.endsWith(a[element.column].toLowerCase(), element.filterString.toLowerCase());
+          return that._custEndWith(a[element.column].toLowerCase(), element.filterString.toLowerCase());
         });
       } else if (element.filterType == FilterTypes.Contains) {
         data = this._custFilter(data, function (a) {
@@ -779,7 +780,15 @@ export class NpUiDataGridComponent implements OnInit {
     return arr.filter(fun);
   }
 
-  _custFind(arr: any[], fun: any): any {    
+  _custFind(arr: any[], fun: any): any {
     return arr.find(fun);
+  }
+
+  _custStartWith(value: string, searchVal: string) {
+    return value.startsWith(searchVal, 0)
+  }
+
+  _custEndWith(value: string, searchVal: string) {
+    return value.endsWith(searchVal)
   }
 }
