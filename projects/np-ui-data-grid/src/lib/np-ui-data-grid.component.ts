@@ -573,7 +573,7 @@ export class NpUiDataGridComponent implements OnInit {
    * @param direction desc | asc
    */
   sortByColumn(dataField: string, direction: SortDirections) {
-    var sortColumn = _.find(this._columns, function (element: Column) { return element.dataField === dataField });
+    var sortColumn = this._custFind(this._columns, function (element: Column) { return element.dataField === dataField });
     sortColumn.sortDirection = direction;
     this._onSort(sortColumn);
   }
@@ -585,7 +585,7 @@ export class NpUiDataGridComponent implements OnInit {
    * @param type FilterTypes
    */
   filterByColumn(dataField: string, keyword: string, type: FilterTypes) {
-    var filterColumn = _.find(this._columns, function (element: Column) { return element.dataField === dataField });
+    var filterColumn = this._custFind(this._columns, function (element: Column) { return element.dataField === dataField });
     filterColumn.filterString = keyword;
     filterColumn.filterType = type;
     this._onFilter(filterColumn, true);
@@ -777,5 +777,9 @@ export class NpUiDataGridComponent implements OnInit {
 
   _custFilter(arr: any[], fun: any) {
     return arr.filter(fun);
+  }
+
+  _custFind(arr: any[], fun: any): any {    
+    return arr.find(fun);
   }
 }
