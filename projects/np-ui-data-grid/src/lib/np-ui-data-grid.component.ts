@@ -688,12 +688,11 @@ export class NpUiDataGridComponent implements OnInit {
   }
 
   _addState() {
-    var name = prompt("Please enter state name", "");
+    var name = prompt("Please enter name", "");
     if (name != undefined && name.length > 0) {
       var columns = this._getColumnsArray();
       this._stateList.push(new State(name, columns));
       this._currentStateName = name;
-      alert("Saved successfully.");
     }
     if (name != undefined && name.length == 0) {
       alert("Name is required.");
@@ -717,10 +716,9 @@ export class NpUiDataGridComponent implements OnInit {
       this._currentStateName = "";
     }
     this._loadState();
-    alert("Deleted successfully.");
   }
 
-  _loadState() {
+  private _loadState() {
     var currentStateName = this._currentStateName;
     if (currentStateName == "") {
       this.reset();
@@ -737,7 +735,7 @@ export class NpUiDataGridComponent implements OnInit {
     });
   }
 
-  _getColumnsArray() {
+  private _getColumnsArray() {
     var result = [];
     this._columns.forEach(function (element) {
       result.push(new Column(element));
@@ -775,35 +773,35 @@ export class NpUiDataGridComponent implements OnInit {
     this.reset();
   }
 
-  _custFilter(arr: any[], fun: any) {
+  private _custFilter(arr: any[], fun: any) {
     return arr.filter(fun);
   }
 
-  _custFind(arr: any[], fun: any): any {
+  private _custFind(arr: any[], fun: any): any {
     return arr.find(fun);
   }
 
-  _custStartWith(value: string, searchVal: string) {
+  private _custStartWith(value: string, searchVal: string) {
     return value.startsWith(searchVal, 0)
   }
 
-  _custEndWith(value: string, searchVal: string) {
+  private _custEndWith(value: string, searchVal: string) {
     return value.endsWith(searchVal)
   }
 
-  _custSort(arr: any[], ele: string, order: string) {
+  private _custSort(arr: any[], ele: string, order: string) {
     if (order == "desc") {
-      return arr.concat().sort(this._sortBy(ele));
-    } else {
       return arr.concat().sort(this._sortByDesc(ele));
+    } else {
+      return arr.concat().sort(this._sortBy(ele));
     }
   }
 
-  _sortBy = (key) => {
+  private _sortBy = (key) => {
     return (a, b) => (a[key] > b[key]) ? 1 : ((b[key] > a[key]) ? -1 : 0);
   };
 
-  _sortByDesc = (key) => {
+  private _sortByDesc = (key) => {
     return (a, b) => (a[key] < b[key]) ? 1 : ((b[key] < a[key]) ? -1 : 0);
   };
 }
