@@ -718,7 +718,7 @@ export class NpUiDataGridComponent implements OnInit {
     this._loadState();
   }
 
-  private _loadState() {
+  _loadState() {
     var currentStateName = this._currentStateName;
     if (currentStateName == "") {
       this.reset();
