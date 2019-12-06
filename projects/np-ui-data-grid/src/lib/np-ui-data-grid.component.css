@@ -12,15 +12,17 @@
     border-right: 1px solid lightgray;
 }
 
-.np-grid-table td {
+.np-grid-table thead th {
     background-color: white;
-    padding: 5px 10px;
+}
+
+.np-grid-table td {
+    padding: 5px;
     border-bottom: 1px solid lightgray;
     border-left: 1px solid lightgray;
 }
 
 .np-grid-table th {
-    background-color: white;
     padding: 5px;
     border-bottom: 1px solid lightgray;
     border-left: 1px solid lightgray;
@@ -32,7 +34,8 @@
 
 .np-pagination ul {
     list-style: none !important;
-    float: right;
+    float: left;
+    padding: 0px;
 }
 
 .np-pagination ul li {
@@ -41,7 +44,7 @@
 }
 
 .div-page-size {
-    float: left;
+    float: right;
 }
 
 .div-page-size input {
@@ -49,7 +52,7 @@
 }
 
 .active {
-    background-color: gray
+    background-color: lightgray
 }
 
 th a.sort-by-asc, th a.sort-by-desc {
@@ -80,10 +83,16 @@ th a.sort-by-asc, th a.sort-by-desc {
 }
 
 .np-pagination {
-    min-height: 50px;
+    height: 50px;
     overflow: auto;
-    border: 1px solid lightgray;
-    background-color: white;
+    min-width: 800px;
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+}
+
+.np-pagination-container {
+    overflow: auto;
 }
 
 .np-pagination .div-page-size {
@@ -108,8 +117,8 @@ th a.sort-by-asc, th a.sort-by-desc {
 
 .np-button {
     height: 30px;
-    background-color: white;
     border: 1px solid lightgray;
+    cursor: pointer;
 }
 
 .div-page-size select {
@@ -160,7 +169,7 @@ input[type="checkbox"] {
 .grid-control {
     width: 100%;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 1px solid lightgray;
     box-sizing: border-box;
     padding: 4px;
 }
@@ -173,8 +182,6 @@ input[type="checkbox"] {
     width: 56px;
     height: 56px;
     border: 8px solid lightgray;
-    border-top-color: black;
-    border-bottom-color: black;
     border-radius: 50%;
     position: sticky;
     animation: loader-rotate 1s linear infinite;
@@ -204,11 +211,11 @@ input[type="checkbox"] {
 .column-chooser-content {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
     min-width: 160px;
     border: 1px solid lightgray;
     padding: 12px 16px;
     z-index: 1006;
+    background-color: white;
 }
 
 .column-chooser-content-open {
@@ -220,11 +227,18 @@ input[type="checkbox"] {
 }
 
 .toolbar {
-    height: 25px;
+    height: 30px;
     padding: 2px;
     border-bottom: 1px solid lightgray;
     border-left: 1px solid lightgray;
     border-right: 1px solid lightgray;
+}
+
+.np-state-select {
+    min-width: 100px;
+    border: 1px solid lightgray;
+    box-sizing: border-box;
+    padding: 4px;
 }
 
 .no-data-message {
@@ -241,6 +255,8 @@ a {
 }
 
 .np-grid-title {
+    height: 20px;
+    padding: 2px;
     border-bottom: 1px solid lightgray;
     border-left: 1px solid lightgray;
     border-right: 1px solid lightgray;
@@ -421,14 +437,14 @@ a {
 /* '' */
 
 .drag-list {
-    border: solid 1px #ccc;
+    border: solid 1px lightgray;
     min-width: 200px;
     display: block;
     overflow: auto;
 }
 
 .drag-box {
-    border-bottom: solid 1px #ccc;
+    border-bottom: solid 1px lightgray;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -455,3 +471,24 @@ a {
 .drag-list.cdk-drop-list-dragging .drag-box:not(.cdk-drag-placeholder) {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+
+.np-table-container {
+    overflow: auto;
+}
+
+@media (max-width: 767px) {
+    .np-state-select {
+        width: 148px;
+    }
+    .np-grid-title {
+        overflow: hidden;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {}
+
+@media (min-width: 992px) and (max-width: 1199px) {}
+
+@media (min-width: 1200px) {}
+
+@media only screen and (max-width: 767px) and (min-width: 150px) {}

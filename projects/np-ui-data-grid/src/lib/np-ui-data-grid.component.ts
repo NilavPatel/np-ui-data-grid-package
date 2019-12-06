@@ -99,6 +99,9 @@ export class NpUiDataGridComponent implements OnInit {
     } else {
       this._key = this._columns[0].dataField;
     }
+    if (this.tableId == undefined) {
+      this.tableId = "tbl-" + Math.floor(Math.random() * 6 + 1);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {

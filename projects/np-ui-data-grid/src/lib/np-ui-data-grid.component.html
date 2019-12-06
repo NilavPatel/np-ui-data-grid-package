@@ -1,21 +1,23 @@
-<div class="np-grid" [style.height.px]="height" [style.width.px]="width" [id]="tableId">
+<div class="np-grid" [style.max-height.px]="height - 1" [style.max-width.px]="width" [id]="tableId">
     <div *ngIf="title.length > 0" class="np-grid-title">{{title}}</div>
     <div *ngIf="_showLoader" class="np-loader"></div>
     <div class="toolbar" *ngIf="showColumnChooser || enableStateStoring">
         <div class="toolbar-item" *ngIf="showColumnChooser">
-            <button type="button" title="Column Chooser" class="column-chooser" *ngIf="showColumnChooser"
+            <button type="button" title="Column Chooser" class="np-button column-chooser" *ngIf="showColumnChooser"
                 (click)="_toggleColumnChooser()"><i class="demo-icon icon-columns"></i></button>
             <div class="column-chooser-content" *ngIf="showColumnChooser"
                 [ngClass]="{'column-chooser-content-open':_isOpenColumnChooser}">
                 <div>
-                    <button type="button" title="Reset All" (click)="_onResetColumn()"><i class="demo-icon icon-refresh"></i></button>
-                    <a class="close" title="Close" (click)="_isOpenColumnChooser = false"><i class="demo-icon icon-cancel"></i></a>
+                    <button type="button" class="np-button" title="Reset All" (click)="_onResetColumn()"><i
+                            class="demo-icon icon-refresh"></i></button>
+                    <a class="close" title="Close" (click)="_isOpenColumnChooser = false"><i
+                            class="demo-icon icon-cancel"></i></a>
                 </div>
                 <div cdkDropList class="drag-list" (cdkDropListDropped)="_drop($event)">
                     <div class="drag-box" *ngFor="let column of _columns; let j = index" cdkDrag>
                         <label><input type="checkbox" [checked]="column.visible"
                                 (change)="_onColumnChoosing(column)">{{column.getCaption()}}</label>
-                        <div class="example-handle" cdkDragHandle>
+                        <div class="example-handle">
                             <svg width="16px" fill="currentColor" viewBox="0 0 24 24">
                                 <path
                                     d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
@@ -28,18 +30,19 @@
             </div>
         </div>
         <div class="toolbar-item np-state-store" *ngIf="enableStateStoring">
-            <select [(ngModel)]="_currentStateName" (change)="_loadState()">
+            <select class="np-state-select" [(ngModel)]="_currentStateName" (change)="_loadState()">
                 <option value="">Default</option>
                 <option *ngFor="let state of _stateList" [ngValue]="state.name">{{state.name}}</option>
             </select>
-            <button type="button" title="Save state" (click)="_saveState()" *ngIf="_currentStateName.length > 0"><i
-                    class="demo-icon icon-save"></i></button>
-            <button type="button" title="Delete state" (click)="_deleteState()" *ngIf="_currentStateName.length > 0"><i
-                    class="demo-icon icon-trash"></i></button>
-            <button type="button" title="Add state" (click)="_addState()"><i class="demo-icon icon-plus"></i></button>
+            <button class="np-button" type="button" title="Save state" (click)="_saveState()"
+                *ngIf="_currentStateName.length > 0"><i class="demo-icon icon-save"></i></button>
+            <button class="np-button" type="button" title="Delete state" (click)="_deleteState()"
+                *ngIf="_currentStateName.length > 0"><i class="demo-icon icon-trash"></i></button>
+            <button class="np-button" type="button" title="Add state" (click)="_addState()"><i
+                    class="demo-icon icon-plus"></i></button>
         </div>
     </div>
-    <div [style.max-height.px]="height - 111" style="overflow:auto" [ngClass]="{'locked': _showLoader}">
+    <div [style.max-height.px]="height - 112" [ngClass]="{'locked': _showLoader}" class="np-table-container">
         <table class="np-grid-table">
             <thead>
                 <tr class="np-grid-header-row">
@@ -87,13 +90,13 @@
                             </div>
                             <div class="filter-text">
                                 <input type="text" class="grid-control" [(ngModel)]="column.filterString"
-                                    (input)="_onFilter(column, false)" placeholder="search..."
+                                    (input)="_onFilter(column, false)" placeholder="Search..."
                                     *ngIf="column.dataType == _dataTypes.string">
                                 <input type="number" class="grid-control" [(ngModel)]="column.filterString"
-                                    (input)="_onFilter(column, false)" placeholder="search..."
+                                    (input)="_onFilter(column, false)" placeholder="Search..."
                                     *ngIf="column.dataType == _dataTypes.number">
                                 <input type="date" class="grid-control" [(ngModel)]="column.filterString"
-                                    (input)="_onFilter(column, false)" placeholder="search..."
+                                    (input)="_onFilter(column, false)" placeholder="Search..."
                                     *ngIf="column.dataType == _dataTypes.date">
                                 <select class="grid-control" [(ngModel)]="column.filterString"
                                     *ngIf="column.dataType == _dataTypes.boolean" (change)="_onFilter(column, false)">
@@ -144,17 +147,8 @@
             No data avaialable.
         </div>
     </div>
-    <div [ngClass]="{'locked': _showLoader}">
+    <div [ngClass]="{'locked': _showLoader}" class="np-pagination-container">
         <div class="np-pagination">
-            <div class="div-page-size">
-                <select [(ngModel)]="_pager.pageSize" (change)="_onPageSizeChange()">
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="50">50</option>
-                </select> of {{_total}}
-                <button type="button" title="Refresh" class="np-button" (click)="_onRefresh()"><i
-                        class="demo-icon icon-refresh"></i></button>
-            </div>
             <ul *ngIf="_pager.pages && _pager.pages.length">
                 <li>
                     <button type="button" class="np-button" title="First page" [disabled]="_pager.currentPage === 1"
@@ -185,6 +179,16 @@
                     </button>
                 </li>
             </ul>
+            <div class="div-page-size">
+                <select [(ngModel)]="_pager.pageSize" (change)="_onPageSizeChange()">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                </select> of {{_total}}
+                <button type="button" title="Refresh" class="np-button" (click)="_onRefresh()"><i
+                        class="demo-icon icon-refresh"></i></button>
+            </div>
+
         </div>
     </div>
 </div>
