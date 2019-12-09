@@ -119,6 +119,7 @@ th a.sort-by-asc, th a.sort-by-desc {
     height: 30px;
     border: 1px solid lightgray;
     cursor: pointer;
+    background-color: white;
 }
 
 .div-page-size select {
@@ -127,6 +128,7 @@ th a.sort-by-asc, th a.sort-by-desc {
 
 .np-button.active {
     background-color: lightgray;
+    cursor: not-allowed;
 }
 
 input[type="checkbox"] {
@@ -172,6 +174,7 @@ input[type="checkbox"] {
     border: 1px solid lightgray;
     box-sizing: border-box;
     padding: 4px;
+    height: 26px;
 }
 
 .txt-center {
@@ -228,6 +231,7 @@ input[type="checkbox"] {
 
 .toolbar {
     height: 30px;
+    min-width: 300px;
     padding: 2px;
     border-bottom: 1px solid lightgray;
     border-left: 1px solid lightgray;
@@ -239,6 +243,7 @@ input[type="checkbox"] {
     border: 1px solid lightgray;
     box-sizing: border-box;
     padding: 4px;
+    height: 30px;
 }
 
 .no-data-message {

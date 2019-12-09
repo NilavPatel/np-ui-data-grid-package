@@ -84,9 +84,9 @@ export class AppComponent {
   toggleFirstColumn() {
     this._toggleColumn = !this._toggleColumn;
     if (this._toggleColumn) {
-      this.serverSideGrid.showColumnByIndex(1);
+      this.serverSideGrid.showColumnByIndex(0);
     } else {
-      this.serverSideGrid.hideColumnByIndex(1);
+      this.serverSideGrid.hideColumnByIndex(0);
     }
   }
 
