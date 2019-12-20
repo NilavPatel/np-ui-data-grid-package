@@ -3,18 +3,15 @@
 <img src="https://raw.githubusercontent.com/NilavPatel/np-ui-data-grid-package/master/src/assets/images/logo-large.png" width="300" height="80">
 
 ````
-Angular Version 8.0.0 or newer
+Data grid for Angular 8 and 8+
 ````
 
-### Demos are given in git repository /src/app/app.component.html...
-### [Demo](https://stackblitz.com/edit/np-ui-data-grid)
-### CSS can be changed as per branding, check CSS at /src/app/style.css
+## [Demo](https://stackblitz.com/edit/np-ui-data-grid)
 
+## NPM
 ````
 npm i np-ui-data-grid
 ````
-
-![image login](https://raw.githubusercontent.com/NilavPatel/np-ui-data-grid-package/master/src/assets/images/image1.png)
 
 ## Features
 ````
@@ -29,7 +26,7 @@ npm i np-ui-data-grid
 9. Column drag and drop
 ````
 
-### How to add grid component in to page
+## HTML
 ````
 <np-ui-data-grid 
     [columns]="gridColumns" 
@@ -43,7 +40,7 @@ npm i np-ui-data-grid
 </np-ui-data-grid>
 ````
 
-### Properties
+## Properties
 ````
 1.  [columns]    
 
@@ -107,24 +104,7 @@ npm i np-ui-data-grid
     if state storing is enabled then only controls are visible for state storing.
 ````
 
-### Methods
-````
-1.  onRowClick( event )
-    bind on row click event.
-    event.data contains the data of clicked row.
-
-2.  onSelect ( event )
-    bind on row select event
-    fires when user select any row/ select all rows.
-    event.data contains the selected row key/keys.
-
-3.  onDeselect ( event )
-    bind on row de select event
-    fires when user de select any row or deselect all rows.
-    event.data contains the de selected row key/keys
-````
-
-### Apis
+## Apis
 ````
 1.  goToPage(pageNumber: number)
     set page given in argument as current page
@@ -201,4 +181,21 @@ npm i np-ui-data-grid
 
 25. refresh()
     refresh current view data only.
+````
+
+## Methods
+````
+1.  onRowClick( event )
+    bind on row click event.
+    event.data contains the data of clicked row.
+
+2.  onSelect ( event )
+    bind on row select event
+    fires when user select any row/ select all rows.
+    event.data contains the selected row key/keys.
+
+3.  onDeselect ( event )
+    bind on row de select event
+    fires when user de select any row or deselect all rows.
+    event.data contains the de selected row key/keys
 ````
