@@ -199,3 +199,11 @@ npm i np-ui-data-grid
     fires when user de select any row or deselect all rows.
     event.data contains the de selected row key/keys
 ````
+
+## All np-ui packages for Angular
+````
+1. [Data grid](https://www.npmjs.com/package/np-ui-data-grid)
+2. [Date picker](https://www.npmjs.com/package/np-ui-date-picker)
+3. [Time picker](https://www.npmjs.com/package/np-ui-time-picker)
+4. [Color picker](https://www.npmjs.com/package/np-ui-color-picker)
+````
