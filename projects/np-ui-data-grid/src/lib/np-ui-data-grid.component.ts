@@ -81,6 +81,8 @@ export class NpUiDataGridComponent implements OnInit {
 
   _currentStateName: string;
 
+  _isFilterAvailable: boolean;
+
   constructor(private pagerService: NpPagerService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
     this._sortColumnList = [];
@@ -88,6 +90,7 @@ export class NpUiDataGridComponent implements OnInit {
     this._filterColumnList = [];
     this._stateList = [];
     this._currentStateName = "";
+    this._isFilterAvailable = false;
   }
 
   ngOnInit() {
@@ -154,7 +157,8 @@ export class NpUiDataGridComponent implements OnInit {
   }
 
   _setColumnsCount() {
-    this._visibleColumnCount = this._custFilter(this._columns, function (element) { if (element.visible) { return element } }).length;
+    this._visibleColumnCount = this._custFilter(this._columns, function (element) { if (element.visible == true) { return element } }).length;
+    this._isFilterAvailable = this._custFilter(this._columns, function (element) { if (element.filterEnabled == true && element.visible == true) { return element } }).length > 0;
   }
 
   _onPageSizeChange() {

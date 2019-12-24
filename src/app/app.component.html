@@ -1,45 +1,45 @@
 <div>
-    <legend>1. Client side data grid example</legend>
-    <fieldset>
-        <np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [multiColumnSortEnable]=true
-            [masterChildTemplate]="masterChildTemplate" [height]="600" [width]="1000" [isStickyHeader]="true"
-            [enableStateStoring]="true" [multiSelectEnable]="true" [tableId]="'tblClientSide'"
-            [showColumnChooser]="true" [title]="'Client side data grid'">
-        </np-ui-data-grid>
-    </fieldset>
+	<fieldset>
+		<legend>1. Client side data grid example</legend>
+		<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [multiColumnSortEnable]=true
+			[masterChildTemplate]="masterChildTemplate" [height]="600" [width]="1000" [isStickyHeader]="true"
+			[enableStateStoring]="true" [multiSelectEnable]="true" [tableId]="'tblClientSide'"
+			[showColumnChooser]="true" [title]="'Client side data grid'">
+		</np-ui-data-grid>
+	</fieldset>
 </div>
 
 <div>
-    <legend>2. Server side data grid example</legend>
-    <fieldset>
-        <np-ui-data-grid #serverSideGrid [columns]="gridColumns" [dataSource]="gridDataSource1"
-            [masterChildTemplate]="masterChildTemplate" [singleSelectEnable]="true" [title]="'Server side data grid'"
-            [showColumnChooser]="true" [enableStateStoring]="true" (onSelect)="onSelectRow($event)"
-            (onDeselect)="onDeselectRow($event)">
-        </np-ui-data-grid>
+	<fieldset>
+		<legend>2. Server side data grid example</legend>
+		<np-ui-data-grid #serverSideGrid [columns]="gridColumns" [dataSource]="gridDataSource1"
+			[masterChildTemplate]="masterChildTemplate" [singleSelectEnable]="true" [title]="'Server side data grid'"
+			[showColumnChooser]="true" [enableStateStoring]="true" (onSelect)="onSelectRow($event)"
+			(onDeselect)="onDeselectRow($event)">
+		</np-ui-data-grid>
 
-        <div class="btn-group">
-            <button type="button" (click)="closeAllChild()">Close All Childs</button>
-            <button type="button" (click)="getSelectedRowKeys()">Get Selected Row Keys</button>
-            <button type="button" (click)="toggleFirstColumn()">Toggle 1st column</button>
-            <button type="button" (click)="changeColumns()">Change Column list</button>
-        </div>
-    </fieldset>
+		<div class="btn-group">
+			<button type="button" (click)="closeAllChild()">Close All Childs</button>
+			<button type="button" (click)="getSelectedRowKeys()">Get Selected Row Keys</button>
+			<button type="button" (click)="toggleFirstColumn()">Toggle 1st column</button>
+			<button type="button" (click)="changeColumns()">Change Column list</button>
+		</div>
+	</fieldset>
 </div>
 
 <ng-template #actionButtonsTemplate let-row="row">
-    <button (click)="onActionClick(row,'Edit', $event)">Edit</button>
-    <button (click)="onActionClick(row,'Delete', $event)">Delete</button>
+	<button (click)="onActionClick(row,'Edit', $event)">Edit</button>
+	<button (click)="onActionClick(row,'Delete', $event)">Delete</button>
 </ng-template>
 
 <ng-template #birthDateColumnTemplate let-row="row">
-    {{row.BirthDate | date:'dd/MM/yyyy'}}
+	{{row.BirthDate | date:'dd/MM/yyyy'}}
 </ng-template>
 
 <ng-template #masterChildTemplate let-row="row">
-    <span><b>Name:</b>{{row.FirstName}} {{row.LastName}}</span>
-    <br>
-    <span><b>Age:</b>{{row.Age}} years</span>
-    <br>
-    <span><b>Birth Date:</b>{{row.BirthDate | date:'dd/MM/yyyy'}}</span>
+	<span><b>Name:</b>{{row.FirstName}} {{row.LastName}}</span>
+	<br>
+	<span><b>Age:</b>{{row.Age}} years</span>
+	<br>
+	<span><b>Birth Date:</b>{{row.BirthDate | date:'dd/MM/yyyy'}}</span>
 </ng-template>
