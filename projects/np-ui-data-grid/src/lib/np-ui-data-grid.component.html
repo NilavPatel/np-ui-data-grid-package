@@ -1,4 +1,4 @@
-<div class="np-grid" [style.max-height.px]="height - 1" [style.max-width.px]="width" [id]="tableId">
+<div class="np-grid" [style.max-height.px]="height" [style.max-width.px]="width" [id]="tableId">
     <div *ngIf="title.length > 0" class="np-grid-title">{{title}}</div>
     <div *ngIf="_showLoader" class="np-loader"></div>
     <div class="toolbar" *ngIf="showColumnChooser || enableStateStoring">
