@@ -146,7 +146,7 @@
             </tbody>
         </table>
         <div *ngIf="_currentViewData && _currentViewData.length == 0 && !_showLoader" class="no-data-message">
-            No data avaialable.
+            {{noDataMessage}}
         </div>
     </div>
     <div [ngClass]="{'locked': _showLoader}" class="np-pagination-container">

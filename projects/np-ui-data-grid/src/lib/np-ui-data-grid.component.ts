@@ -83,6 +83,8 @@ export class NpUiDataGridComponent implements OnInit {
 
   _isFilterAvailable: boolean;
 
+  @Input() noDataMessage: string = "No Data Found.";
+
   constructor(private pagerService: NpPagerService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
     this._sortColumnList = [];

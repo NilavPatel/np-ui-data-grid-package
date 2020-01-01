@@ -1,10 +1,10 @@
 # np-ui-data-grid
 
-<img src="https://raw.githubusercontent.com/NilavPatel/np-ui-data-grid-package/master/src/assets/images/logo-large.png" width="300" height="80">
-
 ````
 Data grid for Angular 8 and 8+
 ````
+
+<img src="https://raw.githubusercontent.com/NilavPatel/np-ui-data-grid-package/master/src/assets/images/logo-large.png" width="300" height="80">
 
 ## [Demo](https://stackblitz.com/edit/np-ui-data-grid)
 
@@ -102,6 +102,10 @@ npm i np-ui-data-grid
 13. [enableStateStoring]=true/false
     enable state storing or not, default is false.
     if state storing is enabled then only controls are visible for state storing.
+
+14. [noDataMessage] : string
+    Message will be displayed if no data found for data grid.
+    Default value is "No Data Found."
 ````
 
 ## Apis
