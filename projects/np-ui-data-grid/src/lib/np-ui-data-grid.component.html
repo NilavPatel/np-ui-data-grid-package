@@ -50,7 +50,7 @@
                         class="txt-center"></th>
                     <th *ngIf="singleSelectEnable || multiSelectEnable" width="30px;"
                         [ngClass]="{'np-sticky-header' : isStickyHeader}" class="txt-center">
-                        <input class="row-selection-input" type="checkbox" *ngIf="multiSelectEnable"
+                        <input class="row-selection-input" type="checkbox" *ngIf="multiSelectEnable" title="Select/Unselect All"
                             (change)="_onSelectAll($event)" [(ngModel)]="_isAllSelected" name="chkAllSelected">
                     </th>
                     <th *ngFor="let column of _columns; let j = index"
@@ -78,6 +78,7 @@
                                 <div class="filter-type">
                                     <select class="grid-control" [(ngModel)]="column.filterType"
                                         (change)="_onFilter(column, false)">
+                                        <option [value]="undefined" disabled hidden>Select</option>
                                         <option
                                             *ngFor="let filterType of _filtersList | filterTypesPipe: column.dataType"
                                             [ngValue]="filterType.name" [innerText]="filterType.text"></option>
@@ -100,6 +101,7 @@
                                     *ngIf="column.dataType == _dataTypes.date">
                                 <select class="grid-control" [(ngModel)]="column.filterString"
                                     *ngIf="column.dataType == _dataTypes.boolean" (change)="_onFilter(column, false)">
+                                    <option [value]="undefined" disabled hidden>Select</option>
                                     <option value="true">True</option>
                                     <option value="false">False</option>
                                 </select>
@@ -180,11 +182,8 @@
                 </li>
             </ul>
             <div class="div-page-size">
-                <select [(ngModel)]="_pager.pageSize" (change)="_onPageSizeChange()">
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="50">50</option>
-                </select> of {{_total}}
+                <input type="number" class="grid-control" [(ngModel)]="_pager.pageSize" (change)="_onPageSizeChange()">
+                of {{_total}}
                 <button type="button" title="Refresh" class="np-button" (click)="_onRefresh()"><i
                         class="demo-icon icon-refresh"></i></button>
             </div>

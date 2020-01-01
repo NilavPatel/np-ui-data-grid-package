@@ -346,8 +346,8 @@ export class NpUiDataGridComponent implements OnInit {
   }
 
   _removeFilterStringFromColumn(column: Column) {
-    column.filterString = null;
-    column.filterType = null;
+    column.filterString = undefined;
+    column.filterType = undefined;
     this._onFilter(column, true);
   }
 
