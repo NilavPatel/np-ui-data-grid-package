@@ -1,8 +1,5 @@
 # np-ui-data-grid
-
-````
 Data grid for Angular 8 and 8+
-````
 
 <img src="https://raw.githubusercontent.com/NilavPatel/np-ui-data-grid-package/master/src/assets/images/logo-large.png" width="300" height="80">
 
