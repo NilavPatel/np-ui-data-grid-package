@@ -135,13 +135,13 @@
                             </div>
                             <div class="filter-text">
                                 <input type="text" class="grid-control" [(ngModel)]="column.filterString"
-                                    (input)="_onFilter(column, false)" placeholder="Search..."
+                                    (change)="_onFilter(column, false)" placeholder="Search..."
                                     *ngIf="column.dataType == _dataTypes.string">
                                 <input type="number" class="grid-control" [(ngModel)]="column.filterString"
-                                    (input)="_onFilter(column, false)" placeholder="Search..."
+                                    (change)="_onFilter(column, false)" placeholder="Search..."
                                     *ngIf="column.dataType == _dataTypes.number">
                                 <input type="date" class="grid-control" [(ngModel)]="column.filterString"
-                                    (input)="_onFilter(column, false)" placeholder="Search..."
+                                    (change)="_onFilter(column, false)" placeholder="Search..."
                                     *ngIf="column.dataType == _dataTypes.date">
                                 <select class="grid-control" [(ngModel)]="column.filterString"
                                     *ngIf="column.dataType == _dataTypes.boolean" (change)="_onFilter(column, false)">

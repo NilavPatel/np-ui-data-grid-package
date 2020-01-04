@@ -13,9 +13,9 @@ npm i np-ui-data-grid
 ## Features
 ````
 1. Maximum row handling capacity is upto 10,00,000 in client side mode
-2. Client/Server side paging
-3. Client/Server side filtering
-4. Client/Server side sorting
+2. Client/Server side Paging
+3. Client/Server side Filtering
+4. Client/Server side Sorting
 5. Single and Multiple row selection
 6. Master-child row section
 7. Get/Set Column configurations
@@ -40,20 +40,21 @@ npm i np-ui-data-grid
 ## Properties
 ````
 1.  [columns]    
-
+    Example:
     [
         { dataField: "Id", visible: true, width: 100, caption: "Id", dataType: DataTypes.number, sortEnabled: true, filterEnabled: true, onCellClick: this.cellClicked },
         { dataField: "FirstName", visible: true, width: 150, caption: "First Name", dataType: DataTypes.string, sortEnabled: true, filterEnabled: true },
         ...
     ]
     
-    1.1 dataType property is for setting type of data. user DataTypes class to get possible values.( data types are string, number, boolean, date)
-    1.2 dataField is name of the property from datasource array. Needs to be same as it retrived in data source.
-    1.3 caption is for setting column header, if not set then dataField will be displayed as caption.
-    1.4 set sortEnabled and filterEnabled on column basis (default false)
-    1.5 cellTemplate : type of TemplateRef<any>, pass template to grid column, row data will be bind as let-row="row".
+    1.1 "dataType" property is for setting type of data. use DataTypes to get possible values.( data types are string, number, boolean, date)
+    1.2 "dataField" is name of the property from datasource array. Needs to be same as it retrived in data source.
+    1.3 "caption" is for setting column header, if not set then "dataField" will be displayed as caption.
+    1.4 Set "sortEnabled" and "filterEnabled" on column basis (default false) 
+    1.5 "cellTemplate" : type of TemplateRef<any>, pass template to grid column, row data will be bind as let-row="row".
     1.6 onCellClick Event : arguments click event, column which is clicked, row.
-    1.7 rightAlignText : boolean , to make text right aligned
+    1.7 "rightAlignText" : boolean , to make text right aligned.
+    1.8 Filter event will fired on change event of filter input/filter type.
 
 2.  [dataSource]
     dataSorce.data => Array of data (for client side only)
