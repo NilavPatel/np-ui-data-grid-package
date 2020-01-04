@@ -329,16 +329,23 @@ a {
 }
 
 .np-icon-button {
-    width: 2rem;
-    height: 2rem;
     cursor: pointer;
-    padding: 2px 4px;
+    display: inline-block;
+    background-color: lightgray;
+    margin: 2px;
+}
+
+.np-icon-lg {
+    height:24px;
+    width:24px;
+    display: inline-block;
     vertical-align: middle;
 }
 
 .np-icon {
-    height: 24px;
-    width: 24px;
+    height:18px;
+    width:18px;
+    display: inline-block;
     vertical-align: middle;
 }
 
@@ -359,6 +366,10 @@ a {
 .np-button.active {
     background-color: lightgray;
     cursor: not-allowed;
+}
+
+.np-row-selected{
+    background-color: lightyellow;
 }
 
 @media (max-width: 767px) {

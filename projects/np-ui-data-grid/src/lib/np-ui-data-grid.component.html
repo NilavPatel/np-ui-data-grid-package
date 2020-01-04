@@ -5,7 +5,7 @@
         <div class="toolbar-item" *ngIf="showColumnChooser">
             <a title="Column Chooser" class="np-icon-button column-chooser" *ngIf="showColumnChooser"
                 (click)="_toggleColumnChooser()">
-                <svg class="np-icon" viewBox="0 0 24 24">
+                <svg class="np-icon-lg" viewBox="0 0 24 24">
                     <path d="M10 18h5V5h-5v13zm-6 0h5V5H4v13zM16 5v13h5V5h-5z" />
                     <path d="M0 0h24v24H0z" fill="none" /></svg>
             </a>
@@ -32,7 +32,7 @@
                             <span>{{column.getCaption()}}</span>
                         </label>
                         <div class="example-handle">
-                            <svg width="16px" fill="currentColor" viewBox="0 0 24 24">
+                            <svg class="np-icon" viewBox="0 0 24 24">
                                 <path
                                     d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
                                 </path>
@@ -49,7 +49,7 @@
                 <option *ngFor="let state of _stateList" [ngValue]="state.name">{{state.name}}</option>
             </select>
             <a class="np-icon-button" title="Save state" (click)="_saveState()" *ngIf="_currentStateName.length > 0">
-                <svg class="np-icon" viewBox="0 0 24 24">
+                <svg class="np-icon-lg" viewBox="0 0 24 24">
                     <path d="M0 0h24v24H0z" fill="none" />
                     <path
                         d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" />
@@ -57,14 +57,14 @@
             </a>
             <a class="np-icon-button" title="Delete state" (click)="_deleteState()"
                 *ngIf="_currentStateName.length > 0">
-                <svg class="np-icon" viewBox="0 0 24 24">
+                <svg class="np-icon-lg" viewBox="0 0 24 24">
                     <path fill="none" d="M0 0h24v24H0V0z" />
                     <path
                         d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z" />
                     <path fill="none" d="M0 0h24v24H0z" /></svg>
             </a>
             <a class="np-icon-button" title="Add state" (click)="_addState()">
-                <svg class="np-icon" viewBox="0 0 24 24">
+                <svg class="np-icon-lg" viewBox="0 0 24 24">
                     <path
                         d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" />
                     <path d="M0 0h24v24H0z" fill="none" /></svg>
@@ -157,7 +157,7 @@
             <tbody>
                 <ng-container *ngFor="let data of _currentViewData; let  i = index">
                     <tr id="row_{{i}}" (click)="_rowClick($event,data)"
-                        [ngClass]="{'np-grid-selected': _isSelected(data[_key])}">
+                        [ngClass]="{'np-row-selected': _isSelected(data[_key])}">
                         <td *ngIf="_enableMasterChild" class="txt-center">
                             <a *ngIf="!_isOpen(data[_key])" (click)="_openMasterChild(data[_key])"
                                 class="child-toggle-link">
@@ -211,7 +211,7 @@
                 <li>
                     <button type="button" class="np-button" title="First page" [disabled]="_pager.currentPage === 1"
                         (click)="_getCurrentViewData(1)">
-                        <svg class="np-icon" viewBox="0 0 24 24">
+                        <svg class="np-icon-lg" viewBox="0 0 24 24">
                             <path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z" />
                             <path d="M0 0h24v24H0z" fill="none" /></svg>
                     </button>
@@ -219,7 +219,7 @@
                 <li>
                     <button type="button" class="np-button" title="Prev page" [disabled]="_pager.currentPage === 1"
                         (click)="_getCurrentViewData(_pager.currentPage - 1)">
-                        <svg class="np-icon" viewBox="0 0 24 24">
+                        <svg class="np-icon-lg" viewBox="0 0 24 24">
                             <path d="M14 7l-5 5 5 5V7z" />
                             <path fill="none" d="M24 0v24H0V0h24z" /></svg>
                     </button>
@@ -232,7 +232,7 @@
                     <button type="button" title="Next page" class="np-button"
                         [disabled]="_pager.currentPage === _pager.totalPages"
                         (click)="_getCurrentViewData(_pager.currentPage + 1)">
-                        <svg class="np-icon" viewBox="0 0 24 24">
+                        <svg class="np-icon-lg" viewBox="0 0 24 24">
                             <path d="M10 17l5-5-5-5v10z" />
                             <path fill="none" d="M0 24V0h24v24H0z" /></svg></button>
                 </li>
@@ -240,7 +240,7 @@
                     <button type="button" title="Last page" class="np-button"
                         [disabled]="_pager.currentPage === _pager.totalPages"
                         (click)="_getCurrentViewData(_pager.totalPages)">
-                        <svg class="np-icon" viewBox="0 0 24 24">
+                        <svg class="np-icon-lg" viewBox="0 0 24 24">
                             <path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z" />
                             <path d="M0 0h24v24H0z" fill="none" /></svg>
                     </button>
@@ -250,7 +250,7 @@
                 <input type="number" class="grid-control" [(ngModel)]="_pager.pageSize" (change)="_onPageSizeChange()">
                 of {{_total}}
                 <a class="np-icon-button" title="Refresh" (click)="_onRefresh()">
-                    <svg class="np-icon" viewBox="0 0 24 24">
+                    <svg class="np-icon-lg" viewBox="0 0 24 24">
                         <path
                             d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />
                         <path d="M0 0h24v24H0z" fill="none" /></svg>
