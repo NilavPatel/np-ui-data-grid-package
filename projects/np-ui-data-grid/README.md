@@ -1,8 +1,6 @@
 # np-ui-data-grid
 Data grid for Angular 8 and 8+
 
-<img src="https://raw.githubusercontent.com/NilavPatel/np-ui-data-grid-package/master/src/assets/images/logo-large.png" width="300" height="80">
-
 ## [Demo](https://stackblitz.com/edit/np-ui-data-grid)
 
 ## NPM
@@ -207,3 +205,5 @@ npm i np-ui-data-grid
 2. [Date picker](https://www.npmjs.com/package/np-ui-date-picker)
 3. [Time picker](https://www.npmjs.com/package/np-ui-time-picker)
 4. [Color picker](https://www.npmjs.com/package/np-ui-color-picker)
+
+<img src="https://raw.githubusercontent.com/NilavPatel/nilavpatel.github.io/master/images/logo-large.png" width="300" height="80">
