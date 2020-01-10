@@ -293,6 +293,7 @@ a {
     min-width: 200px;
     display: block;
     overflow: auto;
+    max-height: 250px;
 }
 
 .drag-box {
