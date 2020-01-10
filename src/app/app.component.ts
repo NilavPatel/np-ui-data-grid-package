@@ -18,7 +18,7 @@ export class AppComponent {
   @ViewChild("serverSideGrid", { static: true }) serverSideGrid: NpUiDataGridComponent;
 
   _toggleColumn: boolean = true;
-  showFilters : boolean = true;
+  showFilters: boolean = true;
   constructor(private dataService: DataService) {
   }
 
@@ -117,6 +117,14 @@ export class AppComponent {
       { visible: true, width: 100, cellTemplate: this.actionButtonsTemplate }]
     var state = new State("Age more than 50", columns);
     this.serverSideGrid.setAllState([state]);
+  }
+
+  onInit() {
+    console.log("grid initializing at" + new Date().toTimeString());
+  }
+
+  onAfterInit() {
+    console.log("grid initialized at" + new Date().toTimeString());
   }
 
 }

@@ -203,6 +203,12 @@ npm i np-ui-data-grid
     bind on row de select event
     fires when user de select any row or deselect all rows.
     event.data contains the de selected row key/keys
+
+4.  onInit()
+    event fired at view initialization start.
+
+5.  onAfterInit()
+    event fired after view initialize.
 ````
 
 ## All np-ui packages for Angular

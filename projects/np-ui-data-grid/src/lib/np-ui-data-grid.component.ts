@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges, TemplateRef, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, TemplateRef, EventEmitter, Output, AfterViewInit } from '@angular/core';
 import { Column } from './models/column.model';
 import { DataSource, CustomStore } from './models/data-source.model';
 import { NpPagerService, Pager } from './services/np-ui-pager.service';
@@ -11,7 +11,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   templateUrl: 'np-ui-data-grid.component.html',
   styleUrls: ['np-ui-data-grid.component.css']
 })
-export class NpUiDataGridComponent implements OnInit {
+export class NpUiDataGridComponent implements OnInit, AfterViewInit {
 
   @Input() columns: Column[];
   _columns: Column[];
@@ -87,6 +87,10 @@ export class NpUiDataGridComponent implements OnInit {
 
   @Input() showFilters: boolean;
 
+  @Output() onInit: EventEmitter<any> = new EventEmitter();
+
+  @Output() onAfterInit: EventEmitter<any> = new EventEmitter();
+
   constructor(private pagerService: NpPagerService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
     this._sortColumnList = [];
@@ -109,6 +113,15 @@ export class NpUiDataGridComponent implements OnInit {
     }
     if (this.tableId == undefined) {
       this.tableId = "tbl-" + Math.floor(Math.random() * 6 + 1);
+    }
+    if (this.onInit != undefined) {
+      this.onInit.emit();
+    }
+  }
+
+  ngAfterViewInit(): void {
+    if (this.onAfterInit != undefined) {
+      this.onAfterInit.emit();
     }
   }
 
