@@ -102,6 +102,11 @@ npm i np-ui-data-grid
 14. [noDataMessage] : string
     Message will be displayed if no data found for data grid.
     Default value is "No Data Found."
+
+15. [showFilters]=true/false
+    default value of show filters is true, this is only used to show/hide row of filters.
+    If any visible column is defined with filterenabled true then filters will be shown for that column,
+    but using this showFilter property you can show/hide whole row of filters.
 ````
 
 ## Apis

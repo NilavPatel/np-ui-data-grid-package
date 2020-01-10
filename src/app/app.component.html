@@ -11,7 +11,7 @@
 	<legend>2. Server side data grid example</legend>
 	<np-ui-data-grid #serverSideGrid [columns]="gridColumns" [dataSource]="gridDataSource1"
 		[masterChildTemplate]="masterChildTemplate" [singleSelectEnable]="true" [title]="'Server side data grid'"
-		[showColumnChooser]="true" [enableStateStoring]="true"
+		[showColumnChooser]="true" [enableStateStoring]="true" [showFilters]="showFilters"
 		(onDeselect)="onDeselectRow($event)">
 	</np-ui-data-grid>
 
@@ -20,6 +20,7 @@
 		<button type="button" (click)="getSelectedRowKeys()">Get Selected Row Keys</button>
 		<button type="button" (click)="toggleFirstColumn()">Toggle 1st column</button>
 		<button type="button" (click)="changeColumns()">Change Column list</button>
+		<button type="button" (click)="showFilters = !showFilters">Toggle Filters</button>
 	</div>
 </div>
 

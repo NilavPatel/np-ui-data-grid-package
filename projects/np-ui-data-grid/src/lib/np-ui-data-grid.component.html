@@ -106,7 +106,7 @@
                         </a>
                     </th>
                 </tr>
-                <tr class="np-grid-header-row-filter" *ngIf="_isFilterAvailable">
+                <tr class="np-grid-header-row-filter" *ngIf="_isFilterAvailable && showFilters">
                     <th *ngIf="_enableMasterChild" width="30px;"
                         [ngClass]="{'np-sticky-header-filter' : isStickyHeader}" class="txt-center"></th>
                     <th *ngIf="singleSelectEnable || multiSelectEnable" width="30px;"

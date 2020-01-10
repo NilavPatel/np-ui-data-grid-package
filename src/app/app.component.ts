@@ -18,7 +18,7 @@ export class AppComponent {
   @ViewChild("serverSideGrid", { static: true }) serverSideGrid: NpUiDataGridComponent;
 
   _toggleColumn: boolean = true;
-
+  showFilters : boolean = true;
   constructor(private dataService: DataService) {
   }
 

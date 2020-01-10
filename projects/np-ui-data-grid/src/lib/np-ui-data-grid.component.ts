@@ -85,6 +85,8 @@ export class NpUiDataGridComponent implements OnInit {
 
   @Input() noDataMessage: string = "No Data Found.";
 
+  @Input() showFilters: boolean;
+
   constructor(private pagerService: NpPagerService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
     this._sortColumnList = [];
@@ -93,6 +95,7 @@ export class NpUiDataGridComponent implements OnInit {
     this._stateList = [];
     this._currentStateName = "";
     this._isFilterAvailable = false;
+    this.showFilters = true;
   }
 
   ngOnInit() {
@@ -110,7 +113,7 @@ export class NpUiDataGridComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.dataSource.currentValue != undefined) {
+    if (changes.dataSource != undefined && changes.dataSource.currentValue != undefined) {
       this._dataSource = new DataSource();
       this._dataSource.data = this.dataSource.data;
       this._dataSource.isServerOperations = this.dataSource.isServerOperations;

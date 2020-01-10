@@ -68,7 +68,7 @@
     border-right: 1px solid darkslategray !important;
 }
 
-.np-grid-selected td {
+.np-row-selected td {
     background-color: linen !important;
 }
 
