@@ -5,7 +5,9 @@
         <div class="toolbar-item" *ngIf="showColumnChooser">
             <a title="Column Chooser" class="np-icon-button column-chooser" *ngIf="showColumnChooser"
                 (click)="_toggleColumnChooser()">
-                <svg class="np-icon-lg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M4 5v13h17V5H4zm10 2v9h-3V7h3zM6 7h3v9H6V7zm13 9h-3V7h3v9z"/></svg>
+                <svg class="np-icon-lg" viewBox="0 0 24 24">
+                    <path fill="none" d="M0 0h24v24H0V0z" />
+                    <path d="M4 5v13h17V5H4zm10 2v9h-3V7h3zM6 7h3v9H6V7zm13 9h-3V7h3v9z" /></svg>
             </a>
             <div class="column-chooser-content" *ngIf="showColumnChooser"
                 [ngClass]="{'column-chooser-content-open':_isOpenColumnChooser}">
@@ -51,7 +53,7 @@
                     <path fill="none" d="M0 0h24v24H0V0z" />
                     <path
                         d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm2 16H5V5h11.17L19 7.83V19zm-7-7c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3zM6 6h9v4H6z" />
-                    </svg>
+                </svg>
             </a>
             <a class="np-icon-button" title="Delete state" (click)="_deleteState()"
                 *ngIf="_currentStateName.length > 0">
@@ -59,14 +61,14 @@
                     <path fill="none" d="M0 0h24v24H0V0z" />
                     <path
                         d="M14.12 10.47L12 12.59l-2.13-2.12-1.41 1.41L10.59 14l-2.12 2.12 1.41 1.41L12 15.41l2.12 2.12 1.41-1.41L13.41 14l2.12-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4zM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9z" />
-                    </svg>
+                </svg>
             </a>
             <a class="np-icon-button" title="Add state" (click)="_addState()">
                 <svg class="np-icon-lg" viewBox="0 0 24 24">
                     <path fill="none" d="M0 0h24v24H0V0z" />
                     <path
                         d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-8-2h2v-4h4v-2h-4V7h-2v4H7v2h4z" />
-                    </svg>
+                </svg>
             </a>
         </div>
     </div>
@@ -200,7 +202,7 @@
             {{noDataMessage}}
         </div>
     </div>
-    <div [ngClass]="{'locked': _showLoader}" class="np-pagination-container">
+    <div [ngClass]="{'locked': _showLoader}">
         <div class="np-pagination">
             <ul *ngIf="_pager.pages && _pager.pages.length">
                 <li>
@@ -219,9 +221,9 @@
                             <path fill="none" d="M24 0v24H0V0h24z" /></svg>
                     </button>
                 </li>
-                <li *ngFor="let page of _pager.pages">
-                    <button type="button" class="np-button" (click)="_getCurrentViewData(page)"
-                        [ngClass]="{active:_pager.currentPage === page}">{{page}}</button>
+                <li>
+                    <input type="number" class="grid-control " [(ngModel)]="_pager.currentPage"
+                        (change)="_getCurrentViewData(_pager.currentPage)"> / {{_pager.totalPages}}
                 </li>
                 <li>
                     <button type="button" title="Next page" class="np-button"
@@ -242,16 +244,20 @@
                 </li>
             </ul>
             <div class="div-page-size">
-                <input type="number" class="grid-control" [(ngModel)]="_pager.pageSize" (change)="_onPageSizeChange()">
-                of {{_total}}
-                <a class="np-icon-button" title="Refresh" (click)="_onRefresh()">
-                    <svg class="np-icon-lg" viewBox="0 0 24 24">
-                        <path
-                            d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />
-                        <path d="M0 0h24v24H0z" fill="none" /></svg>
-                </a>
+                <div>
+                    <input type="number" class="grid-control" [(ngModel)]="_pager.pageSize"
+                        (change)="_onPageSizeChange()">
+                    items per page / Total {{_total}} items
+                </div>
+                <div>
+                    <a class="np-icon-button" title="Refresh" (click)="_onRefresh()">
+                        <svg class="np-icon-lg" viewBox="0 0 24 24">
+                            <path
+                                d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />
+                            <path d="M0 0h24v24H0z" fill="none" /></svg>
+                    </a>
+                </div>
             </div>
-
         </div>
     </div>
 </div>

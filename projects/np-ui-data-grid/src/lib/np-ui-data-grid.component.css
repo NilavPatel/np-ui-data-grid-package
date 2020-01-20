@@ -47,6 +47,10 @@
     float: right;
 }
 
+.div-page-size div {
+    display: inline;
+}
+
 .div-page-size input {
     width: 50px;
 }
@@ -84,15 +88,10 @@ th a.sort-by-asc, th a.sort-by-desc {
 
 .np-pagination {
     height: 55px;
-    overflow: auto;
-    min-width: 800px;
+    overflow: hidden;
     border-left: 1px solid lightgray;
     border-right: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
-}
-
-.np-pagination-container {
-    overflow: auto;
 }
 
 .np-pagination .div-page-size {
@@ -371,6 +370,10 @@ a {
 
 .np-row-selected{
     background-color: lightyellow;
+}
+
+.np-pagination .grid-control{
+    width:60px;
 }
 
 @media (max-width: 767px) {

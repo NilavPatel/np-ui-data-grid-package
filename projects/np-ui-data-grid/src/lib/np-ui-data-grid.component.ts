@@ -139,6 +139,12 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
   }
 
   _getCurrentViewData(currentPageNumber: number) {
+    if (currentPageNumber == 0) {
+      currentPageNumber = 1;
+    }
+    if(this._pager.totalPages > 0 && currentPageNumber > this._pager.totalPages){
+      currentPageNumber = this._pager.totalPages;
+    }
     if (this._dataSource.isServerOperations) {
       this._showLoader = true;
       this._dataSource.load(currentPageNumber, this._pager.pageSize, this._sortColumnList, this._filterColumnList).then((store: CustomStore) => {
