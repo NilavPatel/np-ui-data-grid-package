@@ -117,12 +117,12 @@
                         <div class="filter-group" *ngIf="column.filterEnabled">
                             <div class="filter-type-group">
                                 <div class="filter-type">
-                                    <select class="grid-control" [(ngModel)]="column.filterType"
+                                    <select class="grid-control" [(ngModel)]="column.filterOperator"
                                         (change)="_onFilter(column, false)">
                                         <option [value]="undefined" disabled hidden>Select</option>
                                         <option
-                                            *ngFor="let filterType of _filtersList | filterTypesPipe: column.dataType"
-                                            [ngValue]="filterType.name" [innerText]="filterType.text"></option>
+                                            *ngFor="let filterOperator of _filtersList | filterTypesPipe: column.dataType"
+                                            [ngValue]="filterOperator.name" [innerText]="filterOperator.text"></option>
                                     </select>
                                 </div>
                                 <div class="filter-remove">
@@ -135,16 +135,16 @@
                                 </div>
                             </div>
                             <div class="filter-text">
-                                <input type="text" class="grid-control" [(ngModel)]="column.filterString"
+                                <input type="text" class="grid-control" [(ngModel)]="column.filterValue"
                                     (change)="_onFilter(column, false)" placeholder="Search..."
                                     *ngIf="column.dataType == _dataTypes.string">
-                                <input type="number" class="grid-control" [(ngModel)]="column.filterString"
+                                <input type="number" class="grid-control" [(ngModel)]="column.filterValue"
                                     (change)="_onFilter(column, false)" placeholder="Search..."
                                     *ngIf="column.dataType == _dataTypes.number">
-                                <input type="date" class="grid-control" [(ngModel)]="column.filterString"
+                                <input type="date" class="grid-control" [(ngModel)]="column.filterValue"
                                     (change)="_onFilter(column, false)" placeholder="Search..."
                                     *ngIf="column.dataType == _dataTypes.date">
-                                <select class="grid-control" [(ngModel)]="column.filterString"
+                                <select class="grid-control" [(ngModel)]="column.filterValue"
                                     *ngIf="column.dataType == _dataTypes.boolean" (change)="_onFilter(column, false)">
                                     <option [value]="undefined" disabled hidden>Select</option>
                                     <option value="true">True</option>

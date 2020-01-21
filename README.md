@@ -55,9 +55,19 @@ npm i np-ui-data-grid
     1.8 Filter event will fired on change event of filter input/filter type.
 
 2.  [dataSource]
-    dataSorce.data => Array of data (for client side only)
-    if dataSorce.isServerOperations is set to true then add load function to get data from server side.
-    dataSorce.load function has parameters like pageNumber, pageSize, sortColumns, filterColumns.
+    CLIENT SIDE:
+    dataSource.data => Array of data (for client side only)
+
+    SERVER SIDE:
+    if [dataSource.isServerOperations] is set to true then add load function to get data from server side.
+    [dataSource.load] function has parameters like pageNumber, pageSize, sortColumns, filterColumns.
+    
+    2.1 sortColumns is an array of {column : string, sortDirection: string}.
+        possible values for sortDirection are Ascending, Descending.
+    
+    2.2 filterColumns is an array of { column : string, filterOperator: string, filterValue: string, dataType: string}
+        possible values for filterOperator are StartWith, EndWith, Contains, GreaterThan, LessThan, Equals.
+        possible values for dataType are number, string, date, boolean.
 
 3.  [multiColumnSortEnable]
     if set to true then multiple columns can be sorted. Need to set sortEnabled = true in column too.

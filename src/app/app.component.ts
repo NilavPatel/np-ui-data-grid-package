@@ -1,6 +1,7 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { DataSource, CustomStore, DataTypes, NpUiDataGridComponent, SortDirections, FilterTypes, State } from 'projects/np-ui-data-grid/src/public-api';
+import { DataSource, CustomStore, DataTypes, NpUiDataGridComponent, State } from 'projects/np-ui-data-grid/src/public-api';
 import { DataService } from './data.service';
+import { FilterTypes, SortDirections } from 'np-ui-data-grid';
 
 @Component({
   selector: 'app-root',
@@ -112,7 +113,7 @@ export class AppComponent {
       { dataField: "FirstName", visible: true, width: 150, caption: "First Name", dataType: DataTypes.string, sortEnabled: true, filterEnabled: true },
       { dataField: "LastName", visible: true, width: 150, caption: "Last Name", dataType: DataTypes.string },
       { dataField: "BirthDate", visible: true, width: 150, caption: "Birth Date", dataType: DataTypes.date, filterEnabled: true, cellTemplate: this.birthDateColumnTemplate },
-      { dataField: "Age", visible: true, width: 100, dataType: DataTypes.number, sortEnabled: true, filterEnabled: true, styleClass: "color-red", filterString: "50", filterType: FilterTypes.GreaterThan },
+      { dataField: "Age", visible: true, width: 100, dataType: DataTypes.number, sortEnabled: true, filterEnabled: true, styleClass: "color-red", filterValue: "50", filterOperator: FilterTypes.GreaterThan },
       { dataField: "Active", visible: true, width: 150, caption: "Is Active?", dataType: DataTypes.boolean, filterEnabled: true, },
       { visible: true, width: 100, cellTemplate: this.actionButtonsTemplate }]
     var state = new State("Age more than 50", columns);

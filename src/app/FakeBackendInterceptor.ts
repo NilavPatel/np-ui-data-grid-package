@@ -3,7 +3,6 @@ import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTT
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 import * as _ from 'lodash';
-import { SortDirections, DataTypes, FilterTypes } from 'projects/np-ui-data-grid/src/public-api';
 
 let data: any[];
 
@@ -72,7 +71,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             if (loadOptions.sortColumns && loadOptions.sortColumns.length > 0) {
                 loadOptions.sortColumns.forEach(element => {
-                    data2 = _.orderBy(data2, element.column, element.sortDirection === SortDirections.Ascending ? 'asc' : 'desc');
+                    data2 = _.orderBy(data2, element.column, element.sortDirection === "Ascending" ? 'asc' : 'desc');
                 });
             }
 
@@ -87,41 +86,41 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function _filterDataSource(data, filterColumns) {
             filterColumns.forEach(element => {
-                if (element.filterType == FilterTypes.StartWith) {
+                if (element.filterOperator == "StartWith") {
                     data = _.filter(data, function (a) {
-                        return _.startsWith(a[element.column].toLowerCase(), element.filterString.toLowerCase());
+                        return _.startsWith(a[element.column].toLowerCase(), element.filterValue.toLowerCase());
                     });
-                } else if (element.filterType == FilterTypes.EndWith) {
+                } else if (element.filterOperator == "EndWith") {
                     data = _.filter(data, function (a) {
-                        return _.endsWith(a[element.column].toLowerCase(), element.filterString.toLowerCase());
+                        return _.endsWith(a[element.column].toLowerCase(), element.filterValue.toLowerCase());
                     });
-                } else if (element.filterType == FilterTypes.Contains) {
+                } else if (element.filterOperator == "Contains") {
                     data = _.filter(data, function (a) {
-                        return a[element.column].toLowerCase().indexOf(element.filterString.toLowerCase()) !== -1;
+                        return a[element.column].toLowerCase().indexOf(element.filterValue.toLowerCase()) !== -1;
                     });
-                } else if (element.filterType == FilterTypes.GreaterThan) {
-                    if (element.dataType == DataTypes.number) {
+                } else if (element.filterOperator == "GreaterThan") {
+                    if (element.dataType == "number") {
                         data = _.filter(data, function (a) {
-                            return a[element.column] > parseInt(element.filterString);
+                            return a[element.column] > parseInt(element.filterValue);
                         });
-                    } else if (element.dataType == DataTypes.date) {
+                    } else if (element.dataType == "date") {
                         data = _.filter(data, function (a) {
-                            return a[element.column].setHours(0,0,0,0) > new Date(element.filterString).setHours(0,0,0,0);
+                            return a[element.column].setHours(0, 0, 0, 0) > new Date(element.filterValue).setHours(0, 0, 0, 0);
                         });
                     }
-                } else if (element.filterType == FilterTypes.LessThan) {
-                    if (element.dataType == DataTypes.number) {
+                } else if (element.filterOperator == "LessThan") {
+                    if (element.dataType == "number") {
                         data = _.filter(data, function (a) {
-                            return a[element.column] < parseInt(element.filterString);
+                            return a[element.column] < parseInt(element.filterValue);
                         });
-                    } else if (element.dataType == DataTypes.date) {
+                    } else if (element.dataType == "date") {
                         data = _.filter(data, function (a) {
-                            return a[element.column].setHours(0,0,0,0) < new Date(element.filterString).setHours(0,0,0,0);
+                            return a[element.column].setHours(0, 0, 0, 0) < new Date(element.filterValue).setHours(0, 0, 0, 0);
                         });
                     }
-                } else if (element.filterType == FilterTypes.Equals) {
-                    if (element.dataType == DataTypes.boolean) {
-                        if (element.filterString == "true") {
+                } else if (element.filterOperator == "Equals") {
+                    if (element.dataType == "boolean") {
+                        if (element.filterValue == "true") {
                             data = _.filter(data, function (a) {
                                 return a[element.column] == true;
                             });
@@ -130,13 +129,13 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                                 return a[element.column] == false;
                             });
                         }
-                    } else if (element.dataType == DataTypes.number) {
+                    } else if (element.dataType == "number") {
                         data = _.filter(data, function (a) {
-                            return a[element.column] === parseInt(element.filterString);
+                            return a[element.column] === parseInt(element.filterValue);
                         });
-                    } else if (element.dataType == DataTypes.date) {
+                    } else if (element.dataType == "date") {
                         data = _.filter(data, function (a) {
-                            return a[element.column].setHours(0,0,0,0) == new Date(element.filterString).setHours(0,0,0,0);
+                            return a[element.column].setHours(0, 0, 0, 0) == new Date(element.filterValue).setHours(0, 0, 0, 0);
                         });
                     }
                 }
