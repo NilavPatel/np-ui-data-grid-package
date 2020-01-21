@@ -1,7 +1,6 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { DataSource, CustomStore, DataTypes, NpUiDataGridComponent, State } from 'projects/np-ui-data-grid/src/public-api';
+import { DataSource, CustomStore, DataTypes, NpUiDataGridComponent, State, FilterTypes, SortDirections } from 'projects/np-ui-data-grid/src/public-api';
 import { DataService } from './data.service';
-import { FilterTypes, SortDirections } from 'np-ui-data-grid';
 
 @Component({
   selector: 'app-root',
