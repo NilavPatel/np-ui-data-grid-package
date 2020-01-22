@@ -2,17 +2,17 @@ export class Constants {
     static filters(): any[] {
         return [{
             name: FilterTypes.StartWith,
-            text: "Start with",
+            text: "abc*",
             forDataType: DataTypes.string
         },
         {
             name: FilterTypes.EndWith,
-            text: "End with",
+            text: "*abc",
             forDataType: DataTypes.string
         },
         {
             name: FilterTypes.Contains,
-            text: "Contains",
+            text: "*abc*",
             forDataType: DataTypes.string
         },
         {
@@ -51,22 +51,22 @@ export class Constants {
 }
 
 export enum FilterTypes {
-    StartWith,
-    EndWith,
-    Contains,
-    GreaterThan,
-    LessThan,
-    Equals
+    StartWith = "StartWith",
+    EndWith = "EndWith",
+    Contains = "Contains",
+    GreaterThan = "GreaterThan",
+    LessThan = "LessThan",
+    Equals = "Equals"
 }
 
 export enum DataTypes {
-    number,
-    string,
-    date,
-    boolean
+    number = "number",
+    string = "string",
+    date = "date",
+    boolean = "boolean"
 }
 
 export enum SortDirections {
-    Ascending,
-    Descending
+    Ascending = "Ascending",
+    Descending = "Descending"
 }

@@ -216,7 +216,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
       });
       this._sortColumnList = list;
     }
-    this._sortColumnList.push({ column: column.dataField, sortDirection: SortDirections[column.sortDirection] });
+    this._sortColumnList.push({ column: column.dataField, sortDirection: column.sortDirection });
     this._selectedRowKeys = [];
     this._openRowKeys = [];
     this._isAllSelected = false;
@@ -238,7 +238,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
 
   _sortDataSource() {
     this._sortColumnList.forEach(element => {
-      this._dataSource.data = this._custSort(this._dataSource.data, element.column, element.sortDirection === SortDirections[SortDirections.Ascending] ? 'asc' : 'desc');
+      this._dataSource.data = this._custSort(this._dataSource.data, element.column, element.sortDirection);
     });
   }
 
@@ -264,7 +264,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
       this._resetDataSource();
       this._filterDataSource();
       this._sortColumnList.forEach(element => {
-        this._dataSource.data = this._custSort(this._dataSource.data, element.column, element.sortDirection === SortDirections.Ascending ? 'asc' : 'desc');
+        this._dataSource.data = this._custSort(this._dataSource.data, element.column, element.sortDirection);
       });
     }
     this._getCurrentViewData(1);
@@ -284,7 +284,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
     this._columns.forEach(element => {
       if (element.filterOperator != undefined && element.filterOperator != null
         && element.filterValue && element.filterValue.toString().length > 0) {
-        this._filterColumnList.push({ column: element.dataField, filterOperator: FilterTypes[element.filterOperator], filterValue: element.filterValue, dataType: DataTypes[element.dataType] });
+        this._filterColumnList.push({ column: element.dataField, filterOperator: element.filterOperator, filterValue: element.filterValue, dataType: element.dataType });
       }
     });
     this._selectedRowKeys = [];
@@ -311,40 +311,40 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
     var data = this.dataSource.data;
     var that = this;
     this._filterColumnList.forEach(element => {
-      if (element.filterOperator == FilterTypes[FilterTypes.StartWith]) {
+      if (element.filterOperator == FilterTypes.StartWith) {
         data = this._custFilter(data, function (a) {
           return that._custStartWith(a[element.column].toLowerCase(), element.filterValue.toLowerCase());
         });
-      } else if (element.filterOperator == FilterTypes[FilterTypes.EndWith]) {
+      } else if (element.filterOperator == FilterTypes.EndWith) {
         data = this._custFilter(data, function (a) {
           return that._custEndWith(a[element.column].toLowerCase(), element.filterValue.toLowerCase());
         });
-      } else if (element.filterOperator == FilterTypes[FilterTypes.Contains]) {
+      } else if (element.filterOperator == FilterTypes.Contains) {
         data = this._custFilter(data, function (a) {
           return a[element.column].toLowerCase().indexOf(element.filterValue.toLowerCase()) !== -1;
         });
-      } else if (element.filterOperator == FilterTypes[FilterTypes.GreaterThan]) {
-        if (element.dataType == DataTypes[DataTypes.number]) {
+      } else if (element.filterOperator == FilterTypes.GreaterThan) {
+        if (element.dataType == DataTypes.number) {
           data = this._custFilter(data, function (a) {
             return a[element.column] > parseInt(element.filterValue);
           });
-        } else if (element.dataType == DataTypes[DataTypes.date]) {
+        } else if (element.dataType == DataTypes.date) {
           data = this._custFilter(data, function (a) {
             return a[element.column].setHours(0, 0, 0, 0) > new Date(element.filterValue).setHours(0, 0, 0, 0);
           });
         }
-      } else if (element.filterOperator == FilterTypes[FilterTypes.LessThan]) {
-        if (element.dataType == DataTypes[DataTypes.number]) {
+      } else if (element.filterOperator == FilterTypes.LessThan) {
+        if (element.dataType == DataTypes.number) {
           data = this._custFilter(data, function (a) {
             return a[element.column] < parseInt(element.filterValue);
           });
-        } else if (element.dataType == DataTypes[DataTypes.date]) {
+        } else if (element.dataType == DataTypes.date) {
           data = this._custFilter(data, function (a) {
             return a[element.column].setHours(0, 0, 0, 0) < new Date(element.filterValue).setHours(0, 0, 0, 0);
           });
         }
-      } else if (element.filterOperator == FilterTypes[FilterTypes.Equals]) {
-        if (element.dataType == DataTypes[DataTypes.boolean]) {
+      } else if (element.filterOperator == FilterTypes.Equals) {
+        if (element.dataType == DataTypes.boolean) {
           if (element.filterValue == "true") {
             data = this._custFilter(data, function (a) {
               return a[element.column] === true;
@@ -354,11 +354,11 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
               return a[element.column] === false;
             });
           }
-        } else if (element.dataType == DataTypes[DataTypes.number]) {
+        } else if (element.dataType == DataTypes.number) {
           data = this._custFilter(data, function (a) {
             return a[element.column] === parseInt(element.filterValue);
           });
-        } else if (element.dataType == DataTypes[DataTypes.date]) {
+        } else if (element.dataType == DataTypes.date) {
           data = this._custFilter(data, function (a) {
             return a[element.column].setHours(0, 0, 0, 0) == new Date(element.filterValue).setHours(0, 0, 0, 0);
           });
@@ -688,13 +688,13 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
     this._columns.forEach(element => {
       if (element.filterOperator != undefined && element.filterOperator != null
         && element.filterValue && element.filterValue.toString().length > 0) {
-        this._filterColumnList.push({ column: element.dataField, filterOperator: FilterTypes[element.filterOperator], filterValue: element.filterValue, dataType: DataTypes[element.dataType] });
+        this._filterColumnList.push({ column: element.dataField, filterOperator: element.filterOperator, filterValue: element.filterValue, dataType: element.dataType });
       }
     });
     this._sortColumnList = [];
     this._columns.forEach(element => {
       if (element.sortEnabled && element.sortDirection != null) {
-        this._sortColumnList.push({ column: element.dataField, sortDirection: SortDirections[element.sortDirection] });
+        this._sortColumnList.push({ column: element.dataField, sortDirection: element.sortDirection });
       }
     });
     if (!this._dataSource.isServerOperations) {
@@ -821,7 +821,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
   }
 
   private _custSort(arr: any[], ele: string, order: string) {
-    if (order == "desc") {
+    if (order == SortDirections.Descending) {
       return arr.concat().sort(this._sortByDesc(ele));
     } else {
       return arr.concat().sort(this._sortBy(ele));
