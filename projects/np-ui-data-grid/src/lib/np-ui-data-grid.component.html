@@ -208,7 +208,7 @@
             </ul>
             <div class="div-page-size">
                 <div>
-                    <input type="number" class="grid-control" [(ngModel)]="_pager.pageSize" (change)="_onPageSizeChange()"> items per page / Total {{_total}} items
+                    <input type="number" class="grid-control" [(ngModel)]="_pager.pageSize" (change)="_onPageSizeChange()"> items per page / {{_pager.startIndex >= 0 ? _pager.startIndex + 1 : 0}} - {{_pager.endIndex + 1}} of {{_pager.totalItems}} items
                 </div>
                 <div>
                     <a class="np-icon-button" title="Refresh" (click)="_onRefresh()">
