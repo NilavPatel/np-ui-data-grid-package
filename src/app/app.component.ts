@@ -45,7 +45,6 @@ export class AppComponent {
     this.gridDataSource1.isServerOperations = true;
     this.gridDataSource1.load = function (pageNumber, pageSize, sortColumns, filterColumns) {
       return new Promise((resolve, reject) => {
-        debugger;
         var reqBody = { pageNumber: pageNumber, pageSize: pageSize, sortColumns: sortColumns, filterColumns: filterColumns }
         that.dataService.getDataUsingLoadOptions(reqBody).subscribe((data: any) => {
           var result = new CustomStore();
@@ -128,7 +127,7 @@ export class AppComponent {
     console.log("grid initialized at" + new Date().toTimeString());
   }
 
-  goToPage(num){
+  goToPage(num) {
     this.serverSideGrid.goToPage(num);
   }
 

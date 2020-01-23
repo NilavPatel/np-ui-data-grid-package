@@ -59,7 +59,8 @@
     background-color: lightgray
 }
 
-th a.sort-by-asc, th a.sort-by-desc {
+th a.sort-by-asc,
+th a.sort-by-desc {
     padding-right: 18px;
     position: relative;
 }
@@ -140,18 +141,19 @@ input[type="checkbox"] {
     overflow: hidden;
 }
 
-.filter-type {
-    display: inline-block;
-    padding-bottom: 4px;
-    width: 80%
+.filter-selector {
+    padding-bottom: 5px;
 }
 
-.filter-remove {
-    display: inline-block;
-    width: 20%
+.filter-selector .grid-control {
+    width: 85%;
 }
 
-.filter-text {
+.filter-selector .np-icon-button {
+    width: 15%;
+}
+
+.filter-input {
     width: 100%;
 }
 
@@ -215,7 +217,7 @@ input[type="checkbox"] {
     display: none;
 }
 
-.toolbar {
+.np-toolbar {
     height: 30px;
     min-width: 300px;
     padding: 2px;
@@ -225,24 +227,13 @@ input[type="checkbox"] {
 }
 
 .np-state-select {
-    min-width: 100px;
-    border: 1px solid lightgray;
-    box-sizing: border-box;
-    padding: 4px;
-    height: 30px;
+    min-width: 100px !important;
+    width: auto !important;
 }
 
 .no-data-message {
     padding: 10px;
     text-align: center;
-}
-
-.close {
-    float: right;
-}
-
-a {
-    cursor: pointer;
 }
 
 .np-grid-title {
@@ -253,7 +244,7 @@ a {
     border-right: 1px solid lightgray;
 }
 
-.toolbar-item {
+.np-toolbar-item {
     display: inline;
 }
 
@@ -269,11 +260,6 @@ a {
     text-align: right;
 }
 
-.font-no-margin::before {
-    margin: 0px !important;
-    width: 7px !important;
-}
-
 .np-grid-header {
     padding: 0px 5px;
 }
@@ -287,7 +273,7 @@ a {
     }
 }
 
-.drag-list {
+.np-drag-list {
     border: solid 1px lightgray;
     min-width: 200px;
     display: block;
@@ -295,7 +281,7 @@ a {
     max-height: 250px;
 }
 
-.drag-box {
+.np-drag-box {
     border-bottom: solid 1px lightgray;
     display: flex;
     flex-direction: row;
@@ -316,11 +302,11 @@ a {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.drag-box:last-child {
+.np-drag-box:last-child {
     border: none;
 }
 
-.drag-list.cdk-drop-list-dragging .drag-box:not(.cdk-drag-placeholder) {
+.np-drag-list.cdk-drop-list-dragging .drag-box:not(.cdk-drag-placeholder) {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
@@ -330,50 +316,51 @@ a {
 
 .np-icon-button {
     cursor: pointer;
-    display: inline-block;
-    background-color: lightgray;
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    background-color: transparent !important;
+}
+
+.np-icon-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.np-pagination .np-icon-button {
+    border: 1px solid lightgray;
+    padding: 2px;
+}
+
+.np-toolbar .np-icon-button {
+    border: 1px solid lightgray;
+    padding: 2px;
+}
+
+.column-chooser-content .np-icon-button {
     margin: 2px;
 }
 
 .np-icon-lg {
-    height:24px;
-    width:24px;
+    height: 24px;
+    width: 24px;
     display: inline-block;
     vertical-align: middle;
 }
 
 .np-icon {
-    height:18px;
-    width:18px;
+    height: 18px;
+    width: 18px;
     display: inline-block;
     vertical-align: middle;
 }
 
-.np-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+.np-row-selected {
+    background-color: lightyellow !important;
 }
 
-.np-button{
-    width: 2rem;
-    height: 2rem;
-    vertical-align: middle;
-    padding: 2px;
-    border: none;
-    cursor: pointer;
-}
-
-.np-button.active {
-    background-color: lightgray;
-    cursor: not-allowed;
-}
-
-.np-row-selected{
-    background-color: lightyellow;
-}
-
-.np-pagination .grid-control{
-    width:60px;
+.np-pagination .grid-control {
+    width: 60px;
 }
 
 @media (max-width: 767px) {

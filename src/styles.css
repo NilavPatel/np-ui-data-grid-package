@@ -12,65 +12,38 @@
 }
 
 
-/* CSS to change desing of table start */
+/* CSS to change desing of datagrid start */
 
-.np-grid-table th,
+.np-grid-title,
+.np-toolbar,
+.np-grid-header-row th,
+.np-grid-header-row-filter th,
 .np-pagination {
     background-color: lightblue !important;
 }
 
-.np-grid-table td {
-    background-color: aliceblue !important;
+.np-grid,
+.np-grid-title,
+.np-toolbar,
+.np-grid-table th,
+.np-pagination,
+.np-grid-table td,
+.np-icon-button {
+    border-color: darkcyan !important;
 }
 
-.np-grid-table {
-    color: darkslategray !important;
+.np-icon,
+.np-icon-lg {
+    fill: darkcyan
+}
+
+.np-grid-table tr:nth-of-type(odd) {
+    background-color: aliceblue;
 }
 
 .np-grid {
-    border-top: 1px solid darkslategray !important;
-}
-
-.np-grid-table {
-    border-right: 1px solid darkslategray !important;
-}
-
-.np-pagination {
-    border-left: 1px solid darkslategray !important;
-    border-right: 1px solid darkslategray !important;
-    border-bottom: 1px solid darkslategray !important;
-}
-
-.np-grid-table td,
-.np-grid-table th {
-    border-bottom: 1px solid darkslategray !important;
-    border-left: 1px solid darkslategray !important;
-}
-
-.toolbar {
-    background-color: lightblue !important;
-    border-bottom: 1px solid darkslategray !important;
-    border-left: 1px solid darkslategray !important;
-    border-right: 1px solid darkslategray !important;
-}
-
-.np-loader {
-    border-top-color: lightblue !important;
-    border-bottom-color: lightblue !important;
-}
-
-.np-grid-title {
-    padding: 5px;
-    font-weight: bolder;
-    background-color: lightblue !important;
-    border-bottom: 1px solid darkslategray !important;
-    border-left: 1px solid darkslategray !important;
-    border-right: 1px solid darkslategray !important;
-}
-
-.np-row-selected td {
-    background-color: linen !important;
+    color: darkcyan !important;
 }
 
 
-/* CSS to change desing of table end */
+/* CSS to change desing of datagrid end */
