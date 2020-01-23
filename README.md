@@ -18,7 +18,8 @@ npm i np-ui-data-grid
 6. Master-child row section
 7. Get/Set Column configurations
 8. Store state of grid and change from dropdown (show/hide column, filters values and sorting is also saved in state).
-9. Column drag and drop
+9. Column drag and drop.
+10. Summary in datagrid footer.
 ````
 
 ## HTML
@@ -65,8 +66,8 @@ npm i np-ui-data-grid
     2.1 sortColumns is an array of {column : string, sortDirection: string}.
         possible values for sortDirection are Ascending, Descending.
     
-    2.2 filterColumns is an array of { column : string, filterOperator: string, filterValue: string, dataType: string}
-        possible values for filterOperator are StartWith, EndWith, Contains, GreaterThan, LessThan, Equals.
+    2.2 filterColumns is an array of { column : string, filterOprator: string, filterValue: string, dataType: string}
+        possible values for filterOprator are StartWith, EndWith, Contains, GreaterThan, LessThan, Equals.
         possible values for dataType are number, string, date, boolean.
 
 3.  [multiColumnSortEnable]
@@ -117,6 +118,19 @@ npm i np-ui-data-grid
     default value of show filters is true, this is only used to show/hide row of filters.
     If any visible column is defined with filterenabled true then filters will be shown for that column,
     but using this showFilter property you can show/hide whole row of filters.
+
+16. [isShowSummary]=true/false
+    default value is false. To show/hide summary at footer of datagrid.
+
+17. [summaryTemplate]: TemplateRef<any>;
+    Template reference for summary at footer of datagrid.
+    
+    CLIENT SIDE
+    To show summary in client side pass summary variable in DataSource.summary. Which data is accessible in template context.
+
+    SERVER SIDE
+    To show summary in client side pass summary variable in CustomStore.summary. Which data is accessible in template context.
+
 ````
 
 ## Apis

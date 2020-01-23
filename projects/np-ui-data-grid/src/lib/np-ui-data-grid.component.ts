@@ -91,6 +91,10 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
 
   @Output() onAfterInit: EventEmitter<any> = new EventEmitter();
 
+  @Input() isShowSummary: boolean;
+  @Input() summaryTemplate: TemplateRef<any>;
+  _summaryData: any;  
+
   constructor(private pagerService: NpPagerService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
     this._sortColumnList = [];
@@ -129,6 +133,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
     if (changes.dataSource != undefined && changes.dataSource.currentValue != undefined) {
       this._dataSource = new DataSource();
       this._dataSource.data = this.dataSource.data;
+      this._dataSource.summary = this.dataSource.summary;
       this._dataSource.isServerOperations = this.dataSource.isServerOperations;
       this._dataSource.load = this.dataSource.load;
       this._getCurrentViewData(1);
@@ -149,6 +154,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
       this._showLoader = true;
       this._dataSource.load(currentPageNumber, this._pager.pageSize, this._sortColumnList, this._filterColumnList).then((store: CustomStore) => {
         this._currentViewData = store.data;
+        this._summaryData = store.summary;
         this._total = store.total;
         this._pager = this.pagerService.getPager(this._total, currentPageNumber, this._pager.pageSize);
         if (this._isAllSelected) {
@@ -167,6 +173,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
       this._pager = this.pagerService.getPager(this._dataSource.data.length, currentPageNumber, this._pager.pageSize);
       this._currentViewData = this._dataSource.data.slice(this._pager.startIndex, this._pager.endIndex + 1);
       this._total = this._dataSource.data.length;
+      this._summaryData = this._dataSource.summary;
     }
   }
 

@@ -363,6 +363,17 @@ input[type="checkbox"] {
     width: 60px;
 }
 
+.np-summary {
+    position: sticky;
+    bottom: 0px;
+    z-index: 1001;
+    background-color: white;
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    padding: 2px;
+}
+
 @media (max-width: 767px) {
     .np-state-select {
         width: 148px;

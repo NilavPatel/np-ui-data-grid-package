@@ -28,7 +28,8 @@
 .np-grid-table th,
 .np-pagination,
 .np-grid-table td,
-.np-icon-button {
+.np-icon-button,
+.np-summary {
     border-color: darkcyan !important;
 }
 
@@ -43,6 +44,10 @@
 
 .np-grid {
     color: darkcyan !important;
+}
+
+.np-summary {
+    background-color: lightcyan !important;
 }
 
 

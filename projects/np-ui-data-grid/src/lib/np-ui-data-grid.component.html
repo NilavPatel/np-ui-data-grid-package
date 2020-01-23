@@ -159,6 +159,10 @@
                 </ng-container>
             </tbody>
         </table>
+        <div class="np-summary" *ngIf="isShowSummary">
+            <ng-container *ngTemplateOutlet="summaryTemplate;context:{ summary: _summaryData }">
+            </ng-container>
+        </div>
         <div *ngIf="_currentViewData && _currentViewData.length == 0 && !_showLoader" class="no-data-message">
             {{noDataMessage}}
         </div>

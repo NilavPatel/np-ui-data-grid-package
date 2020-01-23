@@ -14,6 +14,7 @@ export class AppComponent {
   gridDataSource1: DataSource;
   @ViewChild("actionButtonsTemplate", { static: true }) actionButtonsTemplate: TemplateRef<any>;
   @ViewChild("birthDateColumnTemplate", { static: true }) birthDateColumnTemplate: TemplateRef<any>;
+  @ViewChild("summaryTemplate", { static: true }) summaryTemplate: TemplateRef<any>;
 
   @ViewChild("serverSideGrid", { static: true }) serverSideGrid: NpUiDataGridComponent;
 
@@ -38,6 +39,7 @@ export class AppComponent {
       /** for client side grid */
       this.gridDataSource = new DataSource();
       this.gridDataSource.data = data;
+      this.gridDataSource.summary = { total: 1000 };
     });
 
     /** for server side grid */
@@ -50,6 +52,7 @@ export class AppComponent {
           var result = new CustomStore();
           result.data = data.data;
           result.total = data.total;
+          result.summary = { total: 1000 };
           resolve(result)
         });
       });
