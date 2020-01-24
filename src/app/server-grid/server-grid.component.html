@@ -1,0 +1,27 @@
+<div>
+    <legend>2. Server side data grid example</legend>
+    <np-ui-data-grid #serverSideGrid [columns]="gridColumns" [dataSource]="gridDataSource1" [singleSelectEnable]="true" [title]="'Server side data grid'" [showColumnChooser]="true" [enableStateStoring]="true" [showFilters]="showFilters" (onSelect)="onSelectRow($event)"
+        (onInit)="onInit()" (onAfterInit)="onAfterInit()" [isShowSummary]="true" [summaryTemplate]="summaryTemplate">
+    </np-ui-data-grid>
+
+    <div class="btn-group">
+        <button type="button" (click)="getSelectedRowKeys()">Get Selected Row Keys</button>
+        <button type="button" (click)="toggleFirstColumn()">Toggle 1st column</button>
+        <button type="button" (click)="changeColumns()">Change Column list</button>
+        <button type="button" (click)="showFilters = !showFilters">Toggle Filters</button>
+        <button type="button" (click)="goToPage(2)">Go to Page 2</button>
+    </div>
+</div>
+
+<ng-template #actionButtonsTemplate let-row="row">
+    <button (click)="onActionClick(row,'Edit', $event)">Edit</button>
+    <button (click)="onActionClick(row,'Delete', $event)">Delete</button>
+</ng-template>
+
+<ng-template #birthDateColumnTemplate let-row="row">
+    {{row.BirthDate | date:'dd/MM/yyyy'}}
+</ng-template>
+
+<ng-template #summaryTemplate let-summary="summary">
+    <span>Total:{{summary ? summary.total : 0}}</span>
+</ng-template>
