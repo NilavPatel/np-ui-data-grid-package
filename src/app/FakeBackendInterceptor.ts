@@ -108,6 +108,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                             return a[element.column].setHours(0, 0, 0, 0) > new Date(element.filterValue).setHours(0, 0, 0, 0);
                         });
                     }
+                } else if (element.filterOperator == "gte") {
+                    if (element.dataType == "number") {
+                        data = _.filter(data, function (a) {
+                            return a[element.column] >= parseInt(element.filterValue);
+                        });
+                    } else if (element.dataType == "date") {
+                        data = _.filter(data, function (a) {
+                            return a[element.column].setHours(0, 0, 0, 0) >= new Date(element.filterValue).setHours(0, 0, 0, 0);
+                        });
+                    }
                 } else if (element.filterOperator == "lt") {
                     if (element.dataType == "number") {
                         data = _.filter(data, function (a) {
@@ -116,6 +126,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     } else if (element.dataType == "date") {
                         data = _.filter(data, function (a) {
                             return a[element.column].setHours(0, 0, 0, 0) < new Date(element.filterValue).setHours(0, 0, 0, 0);
+                        });
+                    }
+                } else if (element.filterOperator == "lte") {
+                    if (element.dataType == "number") {
+                        data = _.filter(data, function (a) {
+                            return a[element.column] <= parseInt(element.filterValue);
+                        });
+                    } else if (element.dataType == "date") {
+                        data = _.filter(data, function (a) {
+                            return a[element.column].setHours(0, 0, 0, 0) <= new Date(element.filterValue).setHours(0, 0, 0, 0);
                         });
                     }
                 } else if (element.filterOperator == "equals") {

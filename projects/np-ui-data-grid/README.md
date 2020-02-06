@@ -61,7 +61,7 @@ Data grid custom component for Angular 8 and 8+, Created using only Angular.
     ````javascript
     { column : string, filterOprator: string, filterValue: string, dataType: string}
     ````
-    possible values for **filterOprator** are startsWith, endsWith, contains, gt, ls, equals, notEquals.  
+    possible values for **filterOprator** are startsWith, endsWith, contains, gt, ls, gte, lte, equals, notEquals.  
     possible values for **dataType** are number, string, date, boolean.  
 3.  `[multiColumnSortEnable]`  
     if set to true then multiple columns can be sorted. Need to set sortEnabled = true in column too.  

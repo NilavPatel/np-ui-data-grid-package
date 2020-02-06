@@ -341,6 +341,16 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
             return a[element.column].setHours(0, 0, 0, 0) > new Date(element.filterValue).setHours(0, 0, 0, 0);
           });
         }
+      } else if (element.filterOperator === FilterTypes.GreaterThanOrEquals) {
+        if (element.dataType === DataTypes.Number) {
+          data = that._custFilter(data, function (a) {
+            return a[element.column] >= parseInt(element.filterValue);
+          });
+        } else if (element.dataType === DataTypes.Date) {
+          data = that._custFilter(data, function (a) {
+            return a[element.column].setHours(0, 0, 0, 0) >= new Date(element.filterValue).setHours(0, 0, 0, 0);
+          });
+        }
       } else if (element.filterOperator === FilterTypes.LessThan) {
         if (element.dataType === DataTypes.Number) {
           data = that._custFilter(data, function (a) {
@@ -349,6 +359,16 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
         } else if (element.dataType === DataTypes.Date) {
           data = that._custFilter(data, function (a) {
             return a[element.column].setHours(0, 0, 0, 0) < new Date(element.filterValue).setHours(0, 0, 0, 0);
+          });
+        }
+      } else if (element.filterOperator === FilterTypes.LessThanOrEquals) {
+        if (element.dataType === DataTypes.Number) {
+          data = that._custFilter(data, function (a) {
+            return a[element.column] <= parseInt(element.filterValue);
+          });
+        } else if (element.dataType === DataTypes.Date) {
+          data = that._custFilter(data, function (a) {
+            return a[element.column].setHours(0, 0, 0, 0) <= new Date(element.filterValue).setHours(0, 0, 0, 0);
           });
         }
       } else if (element.filterOperator === FilterTypes.Equals) {

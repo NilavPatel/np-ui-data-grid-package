@@ -24,6 +24,16 @@ export class Constants {
             name: FilterTypes.LessThan,
             text: "<",
             forDataType: DataTypes.Number
+        },
+        {
+            name: FilterTypes.GreaterThanOrEquals,
+            text: ">=",
+            forDataType: DataTypes.Number
+        },
+        {
+            name: FilterTypes.LessThanOrEquals,
+            text: "<=",
+            forDataType: DataTypes.Number
         }, {
             name: FilterTypes.Equals,
             text: "=",
@@ -41,6 +51,15 @@ export class Constants {
         }, {
             name: FilterTypes.LessThan,
             text: "<",
+            forDataType: DataTypes.Date
+        },
+        {
+            name: FilterTypes.GreaterThanOrEquals,
+            text: ">=",
+            forDataType: DataTypes.Date
+        }, {
+            name: FilterTypes.LessThanOrEquals,
+            text: "<=",
             forDataType: DataTypes.Date
         }, {
             name: FilterTypes.Equals,
@@ -70,8 +89,8 @@ export enum FilterTypes {
     Contains = "contains",
     GreaterThan = "gt",
     LessThan = "lt",
-    // LessThanOrEquals = "lte",
-    // GreaterThanOrEquals = "gte",
+    LessThanOrEquals = "lte",
+    GreaterThanOrEquals = "gte",
     Equals = "equals",
     NotEquals = "notEquals"
 }
