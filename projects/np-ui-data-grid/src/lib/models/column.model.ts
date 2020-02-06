@@ -24,7 +24,7 @@ export class Column {
         rightAlignText: boolean;
     }) {
         this.dataField = item.dataField;
-        this.dataType = item.dataType == undefined || item.dataType == null ? DataTypes.string : item.dataType;
+        this.dataType = item.dataType == undefined || item.dataType == null ? DataTypes.String : item.dataType;
         this.visible = item.visible;
         this.width = item.width;
         this.caption = item.caption;
@@ -61,7 +61,7 @@ export class Column {
 
     /**get data type of column */
     public getDataType() {
-        return this.dataType ? this.dataType : DataTypes.string;
+        return this.dataType ? this.dataType : DataTypes.String;
     }
 
     /**get sorting class */

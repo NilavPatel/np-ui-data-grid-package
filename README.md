@@ -35,8 +35,8 @@ Data grid custom component for Angular 8 and 8+, Created using only Angular.
     Example:
     ````javascript
     [
-        { dataField: "Id", visible: true, width: 100, caption: "Id", dataType: DataTypes.number, sortEnabled: true, filterEnabled: true, onCellClick: this.cellClicked },
-        { dataField: "FirstName", visible: true, width: 150, caption: "First Name", dataType: DataTypes.string, sortEnabled: true, filterEnabled: true }
+        { dataField: "Id", visible: true, width: 100, caption: "Id", dataType: DataTypes.Number, sortEnabled: true, filterEnabled: true, onCellClick: this.cellClicked },
+        { dataField: "FirstName", visible: true, width: 150, caption: "First Name", dataType: DataTypes.String, sortEnabled: true, filterEnabled: true }
     ]
     ````
     
@@ -56,12 +56,12 @@ Data grid custom component for Angular 8 and 8+, Created using only Angular.
     if `[dataSource.isServerOperations]` is set to true then add load function to get data from server side.  
     `[dataSource.load]` function has parameters like `pageNumber`, `pageSize`, `sortColumns`, `filterColumns`.  
     2.1 `sortColumns` is an array of {column : string, sortDirection: string}.  
-        possible values for sortDirection are Ascending, Descending.  
+        possible values for sortDirection are asc, desc.  
     2.2 `filterColumns` is an array of  
-    ````
+    ````javascript
     { column : string, filterOprator: string, filterValue: string, dataType: string}
     ````
-    possible values for **filterOprator** are StartWith, EndWith, Contains, GreaterThan, LessThan, Equals.  
+    possible values for **filterOprator** are startsWith, endsWith, contains, gt, ls, equals, notEquals.  
     possible values for **dataType** are number, string, date, boolean.  
 3.  `[multiColumnSortEnable]`  
     if set to true then multiple columns can be sorted. Need to set sortEnabled = true in column too.  

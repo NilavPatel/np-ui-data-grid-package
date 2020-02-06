@@ -75,10 +75,10 @@
                     <th *ngFor="let column of _columns; let j = index" [ngClass]="{'np-sticky-header' : isStickyHeader,'hidden': column.visible == false}" [style.width.px]="column.width">
                         <span [innerHTML]="column.getCaption()" (click)="_onSort(column)" [ngClass]="{'cursor-pointer': column.sortEnabled}" class="np-grid-header"></span>
                         <button class="np-icon-button" type="button" *ngIf="column.sortDirection != null" (click)="_onSort(column)">
-                            <svg class="np-icon asc" viewBox="0 0 24 24" *ngIf="column.sortDirection == 'Ascending'">
+                            <svg class="np-icon asc" viewBox="0 0 24 24" *ngIf="column.sortDirection == _sortDirections.Ascending">
                                 <path fill="none" d="M0 0h24v24H0V0z" />
                                 <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z" /></svg>
-                            <svg class="np-icon desc" viewBox="0 0 24 24" *ngIf="column.sortDirection == 'Descending'">
+                            <svg class="np-icon desc" viewBox="0 0 24 24" *ngIf="column.sortDirection == _sortDirections.Descending">
                                 <path fill="none" d="M0 0h24v24H0V0z" />
                                 <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z" /></svg>
                         </button>
@@ -97,7 +97,7 @@
                         <div class="filter-group" *ngIf="column.filterEnabled">
                             <div class="filter-selector">
                                 <select class="grid-control" [(ngModel)]="column.filterOperator" (change)="_onFilter(column, false)">
-                                        <option [value]="undefined" disabled hidden>Select</option>
+                                        <option [value]="undefined" disabled hidden>Select...</option>
                                         <option
                                             *ngFor="let filterOperator of _filtersList | filterTypesPipe: column.dataType"
                                             [ngValue]="filterOperator.name" [innerText]="filterOperator.text"></option>
@@ -111,13 +111,13 @@
                                     </button>
                             </div>
                             <div class="filter-input">
-                                <input type="text" class="grid-control" [(ngModel)]="column.filterValue" (change)="_onFilter(column, false)" placeholder="Search..." *ngIf="column.dataType == _dataTypes.string">
-                                <input type="number" class="grid-control" [(ngModel)]="column.filterValue" (change)="_onFilter(column, false)" placeholder="Search..." *ngIf="column.dataType == _dataTypes.number">
-                                <input type="date" class="grid-control" [(ngModel)]="column.filterValue" (change)="_onFilter(column, false)" placeholder="Search..." *ngIf="column.dataType == _dataTypes.date">
-                                <select class="grid-control" [(ngModel)]="column.filterValue" *ngIf="column.dataType == _dataTypes.boolean" (change)="_onFilter(column, false)">
+                                <input type="text" class="grid-control" [(ngModel)]="column.filterValue" (change)="_onFilter(column, false)" placeholder="Search..." *ngIf="column.dataType == _dataTypes.String">
+                                <input type="number" class="grid-control" [(ngModel)]="column.filterValue" (change)="_onFilter(column, false)" placeholder="Search..." *ngIf="column.dataType == _dataTypes.Number">
+                                <input type="date" class="grid-control" [(ngModel)]="column.filterValue" (change)="_onFilter(column, false)" placeholder="Search..." *ngIf="column.dataType == _dataTypes.Date">
+                                <select class="grid-control" [(ngModel)]="column.filterValue" *ngIf="column.dataType == _dataTypes.Boolean" (change)="_onFilter(column, false)">
                                     <option [value]="undefined" disabled hidden>Select</option>
-                                    <option value="true">True</option>
-                                    <option value="false">False</option>
+                                    <option [value]="true">True</option>
+                                    <option [value]="false">False</option>
                                 </select>
                             </div>
                         </div>

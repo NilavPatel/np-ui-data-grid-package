@@ -65,6 +65,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
   @Output() onRowClick: EventEmitter<any> = new EventEmitter();
 
   _dataTypes = DataTypes;
+  _sortDirections = SortDirections;
 
   @Input() tableId: string;
 
@@ -93,7 +94,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
 
   @Input() isShowSummary: boolean;
   @Input() summaryTemplate: TemplateRef<any>;
-  _summaryData: any;  
+  _summaryData: any;
 
   constructor(private pagerService: NpPagerService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
@@ -159,7 +160,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
         this._pager = this.pagerService.getPager(this._total, currentPageNumber, this._pager.pageSize);
         if (this._isAllSelected) {
           var that = this;
-          this._currentViewData.forEach(function (element) {
+          that._currentViewData.forEach(function (element) {
             if (that._selectedRowKeys.indexOf(element[that._key]) == -1) {
               that._selectedRowKeys.push(element[that._key]);
             }
@@ -315,65 +316,85 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
   }
 
   _filterDataSource() {
-    var data = this.dataSource.data;
     var that = this;
-    this._filterColumnList.forEach(element => {
-      if (element.filterOperator == FilterTypes.StartWith) {
-        data = this._custFilter(data, function (a) {
+    var data = that.dataSource.data;
+    that._filterColumnList.forEach(element => {
+      if (element.filterOperator === FilterTypes.StartsWith) {
+        data = that._custFilter(data, function (a) {
           return that._custStartWith(a[element.column].toLowerCase(), element.filterValue.toLowerCase());
         });
-      } else if (element.filterOperator == FilterTypes.EndWith) {
-        data = this._custFilter(data, function (a) {
+      } else if (element.filterOperator === FilterTypes.EndsWith) {
+        data = that._custFilter(data, function (a) {
           return that._custEndWith(a[element.column].toLowerCase(), element.filterValue.toLowerCase());
         });
-      } else if (element.filterOperator == FilterTypes.Contains) {
-        data = this._custFilter(data, function (a) {
+      } else if (element.filterOperator === FilterTypes.Contains) {
+        data = that._custFilter(data, function (a) {
           return a[element.column].toLowerCase().indexOf(element.filterValue.toLowerCase()) !== -1;
         });
-      } else if (element.filterOperator == FilterTypes.GreaterThan) {
-        if (element.dataType == DataTypes.number) {
-          data = this._custFilter(data, function (a) {
+      } else if (element.filterOperator === FilterTypes.GreaterThan) {
+        if (element.dataType === DataTypes.Number) {
+          data = that._custFilter(data, function (a) {
             return a[element.column] > parseInt(element.filterValue);
           });
-        } else if (element.dataType == DataTypes.date) {
-          data = this._custFilter(data, function (a) {
+        } else if (element.dataType === DataTypes.Date) {
+          data = that._custFilter(data, function (a) {
             return a[element.column].setHours(0, 0, 0, 0) > new Date(element.filterValue).setHours(0, 0, 0, 0);
           });
         }
-      } else if (element.filterOperator == FilterTypes.LessThan) {
-        if (element.dataType == DataTypes.number) {
-          data = this._custFilter(data, function (a) {
+      } else if (element.filterOperator === FilterTypes.LessThan) {
+        if (element.dataType === DataTypes.Number) {
+          data = that._custFilter(data, function (a) {
             return a[element.column] < parseInt(element.filterValue);
           });
-        } else if (element.dataType == DataTypes.date) {
-          data = this._custFilter(data, function (a) {
+        } else if (element.dataType === DataTypes.Date) {
+          data = that._custFilter(data, function (a) {
             return a[element.column].setHours(0, 0, 0, 0) < new Date(element.filterValue).setHours(0, 0, 0, 0);
           });
         }
-      } else if (element.filterOperator == FilterTypes.Equals) {
-        if (element.dataType == DataTypes.boolean) {
-          if (element.filterValue == "true") {
-            data = this._custFilter(data, function (a) {
+      } else if (element.filterOperator === FilterTypes.Equals) {
+        if (element.dataType === DataTypes.Boolean) {
+          if (element.filterValue === "true") {
+            data = that._custFilter(data, function (a) {
               return a[element.column] === true;
             });
           } else {
-            data = this._custFilter(data, function (a) {
+            data = that._custFilter(data, function (a) {
               return a[element.column] === false;
             });
           }
-        } else if (element.dataType == DataTypes.number) {
-          data = this._custFilter(data, function (a) {
+        } else if (element.dataType === DataTypes.Number) {
+          data = that._custFilter(data, function (a) {
             return a[element.column] === parseInt(element.filterValue);
           });
-        } else if (element.dataType == DataTypes.date) {
-          data = this._custFilter(data, function (a) {
-            return a[element.column].setHours(0, 0, 0, 0) == new Date(element.filterValue).setHours(0, 0, 0, 0);
+        } else if (element.dataType === DataTypes.Date) {
+          data = that._custFilter(data, function (a) {
+            return a[element.column].setHours(0, 0, 0, 0) === new Date(element.filterValue).setHours(0, 0, 0, 0);
+          });
+        }
+      } else if (element.filterOperator === FilterTypes.NotEquals) {
+        if (element.dataType === DataTypes.Boolean) {
+          if (element.filterValue === "true") {
+            data = that._custFilter(data, function (a) {
+              return a[element.column] !== true;
+            });
+          } else {
+            data = that._custFilter(data, function (a) {
+              return a[element.column] !== false;
+            });
+          }
+        } else if (element.dataType === DataTypes.Number) {
+          data = that._custFilter(data, function (a) {
+            return a[element.column] !== parseInt(element.filterValue);
+          });
+        } else if (element.dataType === DataTypes.Date) {
+          data = that._custFilter(data, function (a) {
+            return a[element.column].setHours(0, 0, 0, 0) !== new Date(element.filterValue).setHours(0, 0, 0, 0);
           });
         }
       }
     });
-    this._dataSource.data = data;
-    this._total = data.length;
+    that._dataSource.data = data;
+    that._total = data.length;
   }
 
   _removeFilterStringFromColumn(column: Column) {
@@ -423,14 +444,14 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
 
   _selectAll() {
     var that = this;
-    if (this._dataSource.isServerOperations) {
-      this._selectedRowKeys = [];
-      this._currentViewData.forEach(function (element) {
+    if (that._dataSource.isServerOperations) {
+      that._selectedRowKeys = [];
+      that._currentViewData.forEach(function (element) {
         that._selectedRowKeys.push(element[that._key]);
       });
     } else {
-      this._selectedRowKeys = [];
-      this._dataSource.data.forEach(function (element) {
+      that._selectedRowKeys = [];
+      that._dataSource.data.forEach(function (element) {
         that._selectedRowKeys.push(element[that._key]);
       });
     }
@@ -462,6 +483,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
         this.onSelect.emit(event);
       }
     } else {
+      this._isAllSelected = false;
       if (this.onDeselect != undefined) {
         event.data = keyValue;
         this.onDeselect.emit(event);
@@ -757,11 +779,11 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
   }
 
   _loadState() {
-    var currentStateName = this._currentStateName;
-    if (currentStateName == "") {
-      this.reset();
-    }
     var that = this;
+    var currentStateName = that._currentStateName;
+    if (currentStateName == "") {
+      that.reset();
+    }
     this._stateList.forEach(function (element) {
       if (element.name == currentStateName) {
         var columns = [];

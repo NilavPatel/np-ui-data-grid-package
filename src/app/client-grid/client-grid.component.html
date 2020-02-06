@@ -1,19 +1,22 @@
 <div>
     <legend>1. Client side data grid example</legend>
     <np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [multiColumnSortEnable]=true [masterChildTemplate]="masterChildTemplate" [height]="600" [width]="1000" [isStickyHeader]="true" [enableStateStoring]="true" [multiSelectEnable]="true"
-        [tableId]="'tblClientSide'" [showColumnChooser]="true" [title]="'Client side data grid'" [noDataMessage]="'No data available.'" [isShowSummary]="true" [summaryTemplate]="summaryTemplate">
+        tableId="tblClientSide" [showColumnChooser]="true" title="Client side data grid" noDataMessage="No data available." [isShowSummary]="true" [summaryTemplate]="summaryTemplate">
     </np-ui-data-grid>
 </div>
 
+<!-- Template for action buttons column -->
 <ng-template #actionButtonsTemplate let-row="row">
     <button (click)="onActionClick(row,'Edit', $event)">Edit</button>
     <button (click)="onActionClick(row,'Delete', $event)">Delete</button>
 </ng-template>
 
+<!-- Template for birthdate column -->
 <ng-template #birthDateColumnTemplate let-row="row">
     {{row.BirthDate | date:'dd/MM/yyyy'}}
 </ng-template>
 
+<!-- Template for child section -->
 <ng-template #masterChildTemplate let-row="row">
     <span><b>Name:</b>{{row.FirstName}} {{row.LastName}}</span>
     <br>
@@ -22,6 +25,7 @@
     <span><b>Birth Date:</b>{{row.BirthDate | date:'dd/MM/yyyy'}}</span>
 </ng-template>
 
+<!-- Template for summary section -->
 <ng-template #summaryTemplate let-summary="summary">
     <span>Total:{{summary ? summary.total : 0}}</span>
 </ng-template>
