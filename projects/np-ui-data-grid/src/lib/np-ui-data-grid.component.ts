@@ -5,6 +5,7 @@ import { NpPagerService, Pager } from './services/np-ui-pager.service';
 import { Constants, FilterTypes, DataTypes, SortDirections } from './models/constants';
 import { State } from './models/state.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { NpFilterService } from './services/np-ui-filter.service';
 
 @Component({
   selector: 'np-ui-data-grid',
@@ -96,7 +97,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
   @Input() summaryTemplate: TemplateRef<any>;
   _summaryData: any;
 
-  constructor(private pagerService: NpPagerService) {
+  constructor(private pagerService: NpPagerService, private filterService: NpFilterService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
     this._sortColumnList = [];
     this._filtersList = Constants.filters();
@@ -133,10 +134,17 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.dataSource != undefined && changes.dataSource.currentValue != undefined) {
       this._dataSource = new DataSource();
-      this._dataSource.data = this.dataSource.data;
-      this._dataSource.summary = this.dataSource.summary;
-      this._dataSource.isServerOperations = this.dataSource.isServerOperations;
-      this._dataSource.load = this.dataSource.load;
+      if (this.dataSource.isServerOperations) {
+        this._dataSource.data = null;
+        this._dataSource.summary = null;
+        this._dataSource.isServerOperations = this.dataSource.isServerOperations;
+        this._dataSource.load = this.dataSource.load;
+      } else {
+        this._dataSource.data = this.dataSource.data;
+        this._dataSource.summary = this.dataSource.summary;
+        this._dataSource.isServerOperations = false;
+        this._dataSource.load = null;
+      }
       this._getCurrentViewData(1);
     }
     if (changes.columns != undefined) {
@@ -204,17 +212,14 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
   }
 
   _onSort(column: Column) {
-
     if (!column.sortEnabled) {
       return;
     }
-
     var sortOrder = column.sortDirection == SortDirections.Descending ? SortDirections.Ascending : SortDirections.Descending;
     if (!this.multiColumnSortEnable) {
       this._removeAllSorting();
     }
     column.sortDirection = sortOrder;
-
     if (this.multiColumnSortEnable) {
       var list = [];
       this._sortColumnList.forEach(function (element) {
@@ -226,22 +231,12 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
     }
     this._sortColumnList.push({ column: column.dataField, sortDirection: column.sortDirection });
     this._selectedRowKeys = [];
-    this._openRowKeys = [];
     this._isAllSelected = false;
-    if (this._dataSource.isServerOperations) {
-      this._showLoader = true;
-      this._dataSource.load(1, this._pager.pageSize, this._sortColumnList, this._filterColumnList).then((store: CustomStore) => {
-        this._showLoader = false;
-        this._currentViewData = store.data;
-        this._total = store.total;
-        this._pager = this.pagerService.getPager(this._total, 1, this._pager.pageSize);
-      }).catch(error => {
-        console.error(error);
-      });
-    } else {
+    this._openRowKeys = [];
+    if (!this._dataSource.isServerOperations) {
       this._sortDataSource();
-      this._getCurrentViewData(1);
     }
+    this._getCurrentViewData(1);
   }
 
   _sortDataSource() {
@@ -296,125 +291,19 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
       }
     });
     this._selectedRowKeys = [];
-    this._openRowKeys = [];
     this._isAllSelected = false;
-    if (this._dataSource.isServerOperations) {
-      this._showLoader = true;
-      this._dataSource.load(1, this._pager.pageSize, this._sortColumnList, this._filterColumnList).then((store: CustomStore) => {
-        this._showLoader = false;
-        this._currentViewData = store.data;
-        this._total = store.total;
-        this._pager = this.pagerService.getPager(this._total, 1, this._pager.pageSize);
-      }).catch(error => {
-        console.error(error);
-      });
-    } else {
+    this._openRowKeys = [];
+    if (!this._dataSource.isServerOperations) {
       this._filterDataSource();
       this._sortDataSource();
-      this._getCurrentViewData(1);
     }
+    this._getCurrentViewData(1);
   }
 
   _filterDataSource() {
-    var that = this;
-    var data = that.dataSource.data;
-    that._filterColumnList.forEach(element => {
-      if (element.filterOperator === FilterTypes.StartsWith) {
-        data = that._custFilter(data, function (a) {
-          return that._custStartWith(a[element.column].toLowerCase(), element.filterValue.toLowerCase());
-        });
-      } else if (element.filterOperator === FilterTypes.EndsWith) {
-        data = that._custFilter(data, function (a) {
-          return that._custEndWith(a[element.column].toLowerCase(), element.filterValue.toLowerCase());
-        });
-      } else if (element.filterOperator === FilterTypes.Contains) {
-        data = that._custFilter(data, function (a) {
-          return a[element.column].toLowerCase().indexOf(element.filterValue.toLowerCase()) !== -1;
-        });
-      } else if (element.filterOperator === FilterTypes.GreaterThan) {
-        if (element.dataType === DataTypes.Number) {
-          data = that._custFilter(data, function (a) {
-            return a[element.column] > parseInt(element.filterValue);
-          });
-        } else if (element.dataType === DataTypes.Date) {
-          data = that._custFilter(data, function (a) {
-            return a[element.column].setHours(0, 0, 0, 0) > new Date(element.filterValue).setHours(0, 0, 0, 0);
-          });
-        }
-      } else if (element.filterOperator === FilterTypes.GreaterThanOrEquals) {
-        if (element.dataType === DataTypes.Number) {
-          data = that._custFilter(data, function (a) {
-            return a[element.column] >= parseInt(element.filterValue);
-          });
-        } else if (element.dataType === DataTypes.Date) {
-          data = that._custFilter(data, function (a) {
-            return a[element.column].setHours(0, 0, 0, 0) >= new Date(element.filterValue).setHours(0, 0, 0, 0);
-          });
-        }
-      } else if (element.filterOperator === FilterTypes.LessThan) {
-        if (element.dataType === DataTypes.Number) {
-          data = that._custFilter(data, function (a) {
-            return a[element.column] < parseInt(element.filterValue);
-          });
-        } else if (element.dataType === DataTypes.Date) {
-          data = that._custFilter(data, function (a) {
-            return a[element.column].setHours(0, 0, 0, 0) < new Date(element.filterValue).setHours(0, 0, 0, 0);
-          });
-        }
-      } else if (element.filterOperator === FilterTypes.LessThanOrEquals) {
-        if (element.dataType === DataTypes.Number) {
-          data = that._custFilter(data, function (a) {
-            return a[element.column] <= parseInt(element.filterValue);
-          });
-        } else if (element.dataType === DataTypes.Date) {
-          data = that._custFilter(data, function (a) {
-            return a[element.column].setHours(0, 0, 0, 0) <= new Date(element.filterValue).setHours(0, 0, 0, 0);
-          });
-        }
-      } else if (element.filterOperator === FilterTypes.Equals) {
-        if (element.dataType === DataTypes.Boolean) {
-          if (element.filterValue === "true") {
-            data = that._custFilter(data, function (a) {
-              return a[element.column] === true;
-            });
-          } else {
-            data = that._custFilter(data, function (a) {
-              return a[element.column] === false;
-            });
-          }
-        } else if (element.dataType === DataTypes.Number) {
-          data = that._custFilter(data, function (a) {
-            return a[element.column] === parseInt(element.filterValue);
-          });
-        } else if (element.dataType === DataTypes.Date) {
-          data = that._custFilter(data, function (a) {
-            return a[element.column].setHours(0, 0, 0, 0) === new Date(element.filterValue).setHours(0, 0, 0, 0);
-          });
-        }
-      } else if (element.filterOperator === FilterTypes.NotEquals) {
-        if (element.dataType === DataTypes.Boolean) {
-          if (element.filterValue === "true") {
-            data = that._custFilter(data, function (a) {
-              return a[element.column] !== true;
-            });
-          } else {
-            data = that._custFilter(data, function (a) {
-              return a[element.column] !== false;
-            });
-          }
-        } else if (element.dataType === DataTypes.Number) {
-          data = that._custFilter(data, function (a) {
-            return a[element.column] !== parseInt(element.filterValue);
-          });
-        } else if (element.dataType === DataTypes.Date) {
-          data = that._custFilter(data, function (a) {
-            return a[element.column].setHours(0, 0, 0, 0) !== new Date(element.filterValue).setHours(0, 0, 0, 0);
-          });
-        }
-      }
-    });
-    that._dataSource.data = data;
-    that._total = data.length;
+    var filterdData = this.filterService.filterData(this._filterColumnList, this.columns, this.dataSource.data);
+    this._dataSource.data = filterdData;
+    this._total = filterdData.length;
   }
 
   _removeFilterStringFromColumn(column: Column) {
@@ -859,14 +748,6 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
 
   private _custFind(arr: any[], fun: any): any {
     return arr.find(fun);
-  }
-
-  private _custStartWith(value: string, searchVal: string) {
-    return value.startsWith(searchVal, 0)
-  }
-
-  private _custEndWith(value: string, searchVal: string) {
-    return value.endsWith(searchVal)
   }
 
   private _custSort(arr: any[], ele: string, order: string) {

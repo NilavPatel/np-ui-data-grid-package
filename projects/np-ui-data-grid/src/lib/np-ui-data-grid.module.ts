@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NpPagerService } from './services/np-ui-pager.service';
 import { NpFilterTypesPipe } from './pipes/np-filter-types.pipe';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { NpFilterService } from './services/np-ui-filter.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     NpUiDataGridComponent
   ],
   providers: [
-    NpPagerService
+    NpPagerService,
+    NpFilterService
   ]
 })
 export class NpUiDataGridModule { }
