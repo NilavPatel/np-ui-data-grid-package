@@ -197,8 +197,8 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
   }
 
   _setColumnsCount() {
-    this._visibleColumnCount = this._custFilter(this._columns, function (element) { if (element.visible == true) { return element } }).length;
-    this._isFilterAvailable = this._custFilter(this._columns, function (element) { if (element.filterEnabled == true && element.visible == true) { return element } }).length > 0;
+    this._visibleColumnCount = this._custFilter(this._columns, function (element) { if (element.visible === true) { return element } }).length;
+    this._isFilterAvailable = this._custFilter(this._columns, function (element) { if (element.filterEnabled === true && element.visible === true) { return element } }).length > 0;
   }
 
   _onPageSizeChange() {
