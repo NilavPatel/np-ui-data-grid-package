@@ -1,5 +1,7 @@
 <div>
-    <legend>2. Server side data grid example</legend>
+    <legend>
+        <h1>2. Server side data grid example</h1>
+    </legend>
     <np-ui-data-grid #serverSideGrid [columns]="gridColumns" [dataSource]="gridDataSource1" [singleSelectEnable]="true" title="Server side data grid" [showColumnChooser]="true" [enableStateStoring]="true" [showFilters]="showFilters" [isShowSummary]="true"
         [summaryTemplate]="summaryTemplate" (onSelect)="onSelectRow($event)" (onInit)="onInit()" (onAfterInit)="onAfterInit()">
     </np-ui-data-grid>

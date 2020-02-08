@@ -1,4 +1,4 @@
-<div class="np-grid" [style.max-height.px]="height" [style.max-width.px]="width" [id]="tableId">
+<div class="np-grid" [style.max-height.px]="height" [style.max-width.px]="width - 2" [id]="tableId">
     <div *ngIf="_showLoader" class="np-loader"></div>
     <div *ngIf="title.length > 0" class="np-grid-title" [ngClass]="{'locked': _showLoader}">{{title}}</div>
     <div class="np-toolbar" [ngClass]="{'locked': _showLoader}" *ngIf="showColumnChooser || enableStateStoring">
@@ -30,7 +30,10 @@
                             <span>{{column.getCaption()}}</span>
                         </label>
                         <div class="np-drag-handle">
-                            <svg class="np-icon" viewBox="0 0 24 24"><path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                            <svg class="np-icon" viewBox="0 0 24 24">
+                                <path
+                                    d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z" />
+                                <path d="M0 0h24v24H0z" fill="none" /></svg>
                         </div>
                     </div>
                 </div>
@@ -75,10 +78,12 @@
                     <th *ngFor="let column of _columns; let j = index" [ngClass]="{'np-sticky-header' : isStickyHeader,'hidden': column.visible == false}" [style.width.px]="column.width">
                         <span [innerHTML]="column.getCaption()" (click)="_onSort(column)" [ngClass]="{'cursor-pointer': column.sortEnabled}" class="np-grid-header"></span>
                         <button class="np-icon-button" type="button" *ngIf="column.sortDirection != null" (click)="_onSort(column)">
-                            <svg class="np-icon asc" viewBox="0 0 24 24" *ngIf="column.sortDirection == _sortDirections.Ascending">
+                            <svg class="np-icon asc" viewBox="0 0 24 24"
+                                *ngIf="column.sortDirection == _sortDirections.Ascending">
                                 <path fill="none" d="M0 0h24v24H0V0z" />
                                 <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z" /></svg>
-                            <svg class="np-icon desc" viewBox="0 0 24 24" *ngIf="column.sortDirection == _sortDirections.Descending">
+                            <svg class="np-icon desc" viewBox="0 0 24 24"
+                                *ngIf="column.sortDirection == _sortDirections.Descending">
                                 <path fill="none" d="M0 0h24v24H0V0z" />
                                 <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z" /></svg>
                         </button>
@@ -97,18 +102,18 @@
                         <div class="filter-group" *ngIf="column.filterEnabled">
                             <div class="filter-selector">
                                 <select class="grid-control" [(ngModel)]="column.filterOperator" (change)="_onFilter(column, false)">
-                                        <option [value]="undefined" disabled hidden>Select...</option>
-                                        <option
-                                            *ngFor="let filterOperator of _filtersList | filterTypesPipe: column.dataType"
-                                            [ngValue]="filterOperator.name" [innerText]="filterOperator.text"></option>
-                                    </select>
+                                    <option [value]="undefined" disabled hidden>Select...</option>
+                                    <option
+                                        *ngFor="let filterOperator of _filtersList | filterTypesPipe: column.dataType"
+                                        [ngValue]="filterOperator.name" [innerText]="filterOperator.text"></option>
+                                </select>
                                 <button class="np-icon-button" type="button" title="Remove filter" (click)="_removeFilterStringFromColumn(column)">
-                                        <svg class="np-icon" viewBox="0 0 24 24">
-                                            <path
-                                                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
-                                            <path d="M0 0h24v24H0z" fill="none" />
-                                        </svg>
-                                    </button>
+                                    <svg class="np-icon" viewBox="0 0 24 24">
+                                        <path
+                                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                                        <path d="M0 0h24v24H0z" fill="none" />
+                                    </svg>
+                                </button>
                             </div>
                             <div class="filter-input">
                                 <input type="text" class="grid-control" [(ngModel)]="column.filterValue" (change)="_onFilter(column, false)" placeholder="Search..." *ngIf="column.dataType == _dataTypes.String">

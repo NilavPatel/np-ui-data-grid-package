@@ -2,6 +2,7 @@
     width: 100%;
     table-layout: fixed;
     overflow: hidden;
+    border: 1px solid black;
 }
 
 .np-grid-table {
@@ -9,27 +10,24 @@
     border-collapse: separate;
     border-spacing: 0px;
     width: 100%;
-    border-right: 1px solid lightgray;
-}
-
-.np-grid-table thead th {
-    background-color: white;
 }
 
 .np-grid-table td {
     padding: 5px;
-    border-bottom: 1px solid lightgray;
-    border-left: 1px solid lightgray;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
 }
 
 .np-grid-table th {
+    background-color: white;
     padding: 5px;
-    border-bottom: 1px solid lightgray;
-    border-left: 1px solid lightgray;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
 }
 
-.np-grid {
-    border-top: 1px solid lightgray;
+.np-grid-table tr td:last-child,
+.np-grid-table tr th:last-child {
+    border-right: none;
 }
 
 .np-pagination ul {
@@ -56,7 +54,7 @@
 }
 
 .active {
-    background-color: lightgray
+    background-color: black
 }
 
 th a.sort-by-asc,
@@ -90,9 +88,6 @@ th a.sort-by-desc {
 .np-pagination {
     height: 55px;
     overflow: hidden;
-    border-left: 1px solid lightgray;
-    border-right: 1px solid lightgray;
-    border-bottom: 1px solid lightgray;
 }
 
 .np-pagination .div-page-size {
@@ -159,8 +154,7 @@ input[type="checkbox"] {
 
 .grid-control {
     width: 100%;
-    display: inline-block;
-    border: 1px solid lightgray;
+    border: 1px solid black;
     box-sizing: border-box;
     padding: 4px;
     height: 26px;
@@ -177,7 +171,7 @@ input[type="checkbox"] {
 .np-loader {
     width: 56px;
     height: 56px;
-    border: 8px solid lightgray;
+    border: 8px solid black;
     border-radius: 50%;
     position: sticky;
     animation: loader-rotate 1s linear infinite;
@@ -203,7 +197,7 @@ input[type="checkbox"] {
     display: none;
     position: absolute;
     min-width: 160px;
-    border: 1px solid lightgray;
+    border: 1px solid black;
     padding: 12px 16px;
     z-index: 1006;
     background-color: white;
@@ -221,9 +215,7 @@ input[type="checkbox"] {
     height: 30px;
     min-width: 300px;
     padding: 2px;
-    border-bottom: 1px solid lightgray;
-    border-left: 1px solid lightgray;
-    border-right: 1px solid lightgray;
+    border-bottom: 1px solid black;
 }
 
 .np-state-select {
@@ -239,9 +231,7 @@ input[type="checkbox"] {
 .np-grid-title {
     height: 20px;
     padding: 2px;
-    border-bottom: 1px solid lightgray;
-    border-left: 1px solid lightgray;
-    border-right: 1px solid lightgray;
+    border-bottom: 1px solid black;
 }
 
 .np-toolbar-item {
@@ -274,7 +264,7 @@ input[type="checkbox"] {
 }
 
 .np-drag-list {
-    border: solid 1px lightgray;
+    border: solid 1px black;
     min-width: 200px;
     display: block;
     overflow: auto;
@@ -282,7 +272,7 @@ input[type="checkbox"] {
 }
 
 .np-drag-box {
-    border-bottom: solid 1px lightgray;
+    border-bottom: solid 1px black;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -316,8 +306,7 @@ input[type="checkbox"] {
 
 .np-icon-button {
     cursor: pointer;
-    margin: 0px;
-    padding: 0px;
+    padding: 2px;
     border: none;
     background-color: transparent !important;
 }
@@ -328,12 +317,12 @@ input[type="checkbox"] {
 }
 
 .np-pagination .np-icon-button {
-    border: 1px solid lightgray;
+    border: 1px solid black;
     padding: 2px;
 }
 
 .np-toolbar .np-icon-button {
-    border: 1px solid lightgray;
+    border: 1px solid black;
     padding: 2px;
 }
 
@@ -369,10 +358,25 @@ input[type="checkbox"] {
     left: 0px;
     z-index: 1001;
     background-color: white;
-    border-left: 1px solid lightgray;
-    border-right: 1px solid lightgray;
-    border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid black;
     padding: 2px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 @media (max-width: 767px) {
