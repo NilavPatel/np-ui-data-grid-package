@@ -15,6 +15,7 @@ Data grid custom component for Angular 8 and 8+, Created using only Angular.
 * Store state of grid and change from dropdown (show/hide column, filters values and sorting is also saved in state).
 * Column drag and drop.
 * Summary in datagrid footer.
+* Resize columns width
 
 ## HTML
 ````html
@@ -110,6 +111,10 @@ Data grid custom component for Angular 8 and 8+, Created using only Angular.
     **SERVER SIDE**  
     To show summary in client side pass summary variable in CustomStore.summary.  
     Which data is accessible in template context.  
+18. `[allowColumnReorder]`: boolean
+    Set allow columns reorder or not
+19. `[allowColumnResize]`: boolean
+    Set allow columns resize or not
 
 ## Apis
 1.  `goToPage(pageNumber: number)`  
@@ -163,6 +168,10 @@ Data grid custom component for Angular 8 and 8+, Created using only Angular.
     parameter is array of State object.  
 25. `refresh()`  
     refresh current view data only.  
+26. `removeAllFilters()`  
+    remove all filters from grid all columns.  
+27. `removeAllSortings()`  
+    remove all sortings from grid all columns.  
 
 ## Methods  
 1.  `onRowClick(event)`  

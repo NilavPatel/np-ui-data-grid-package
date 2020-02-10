@@ -1,3 +1,5 @@
+import { Pager } from '../models/pager.model';
+
 export class NpPagerService {
     getPager(totalItems: number, currentPage: number = 1, pageSize: number = 10): Pager {
         // calculate total pages
@@ -50,16 +52,4 @@ export class NpPagerService {
             pages: pages
         };
     }
-}
-
-export class Pager {
-    public totalItems: number;
-    public currentPage: number;
-    public pageSize: number;
-    public totalPages: number;
-    public startPage: number;
-    public endPage: number;
-    public startIndex: number;
-    public endIndex: number;
-    public pages: number[];
 }

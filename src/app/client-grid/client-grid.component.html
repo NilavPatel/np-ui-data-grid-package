@@ -5,7 +5,7 @@
         </h1>
     </legend>
     <np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [multiColumnSortEnable]=true [masterChildTemplate]="masterChildTemplate" [height]="600" [width]="1000" [isStickyHeader]="true" [enableStateStoring]="true" [multiSelectEnable]="true"
-        tableId="tblClientSide" [showColumnChooser]="true" title="Client side data grid" noDataMessage="No data available." [isShowSummary]="true" [summaryTemplate]="summaryTemplate">
+        tableId="tblClientSide" [showColumnChooser]="true" [title]="'Client side data grid'" noDataMessage="No data available." [isShowSummary]="true" [summaryTemplate]="summaryTemplate" [allowColumnReorder]="true" [allowColumnResize]="true">
     </np-ui-data-grid>
 </div>
 

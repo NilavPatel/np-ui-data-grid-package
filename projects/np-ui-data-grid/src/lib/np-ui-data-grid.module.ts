@@ -3,9 +3,10 @@ import { NpUiDataGridComponent } from './np-ui-data-grid.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NpPagerService } from './services/np-ui-pager.service';
-import { NpFilterTypesPipe } from './pipes/np-filter-types.pipe';
+import { NpFilterTypesPipe } from './pipes/np-ui-filter-types.pipe';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NpFilterService } from './services/np-ui-filter.service';
+import { NpUtilityService } from './services/np-ui-utility';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { NpFilterService } from './services/np-ui-filter.service';
   ],
   providers: [
     NpPagerService,
-    NpFilterService
+    NpFilterService,
+    NpUtilityService
   ]
 })
 export class NpUiDataGridModule { }

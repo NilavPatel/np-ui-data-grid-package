@@ -14,7 +14,7 @@ export class ServerGridComponent implements OnInit {
   gridDataSource1: DataSource;
   _toggleColumn: boolean = true;
   showFilters: boolean = true;
-    
+
   @ViewChild("actionButtonsTemplate", { static: true }) actionButtonsTemplate: TemplateRef<any>;
   @ViewChild("birthDateColumnTemplate", { static: true }) birthDateColumnTemplate: TemplateRef<any>;
   @ViewChild("summaryTemplate", { static: true }) summaryTemplate: TemplateRef<any>;
@@ -28,13 +28,13 @@ export class ServerGridComponent implements OnInit {
     var that = this;
 
     this.gridColumns = [
-      { dataField: "Id", visible: true, width: 100, caption: "Id", dataType: DataTypes.Number, sortEnabled: true, filterEnabled: true, onCellClick: this.cellClicked },
-      { dataField: "FirstName", visible: true, width: 150, caption: "First Name", dataType: DataTypes.String, sortEnabled: true, filterEnabled: true },
-      { dataField: "LastName", visible: true, width: 150, caption: "Last Name", dataType: DataTypes.String },
-      { dataField: "BirthDate", visible: true, width: 150, caption: "Birth Date", dataType: DataTypes.Date, filterEnabled: true, cellTemplate: this.birthDateColumnTemplate },
-      { dataField: "Age", visible: true, width: 100, dataType: DataTypes.Number, sortEnabled: true, filterEnabled: true, styleClass: "color-red", rightAlignText: true },
-      { dataField: "Active", visible: true, width: 150, caption: "Is Active?", dataType: DataTypes.Boolean, filterEnabled: true, },
-      { visible: true, width: 100, cellTemplate: this.actionButtonsTemplate }];
+      { dataField: "Id", visible: true, caption: "Id", dataType: DataTypes.Number, sortEnabled: true, filterEnabled: true, onCellClick: this.cellClicked },
+      { dataField: "FirstName", visible: true, caption: "First Name", dataType: DataTypes.String, sortEnabled: true, filterEnabled: true },
+      { dataField: "LastName", visible: true, caption: "Last Name", dataType: DataTypes.String },
+      { dataField: "BirthDate", visible: true, caption: "Birth Date", dataType: DataTypes.Date, filterEnabled: true, cellTemplate: this.birthDateColumnTemplate },
+      { dataField: "Age", visible: true, dataType: DataTypes.Number, sortEnabled: true, filterEnabled: true, styleClass: "color-red", rightAlignText: true },
+      { dataField: "Active", visible: true, caption: "Is Active?", dataType: DataTypes.Boolean, filterEnabled: true, },
+      { visible: true, cellTemplate: this.actionButtonsTemplate }];
 
     /** for server side grid */
     this.gridDataSource1 = new DataSource();
@@ -122,6 +122,14 @@ export class ServerGridComponent implements OnInit {
 
   goToPage(num) {
     this.serverSideGrid.goToPage(num);
+  }
+
+  clearFilters() {
+    this.serverSideGrid.removeAllFilters();
+  }
+
+  clearSortings() {
+    this.serverSideGrid.removeAllSortings();
   }
 
 }

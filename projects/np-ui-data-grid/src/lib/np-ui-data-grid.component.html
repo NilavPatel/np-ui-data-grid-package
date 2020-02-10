@@ -10,7 +10,7 @@
             </button>
             <div class="column-chooser-content" *ngIf="showColumnChooser" [ngClass]="{'column-chooser-content-open':_isOpenColumnChooser}">
                 <div class="txt-right">
-                    <button type="button" class="np-icon-button" title="Reset All" (click)="_onResetColumn()">
+                    <button type="button" class="np-icon-button" title="Reset All" (click)="_onResetColumns()">
                         <svg class="np-icon" viewBox="0 0 24 24">
                             <path
                                 d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z" />
@@ -23,13 +23,14 @@
                             <path d="M0 0h24v24H0z" fill="none" /></svg>
                     </button>
                 </div>
-                <div cdkDropList class="np-drag-list" (cdkDropListDropped)="_drop($event)">
-                    <div class="np-drag-box" *ngFor="let column of _columns; let j = index" cdkDrag>
+                <div cdkDropList class="np-drag-list" (cdkDropListDropped)="_dropColumn($event)" [cdkDropListDisabled]="!allowColumnReorder">
+                    <div class="np-drag-box" *ngFor="let column of _columns; let j = index" cdkDrag cdkDragLockAxis="y" cdkDragBoundary=".np-drag-list">
+                        <div class="np-drag-custom-placeholder" *cdkDragPlaceholder></div>
                         <label>
                             <input type="checkbox" [checked]="column.visible" (change)="_onColumnChoosing(column)">
                             <span>{{column.getCaption()}}</span>
                         </label>
-                        <div class="np-drag-handle">
+                        <div class="np-drag-handle" cdkDragHandle *ngIf="allowColumnReorder">
                             <svg class="np-icon" viewBox="0 0 24 24">
                                 <path
                                     d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z" />
@@ -70,12 +71,12 @@
     <div [style.max-height.px]="height - 117" [ngClass]="{'locked': _showLoader}" class="np-table-container">
         <table class="np-grid-table">
             <thead>
-                <tr class="np-grid-header-row">
+                <tr class="np-grid-header-row" cdkDropList (cdkDropListDropped)="_resizeColumn($event)" [cdkDropListDisabled]="!allowColumnResize">
                     <th *ngIf="_enableMasterChild" width="30px;" [ngClass]="{'np-sticky-header' : isStickyHeader}" class="txt-center"></th>
                     <th *ngIf="singleSelectEnable || multiSelectEnable" width="30px;" [ngClass]="{'np-sticky-header' : isStickyHeader}" class="txt-center">
-                        <input class="row-selection-input" type="checkbox" *ngIf="multiSelectEnable" title="Select/Unselect All" (change)="_onSelectAll($event)" [(ngModel)]="_isAllSelected" name="chkAllSelected">
+                        <input class="row-selection-input" type="checkbox" *ngIf="multiSelectEnable" title="Select/Unselect All" (change)="_onSelectAll($event)" [(ngModel)]="_isAllSelected">
                     </th>
-                    <th *ngFor="let column of _columns; let j = index" [ngClass]="{'np-sticky-header' : isStickyHeader,'hidden': column.visible == false}" [style.width.px]="column.width">
+                    <th *ngFor="let column of _columns; let j = index" [ngClass]="{'np-sticky-header' : isStickyHeader,'hidden': column.visible == false}" [style.width.px]="column.width" cdkDrag cdkDragLockAxis="x" cdkDragBoundary=".np-grid-header-row">
                         <span [innerHTML]="column.getCaption()" (click)="_onSort(column)" [ngClass]="{'cursor-pointer': column.sortEnabled}" class="np-grid-header"></span>
                         <button class="np-icon-button" type="button" *ngIf="column.sortDirection != null" (click)="_onSort(column)">
                             <svg class="np-icon asc" viewBox="0 0 24 24"
@@ -93,6 +94,7 @@
                                     d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
                                 <path d="M0 0h24v24H0z" fill="none" /></svg>
                         </button>
+                        <div class="np-resizable-handle" cdkDragHandle *ngIf="allowColumnResize"></div>
                     </th>
                 </tr>
                 <tr class="np-grid-header-row-filter" *ngIf="_isFilterAvailable && showFilters">
@@ -164,12 +166,12 @@
                 </ng-container>
             </tbody>
         </table>
+        <div *ngIf="_currentViewData && _currentViewData.length == 0 && !_showLoader" class="no-data-message">
+            {{noDataMessage}}
+        </div>
         <div class="np-summary" *ngIf="isShowSummary">
             <ng-container *ngTemplateOutlet="summaryTemplate;context:{ summary: _summaryData }">
             </ng-container>
-        </div>
-        <div *ngIf="_currentViewData && _currentViewData.length == 0 && !_showLoader" class="no-data-message">
-            {{noDataMessage}}
         </div>
     </div>
     <div [ngClass]="{'locked': _showLoader}">

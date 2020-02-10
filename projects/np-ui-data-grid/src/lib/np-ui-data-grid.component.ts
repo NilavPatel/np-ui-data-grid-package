@@ -1,11 +1,13 @@
 import { Component, OnInit, Input, SimpleChanges, TemplateRef, EventEmitter, Output, AfterViewInit } from '@angular/core';
 import { Column } from './models/column.model';
 import { DataSource, CustomStore } from './models/data-source.model';
-import { NpPagerService, Pager } from './services/np-ui-pager.service';
+import { NpPagerService } from './services/np-ui-pager.service';
 import { Constants, FilterTypes, DataTypes, SortDirections } from './models/constants';
 import { State } from './models/state.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { NpFilterService } from './services/np-ui-filter.service';
+import { NpUtilityService } from './services/np-ui-utility';
+import { Pager } from './models/pager.model';
 
 @Component({
   selector: 'np-ui-data-grid',
@@ -97,7 +99,12 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
   @Input() summaryTemplate: TemplateRef<any>;
   _summaryData: any;
 
-  constructor(private pagerService: NpPagerService, private filterService: NpFilterService) {
+  @Input() allowColumnResize: boolean;
+  @Input() allowColumnReorder: boolean;
+
+  constructor(private pagerService: NpPagerService,
+    private filterService: NpFilterService,
+    private utilityService: NpUtilityService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
     this._sortColumnList = [];
     this._filtersList = Constants.filters();
@@ -197,8 +204,8 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
   }
 
   _setColumnsCount() {
-    this._visibleColumnCount = this._custFilter(this._columns, function (element) { if (element.visible === true) { return element } }).length;
-    this._isFilterAvailable = this._custFilter(this._columns, function (element) { if (element.filterEnabled === true && element.visible === true) { return element } }).length > 0;
+    this._visibleColumnCount = this.utilityService.custFilter(this._columns, function (element) { if (element.visible === true) { return element } }).length;
+    this._isFilterAvailable = this.utilityService.custFilter(this._columns, function (element) { if (element.filterEnabled === true && element.visible === true) { return element } }).length > 0;
   }
 
   _onPageSizeChange() {
@@ -241,7 +248,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
 
   _sortDataSource() {
     this._sortColumnList.forEach(element => {
-      this._dataSource.data = this._custSort(this._dataSource.data, element.column, element.sortDirection);
+      this._dataSource.data = this.utilityService.custSort(this._dataSource.data, element.column, element.sortDirection);
     });
   }
 
@@ -267,7 +274,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
       this._resetDataSource();
       this._filterDataSource();
       this._sortColumnList.forEach(element => {
-        this._dataSource.data = this._custSort(this._dataSource.data, element.column, element.sortDirection);
+        this._dataSource.data = this.utilityService.custSort(this._dataSource.data, element.column, element.sortDirection);
       });
     }
     this._getCurrentViewData(1);
@@ -310,6 +317,14 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
     column.filterValue = undefined;
     column.filterOperator = undefined;
     this._onFilter(column, true);
+  }
+
+  _removeAllFilters() {
+    this._columns.forEach(element => {
+      element.filterOperator = null;
+      element.filterValue = null;
+    });
+    this._filterColumnList = [];
   }
 
   _openMasterChild(keyValue: any) {
@@ -424,7 +439,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
     this._isOpenColumnChooser = !this._isOpenColumnChooser;
   }
 
-  _drop(event: CdkDragDrop<string[]>) {
+  _dropColumn(event: CdkDragDrop<string[]>) {
     this.showLoader();
     moveItemInArray(this._columns, event.previousIndex, event.currentIndex);
     this.hideLoader();
@@ -542,7 +557,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
    * @param direction desc | asc
    */
   sortByColumn(dataField: string, direction: SortDirections) {
-    var sortColumn = this._custFind(this._columns, function (element: Column) { return element.dataField === dataField });
+    var sortColumn = this.utilityService.custFind(this._columns, function (element: Column) { return element.dataField === dataField });
     sortColumn.sortDirection = direction;
     this._onSort(sortColumn);
   }
@@ -554,7 +569,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
    * @param type FilterTypes
    */
   filterByColumn(dataField: string, keyword: string, type: FilterTypes) {
-    var filterColumn = this._custFind(this._columns, function (element: Column) { return element.dataField === dataField });
+    var filterColumn = this.utilityService.custFind(this._columns, function (element: Column) { return element.dataField === dataField });
     filterColumn.filterString = keyword;
     filterColumn.filterType = type;
     this._onFilter(filterColumn, true);
@@ -738,31 +753,31 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
     this._getCurrentViewData(this._pager.currentPage);
   }
 
-  _onResetColumn() {
+  _onResetColumns() {
     this.reset();
   }
 
-  private _custFilter(arr: any[], fun: any) {
-    return arr.filter(fun);
-  }
-
-  private _custFind(arr: any[], fun: any): any {
-    return arr.find(fun);
-  }
-
-  private _custSort(arr: any[], ele: string, order: string) {
-    if (order == SortDirections.Descending) {
-      return arr.concat().sort(this._sortByDesc(ele));
-    } else {
-      return arr.concat().sort(this._sortBy(ele));
+  _resizeColumn($event: CdkDragDrop<string[]>) {
+    var currentWidth = this._columns[$event.previousIndex].width;
+    if (isNaN(currentWidth)) {
+      currentWidth = $event.item.element.nativeElement.offsetWidth;
     }
+    this._columns[$event.previousIndex].width = (isNaN(currentWidth) ? 0 : currentWidth) + $event.distance.x;
   }
 
-  private _sortBy = (key) => {
-    return (a, b) => (a[key] > b[key]) ? 1 : ((b[key] > a[key]) ? -1 : 0);
-  };
+  /**
+   * Remove all sortings
+   */
+  removeAllSortings() {
+    this._removeAllSorting();
+    this._getCurrentViewData(1);
+  }
 
-  private _sortByDesc = (key) => {
-    return (a, b) => (a[key] < b[key]) ? 1 : ((b[key] < a[key]) ? -1 : 0);
-  };
+  /**
+   * Remove all filters
+   */
+  removeAllFilters() {
+    this._removeAllFilters();
+    this._getCurrentViewData(1);
+  }
 }

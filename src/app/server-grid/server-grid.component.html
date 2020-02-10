@@ -2,8 +2,8 @@
     <legend>
         <h1>2. Server side data grid example</h1>
     </legend>
-    <np-ui-data-grid #serverSideGrid [columns]="gridColumns" [dataSource]="gridDataSource1" [singleSelectEnable]="true" title="Server side data grid" [showColumnChooser]="true" [enableStateStoring]="true" [showFilters]="showFilters" [isShowSummary]="true"
-        [summaryTemplate]="summaryTemplate" (onSelect)="onSelectRow($event)" (onInit)="onInit()" (onAfterInit)="onAfterInit()">
+    <np-ui-data-grid #serverSideGrid [columns]="gridColumns" [dataSource]="gridDataSource1" [singleSelectEnable]="true" [title]="'Server side data grid'" [showColumnChooser]="true" [enableStateStoring]="true" [showFilters]="showFilters" [isShowSummary]="true"
+        [summaryTemplate]="summaryTemplate" (onSelect)="onSelectRow($event)" (onInit)="onInit()" (onAfterInit)="onAfterInit()" [allowColumnReorder]="true" [allowColumnResize]="true">
     </np-ui-data-grid>
 
     <div class="btn-group">
@@ -12,6 +12,8 @@
         <button type="button" (click)="changeColumns()">Change Column list</button>
         <button type="button" (click)="showFilters = !showFilters">Toggle Filters</button>
         <button type="button" (click)="goToPage(2)">Go to Page 2</button>
+        <button type="button" (click)="clearFilters()">Clear All Filters</button>
+        <button type="button" (click)="clearSortings()">Clear All Sorting</button>
     </div>
 </div>
 

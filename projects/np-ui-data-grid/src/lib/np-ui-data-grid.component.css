@@ -16,6 +16,7 @@
     padding: 5px;
     border-bottom: 1px solid black;
     border-right: 1px solid black;
+    overflow: hidden;
 }
 
 .np-grid-table th {
@@ -23,6 +24,8 @@
     padding: 5px;
     border-bottom: 1px solid black;
     border-right: 1px solid black;
+    position: relative;
+    overflow: hidden;
 }
 
 .np-grid-table tr td:last-child,
@@ -99,13 +102,13 @@ th a.sort-by-desc {
 }
 
 .np-sticky-header {
-    position: sticky;
+    position: sticky !important;
     top: 0px;
     z-index: 1001;
 }
 
 .np-sticky-header-filter {
-    position: sticky;
+    position: sticky !important;
     top: 35px;
     z-index: 1002;
 }
@@ -169,23 +172,25 @@ input[type="checkbox"] {
 }
 
 .np-loader {
+    border: 8px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 8px solid black;
     width: 56px;
     height: 56px;
-    border: 8px solid black;
-    border-radius: 50%;
+    animation: spin 2s linear infinite;
     position: sticky;
-    animation: loader-rotate 1s linear infinite;
-    animation-duration: 1s;
-    animation-timing-function: linear;
-    animation-delay: 0s;
-    animation-iteration-count: infinite;
-    animation-direction: normal;
-    animation-fill-mode: none;
-    animation-play-state: running;
-    animation-name: loader-rotate;
-    top: 50%;
     margin: -72px auto 0;
-    z-index: 9999;
+    top: 50%;
+    z-index: 2000;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .locked {
@@ -254,15 +259,6 @@ input[type="checkbox"] {
     padding: 0px 5px;
 }
 
-@keyframes loader-rotate {
-    0% {
-        transform: rotate(0);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
 .np-drag-list {
     border: solid 1px black;
     min-width: 200px;
@@ -278,17 +274,19 @@ input[type="checkbox"] {
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
-    cursor: move;
     padding: 2px;
+    height: 25px;
 }
 
-.cdk-drag-preview {
+.np-drag-box.cdk-drag-preview {
     box-sizing: border-box;
     border-radius: 4px;
     box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    z-index: 1007 !important;
+    background-color: white;
 }
 
-.cdk-drag-animating {
+.np-drag-box.cdk-drag-animating {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
@@ -296,7 +294,13 @@ input[type="checkbox"] {
     border: none;
 }
 
-.np-drag-list.cdk-drop-list-dragging .drag-box:not(.cdk-drag-placeholder) {
+.np-drag-list.cdk-drop-list-dragging .np-drag-box:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.np-drag-custom-placeholder {
+    background: #ccc;
+    min-height: 25px;
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
@@ -377,6 +381,21 @@ input[type="checkbox"] {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+.np-resizable-handle {
+    width: 7px;
+    right: 0;
+    top: 0;
+    height: 100%;
+    z-index: 1;
+    position: absolute;
+    display: block;
+    cursor: col-resize;
+}
+
+.np-drag-handle {
+    cursor: move;
 }
 
 @media (max-width: 767px) {

@@ -65,5 +65,9 @@
     border-radius: 5px;
 }
 
+.np-loader {
+    border-top: 8px solid lightslategray !important;
+}
+
 
 /* CSS to change desing of datagrid end CSS-2*/
