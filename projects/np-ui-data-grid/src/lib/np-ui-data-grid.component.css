@@ -231,6 +231,10 @@ input[type="checkbox"] {
 .no-data-message {
     padding: 10px;
     text-align: center;
+    border-bottom: 1px solid black;
+    position: sticky;
+    bottom: 0px;
+    left: 0px;
 }
 
 .np-grid-title {
