@@ -1,6 +1,7 @@
 import { Component, TemplateRef, ViewChild, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataSource, DataTypes, NpUiDataGridComponent } from 'projects/np-ui-data-grid/src/public-api';
 import { DataService } from '../data.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-client-grid',
@@ -11,8 +12,8 @@ import { DataService } from '../data.service';
 export class ClientGridComponent implements OnInit {
 
   gridColumns: any[];
-  gridDataSource: DataSource;
-    
+  gridDataSource: BehaviorSubject<DataSource>;
+
   @ViewChild("actionButtonsTemplate", { static: true }) actionButtonsTemplate: TemplateRef<any>;
   @ViewChild("birthDateColumnTemplate", { static: true }) birthDateColumnTemplate: TemplateRef<any>;
   @ViewChild("summaryTemplate", { static: true }) summaryTemplate: TemplateRef<any>;
@@ -25,8 +26,6 @@ export class ClientGridComponent implements OnInit {
   }
 
   ngOnInit() {
-    var that = this;
-
     this.gridColumns = [
       { dataField: "Id", visible: true, width: 100, caption: "Id", dataType: DataTypes.Number, sortEnabled: true, filterEnabled: true, onCellClick: this.cellClicked },
       { dataField: "FirstName", visible: true, width: 150, caption: "First Name", dataType: DataTypes.String, sortEnabled: true, filterEnabled: true },
@@ -35,12 +34,19 @@ export class ClientGridComponent implements OnInit {
       { dataField: "Age", visible: true, width: 100, dataType: DataTypes.Number, sortEnabled: true, filterEnabled: true, styleClass: "color-red", rightAlignText: true },
       { dataField: "Active", visible: true, width: 150, caption: "Is Active?", dataType: DataTypes.Boolean, filterEnabled: true, },
       { visible: true, width: 100, cellTemplate: this.actionButtonsTemplate }];
+      
+    this.gridDataSource = new BehaviorSubject(null);
 
+    this.loadData();
+  }
+
+  loadData() {
     this.dataService.getAll().subscribe((data: any) => {
       /** for client side grid */
-      this.gridDataSource = new DataSource();
-      this.gridDataSource.data = data;
-      this.gridDataSource.summary = { total: 1000 };
+      var dataSource = new DataSource();
+      dataSource.data = data;
+      dataSource.summary = { totalCount: 1000 };
+      this.gridDataSource.next(dataSource);
     });
   }
 

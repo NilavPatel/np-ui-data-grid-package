@@ -176,7 +176,7 @@
     </div>
     <div [ngClass]="{'locked': _showLoader}">
         <div class="np-pagination">
-            <ul *ngIf="_pager.pages && _pager.pages.length">
+            <ul *ngIf="_pager.pages && _pager.pages.length > 0">
                 <li>
                     <button type="button" class="np-icon-button" title="First page" [disabled]="_pager.currentPage === 1" (click)="_getCurrentViewData(1)">
                         <svg class="np-icon-lg" viewBox="0 0 24 24">

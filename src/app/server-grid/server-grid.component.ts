@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { DataSource, NpUiDataGridComponent, DataTypes, CustomStore, SortDirections, State, FilterTypes } from 'projects/np-ui-data-grid/src/public-api';
+import { DataSource, NpUiDataGridComponent, DataTypes, SortDirections, State, FilterTypes, LoadOptions } from 'projects/np-ui-data-grid/src/public-api';
 import { DataService } from '../data.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-server-grid',
@@ -11,7 +12,8 @@ import { DataService } from '../data.service';
 export class ServerGridComponent implements OnInit {
 
   gridColumns: any[];
-  gridDataSource1: DataSource;
+  gridDataSource: BehaviorSubject<DataSource>;
+
   _toggleColumn: boolean = true;
   showFilters: boolean = true;
 
@@ -25,8 +27,6 @@ export class ServerGridComponent implements OnInit {
   }
 
   ngOnInit() {
-    var that = this;
-
     this.gridColumns = [
       { dataField: "Id", visible: true, caption: "Id", dataType: DataTypes.Number, sortEnabled: true, filterEnabled: true, onCellClick: this.cellClicked },
       { dataField: "FirstName", visible: true, caption: "First Name", dataType: DataTypes.String, sortEnabled: true, filterEnabled: true },
@@ -35,24 +35,19 @@ export class ServerGridComponent implements OnInit {
       { dataField: "Age", visible: true, dataType: DataTypes.Number, sortEnabled: true, filterEnabled: true, styleClass: "color-red", rightAlignText: true },
       { dataField: "Active", visible: true, caption: "Is Active?", dataType: DataTypes.Boolean, filterEnabled: true, },
       { visible: true, cellTemplate: this.actionButtonsTemplate }];
-
-    /** for server side grid */
-    this.gridDataSource1 = new DataSource();
-    this.gridDataSource1.isServerOperations = true;
-    this.gridDataSource1.load = function (pageNumber, pageSize, sortColumns, filterColumns) {
-      return new Promise((resolve, reject) => {
-        var reqBody = { pageNumber: pageNumber, pageSize: pageSize, sortColumns: sortColumns, filterColumns: filterColumns }
-        that.dataService.getDataUsingLoadOptions(reqBody).subscribe((data: any) => {
-          var result = new CustomStore();
-          result.data = data.data;
-          result.total = data.total;
-          result.summary = { total: 1000 };
-          resolve(result)
-        });
-      });
-    }
+    this.gridDataSource = new BehaviorSubject(null);
 
     this.setStateForServerSideGrid();
+  }
+
+  onLoadData(options: LoadOptions) {
+    this.dataService.getDataUsingLoadOptions(options).subscribe((data: any) => {
+      var result = new DataSource();
+      result.data = data.data;
+      result.total = data.total;
+      result.summary = { totalCount: 1000 };
+      this.gridDataSource.next(result);
+    });
   }
 
   cellClicked(event: any, column: any, row: any) {
