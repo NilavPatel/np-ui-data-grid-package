@@ -34,18 +34,16 @@ export class ClientGridComponent implements OnInit {
       { dataField: "Age", visible: true, width: 100, dataType: DataTypes.Number, sortEnabled: true, filterEnabled: true, styleClass: "color-red", rightAlignText: true },
       { dataField: "Active", visible: true, width: 150, caption: "Is Active?", dataType: DataTypes.Boolean, filterEnabled: true, },
       { visible: true, width: 100, cellTemplate: this.actionButtonsTemplate }];
-      
+
     this.gridDataSource = new BehaviorSubject(null);
 
-    this.loadData();
+    this.onLoadData();
   }
 
-  loadData() {
+  onLoadData() {
     this.dataService.getAll().subscribe((data: any) => {
-      /** for client side grid */
-      var dataSource = new DataSource();
-      dataSource.data = data;
-      dataSource.summary = { totalCount: 1000 };
+      // for client side data pass total is 0, as it will calculate total from length of array.
+      var dataSource = new DataSource(data, 0, { totalCount: 1000 });
       this.gridDataSource.next(dataSource);
     });
   }

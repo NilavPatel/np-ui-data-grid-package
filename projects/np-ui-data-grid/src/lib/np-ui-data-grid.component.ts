@@ -144,7 +144,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.columns) {
+    if (changes.columns && changes.columns.currentValue) {
       this._setColumns();
     }
     if (changes.dataSource && changes.dataSource.currentValue) {
@@ -167,11 +167,9 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
           this._pager = this.pagerService.getPager(this._total, this._pager.currentPage, this._pager.pageSize);
           this._showLoader = false;
         } else {
-          var dataSource = new DataSource();
-          dataSource.data = data.data;
-          dataSource.summary = data.summary;
+          var dataSource = new DataSource(data.data, data.data.length, data.summary);
           this._dataSource = dataSource;
-          this._total = this._dataSource.data.length;
+          this._total = this._dataSource.total;
           this._summaryData = this._dataSource.summary;
           this._getCurrentViewData(1);
         }
@@ -201,7 +199,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
     } else {
       this._currentViewData = this._dataSource.data.slice(this._pager.startIndex, this._pager.endIndex + 1);
     }
-    
+
   }
 
   _setColumns() {

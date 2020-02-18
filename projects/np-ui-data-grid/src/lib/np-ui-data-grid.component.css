@@ -245,6 +245,7 @@ input[type="checkbox"] {
 
 .np-toolbar-item {
     display: inline;
+    padding: 0px 2px;
 }
 
 .np-state-store {

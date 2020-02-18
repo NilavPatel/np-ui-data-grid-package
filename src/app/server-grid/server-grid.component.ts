@@ -42,10 +42,7 @@ export class ServerGridComponent implements OnInit {
 
   onLoadData(options: LoadOptions) {
     this.dataService.getDataUsingLoadOptions(options).subscribe((data: any) => {
-      var result = new DataSource();
-      result.data = data.data;
-      result.total = data.total;
-      result.summary = { totalCount: 1000 };
+      var result = new DataSource(data.data, data.total, { totalCount: 1000 });
       this.gridDataSource.next(result);
     });
   }
@@ -97,12 +94,11 @@ export class ServerGridComponent implements OnInit {
   setStateForServerSideGrid() {
     var columns = [
       { dataField: "Id", visible: true, width: 100, caption: "Id", dataType: DataTypes.Number, sortEnabled: true, filterEnabled: true, onCellClick: this.cellClicked },
-      { dataField: "FirstName", visible: true, width: 150, caption: "First Name", dataType: DataTypes.String, sortEnabled: true, filterEnabled: true },
+      { dataField: "FirstName", visible: true, width: 150, caption: "First Name", dataType: DataTypes.String, sortEnabled: true, filterEnabled: true, sortDirection: SortDirections.Ascending },
       { dataField: "LastName", visible: true, width: 150, caption: "Last Name", dataType: DataTypes.String },
       { dataField: "BirthDate", visible: true, width: 150, caption: "Birth Date", dataType: DataTypes.Date, filterEnabled: true, cellTemplate: this.birthDateColumnTemplate },
       { dataField: "Age", visible: true, width: 100, dataType: DataTypes.Number, sortEnabled: true, filterEnabled: true, styleClass: "color-red", filterValue: "50", filterOperator: FilterTypes.GreaterThan },
-      { dataField: "Active", visible: true, width: 150, caption: "Is Active?", dataType: DataTypes.Boolean, filterEnabled: true, },
-      { visible: true, width: 100, cellTemplate: this.actionButtonsTemplate }]
+      { dataField: "Active", visible: true, width: 150, caption: "Is Active?", dataType: DataTypes.Boolean, filterEnabled: true, }];
     var state = new State("Age more than 50", columns);
     this.serverSideGrid.setAllState([state]);
   }
@@ -125,6 +121,10 @@ export class ServerGridComponent implements OnInit {
 
   clearSortings() {
     this.serverSideGrid.removeAllSortings();
+  }
+
+  reset() {
+    this.serverSideGrid.reset();
   }
 
 }

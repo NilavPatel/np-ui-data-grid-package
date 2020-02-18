@@ -36,12 +36,12 @@
 
 .np-icon,
 .np-icon-lg {
-    fill: white
+    color: white
 }
 
 .np-grid-table tbody .np-icon,
 .np-grid-table tbody .np-icon-lg {
-    fill: slategrey
+    color: slategrey
 }
 
 .np-grid-table tr:nth-of-type(odd) {
