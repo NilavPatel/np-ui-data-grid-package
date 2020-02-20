@@ -1,5 +1,5 @@
 # np-ui-data-grid
-Data grid custom component for Angular 8, 9 and 9+, Created using only Angular.
+Data grid custom component for Angular 9 and 9+, Created using only Angular.
 ## Check demo [Here](https://stackblitz.com/edit/np-ui-data-grid)
 ## NPM
 `$ npm i np-ui-data-grid`
@@ -232,7 +232,7 @@ Data grid custom component for Angular 8, 9 and 9+, Created using only Angular.
 5.  `onAfterInit()`  
     event fired after view initialize.  
       
-6.  `onLoadData(optaions : LoadOptions)` 
+6.  `onLoadData(optaions : loadOptions)` 
     This function has parameters like `pageNumber`, `pageSize`, `sortColumns`, `filterColumns`.  
     Where `sortColumns` is an array of {column : string, sortDirection: string}.  
         possible values for sortDirection are asc, desc.  

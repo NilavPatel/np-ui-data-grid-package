@@ -1,5 +1,5 @@
 # np-ui-data-grid
-Data grid custom component for Angular 8, 9 and 9+, Created using only Angular.
+Data grid custom component for Angular 9 and 9+, Created using only Angular.
 ## Check demo [Here](https://stackblitz.com/edit/np-ui-data-grid)
 ## NPM
 `$ npm i np-ui-data-grid`
