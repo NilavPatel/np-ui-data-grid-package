@@ -27,13 +27,13 @@ export class ClientGridComponent implements OnInit {
 
   ngOnInit() {
     this.gridColumns = [
-      { dataField: "Id", visible: true, width: 100, caption: "Id", dataType: DataTypes.Number, sortEnabled: true, filterEnabled: true, onCellClick: this.cellClicked },
-      { dataField: "FirstName", visible: true, width: 150, caption: "First Name", dataType: DataTypes.String, sortEnabled: true, filterEnabled: true },
-      { dataField: "LastName", visible: true, width: 150, caption: "Last Name", dataType: DataTypes.String },
-      { dataField: "BirthDate", visible: true, width: 150, caption: "Birth Date", dataType: DataTypes.Date, filterEnabled: true, cellTemplate: this.birthDateColumnTemplate },
-      { dataField: "Age", visible: true, width: 100, dataType: DataTypes.Number, sortEnabled: true, filterEnabled: true, styleClass: "color-red", rightAlignText: true },
-      { dataField: "Active", visible: true, width: 150, caption: "Is Active?", dataType: DataTypes.Boolean, filterEnabled: true, },
-      { visible: true, width: 100, cellTemplate: this.actionButtonsTemplate }];
+      { dataField: "Id", visible: true, width: 200, caption: "Id", dataType: DataTypes.Number, sortEnabled: true, filterEnabled: true, onCellClick: this.cellClicked },
+      { dataField: "FirstName", visible: true, width: 200, caption: "First Name", dataType: DataTypes.String, sortEnabled: true, filterEnabled: true },
+      { dataField: "LastName", visible: true, width: 200, caption: "Last Name", dataType: DataTypes.String },
+      { dataField: "BirthDate", visible: true, width: 200, caption: "Birth Date", dataType: DataTypes.Date, filterEnabled: true, cellTemplate: this.birthDateColumnTemplate },
+      { dataField: "Age", visible: true, width: 200, dataType: DataTypes.Number, sortEnabled: true, filterEnabled: true, styleClass: "color-red", rightAlignText: true },
+      { dataField: "Active", visible: true, width: 200, caption: "Is Active?", dataType: DataTypes.Boolean, filterEnabled: true, },
+      { visible: true, width: 200, cellTemplate: this.actionButtonsTemplate }];
 
     this.gridDataSource = new BehaviorSubject(null);
 

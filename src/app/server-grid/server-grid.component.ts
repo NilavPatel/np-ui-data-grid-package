@@ -98,7 +98,8 @@ export class ServerGridComponent implements OnInit {
       { dataField: "LastName", visible: true, width: 150, caption: "Last Name", dataType: DataTypes.String },
       { dataField: "BirthDate", visible: true, width: 150, caption: "Birth Date", dataType: DataTypes.Date, filterEnabled: true, cellTemplate: this.birthDateColumnTemplate },
       { dataField: "Age", visible: true, width: 100, dataType: DataTypes.Number, sortEnabled: true, filterEnabled: true, styleClass: "color-red", filterValue: "50", filterOperator: FilterTypes.GreaterThan },
-      { dataField: "Active", visible: true, width: 150, caption: "Is Active?", dataType: DataTypes.Boolean, filterEnabled: true, }];
+      { dataField: "Active", visible: true, width: 150, caption: "Is Active?", dataType: DataTypes.Boolean, filterEnabled: true, },
+      { visible: false, cellTemplate: this.actionButtonsTemplate }];
     var state = new State("Age more than 50", columns);
     this.serverSideGrid.setAllState([state]);
   }

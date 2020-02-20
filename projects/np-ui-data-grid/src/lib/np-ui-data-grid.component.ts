@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges, TemplateRef, EventEmitter, Output, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, TemplateRef, EventEmitter, Output, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { Column } from './models/column.model';
 import { DataSource } from './models/data-source.model';
 import { NpPagerService } from './services/np-ui-pager.service';
@@ -14,7 +14,8 @@ import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'np-ui-data-grid',
   templateUrl: 'np-ui-data-grid.component.html',
-  styleUrls: ['np-ui-data-grid.component.css']
+  styleUrls: ['np-ui-data-grid.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class NpUiDataGridComponent implements OnInit, AfterViewInit {
 
@@ -77,7 +78,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
   @Input() showColumnChooser: boolean;
   _isOpenColumnChooser: boolean = false;
 
-  _visibleColumnCount: number = 0;
+  _visibleColumns: any[] = [];
 
   @Input() title: string = "";
 
@@ -213,7 +214,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
   }
 
   _setColumnsCount() {
-    this._visibleColumnCount = this.utilityService.custFilter(this._columns, function (element) { if (element.visible === true) { return element } }).length;
+    this._visibleColumns = this.utilityService.custFilter(this._columns, function (element: Column) { if (element.visible === true) { return element } });
     this._isFilterAvailable = this.utilityService.custFilter(this._columns, function (element) { if (element.filterEnabled === true && element.visible === true) { return element } }).length > 0;
   }
 
@@ -428,7 +429,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
     return this._selectedRowKeys.indexOf(keyValue) > -1;
   }
 
-  _isOpen(keyValue: any) {
+  _isOpenChild(keyValue: any) {
     return this._openRowKeys.indexOf(keyValue) > -1;
   }
 
@@ -471,6 +472,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
     this._selectedRowKeys = [];
     this._openRowKeys = [];
     this._isAllSelected = false;
+    this._isOpenColumnChooser = false;
     if (this.isServerOperations) {
       this._getCurrentViewData(1);
     }

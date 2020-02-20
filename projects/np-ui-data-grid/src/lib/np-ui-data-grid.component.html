@@ -1,4 +1,4 @@
-<div class="np-grid" [style.max-height.px]="height" [style.max-width.px]="width - 2" [id]="tableId">
+<div class="np-grid-component" [style.max-height.px]="height - 2" [style.max-width.px]="width - 2" [id]="tableId">
     <div *ngIf="_showLoader" class="np-loader"></div>
     <div *ngIf="title.length > 0" class="np-grid-title" [ngClass]="{'locked': _showLoader}">{{title}}</div>
     <div class="np-toolbar" [ngClass]="{'locked': _showLoader}" *ngIf="showColumnChooser || enableStateStoring">
@@ -9,7 +9,7 @@
                     <path fill="currentcolor" d="M4 5v13h17V5H4zm10 2v9h-3V7h3zM6 7h3v9H6V7zm13 9h-3V7h3v9z"/>
                 s</svg>
             </button>
-            <div class="column-chooser-content" *ngIf="showColumnChooser" [ngClass]="{'column-chooser-content-open':_isOpenColumnChooser}">
+            <div class="np-column-chooser-content" *ngIf="showColumnChooser" [ngClass]="{'np-column-chooser-open':_isOpenColumnChooser}">
                 <div class="txt-right">
                     <button type="button" class="np-icon-button" title="Reset All" (click)="_onResetColumns()">
                         <svg class="np-icon" viewBox="0 0 24 24">
@@ -53,43 +53,56 @@
                 </svg>
             </button>
         </div>
-        <div class="np-toolbar-item np-state-store" *ngIf="enableStateStoring">
-            <select class="grid-control np-state-select" [(ngModel)]="_currentStateName" (change)="_loadState()">
-                <option value="">Default</option>
-                <option *ngFor="let state of _stateList" [ngValue]="state.name">{{state.name}}</option>
-            </select>
-            <button type="button" class="np-icon-button" title="Save state" (click)="_saveState()" *ngIf="_currentStateName.length > 0">
-                <svg class="np-icon-lg" viewBox="0 0 24 24">
-                    <path fill="none" d="M0 0h24v24H0V0z" />
-                    <path fill="currentcolor"
-                        d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm2 16H5V5h11.17L19 7.83V19zm-7-7c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3zM6 6h9v4H6z" />
-                </svg>
-            </button>
-            <button type="button" class="np-icon-button" title="Delete state" (click)="_deleteState()" *ngIf="_currentStateName.length > 0">
-                <svg class="np-icon-lg" viewBox="0 0 24 24">
-                    <path fill="none" d="M0 0h24v24H0V0z" />
-                    <path fill="currentcolor"
-                        d="M14.12 10.47L12 12.59l-2.13-2.12-1.41 1.41L10.59 14l-2.12 2.12 1.41 1.41L12 15.41l2.12 2.12 1.41-1.41L13.41 14l2.12-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4zM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9z" />
-                </svg>
-            </button>
-            <button type="button" class="np-icon-button" title="Add state" (click)="_addState()">
-                <svg class="np-icon-lg" viewBox="0 0 24 24">
-                    <path fill="none" d="M0 0h24v24H0V0z" />
-                    <path fill="currentcolor"
-                        d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-8-2h2v-4h4v-2h-4V7h-2v4H7v2h4z" />
-                </svg>
-            </button>
+        <div class="np-toolbar-item align-right hidden-xs np-state-manager" *ngIf="enableStateStoring">
+            <div>
+                <select class="grid-control" [(ngModel)]="_currentStateName" (change)="_loadState()">
+                    <option value="">Default</option>
+                    <option *ngFor="let state of _stateList" [ngValue]="state.name">{{state.name}}</option>
+                </select>
+            </div>
+            <div *ngIf="_currentStateName.length > 0">
+                <button type="button" class="np-icon-button" title="Save state" (click)="_saveState()">
+                    <svg class="np-icon-lg" viewBox="0 0 24 24">
+                        <path fill="none" d="M0 0h24v24H0V0z" />
+                        <path fill="currentcolor"
+                            d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm2 16H5V5h11.17L19 7.83V19zm-7-7c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3zM6 6h9v4H6z" />
+                    </svg>
+                </button>
+            </div>
+            <div *ngIf="_currentStateName.length > 0">
+                <button type="button" class="np-icon-button" title="Delete state" (click)="_deleteState()">
+                    <svg class="np-icon-lg" viewBox="0 0 24 24">
+                        <path fill="none" d="M0 0h24v24H0V0z" />
+                        <path fill="currentcolor"
+                            d="M14.12 10.47L12 12.59l-2.13-2.12-1.41 1.41L10.59 14l-2.12 2.12 1.41 1.41L12 15.41l2.12 2.12 1.41-1.41L13.41 14l2.12-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4zM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9z" />
+                    </svg>
+                </button>
+            </div>
+            <div>
+                <button type="button" class="np-icon-button" title="Add state" (click)="_addState()">
+                    <svg class="np-icon-lg" viewBox="0 0 24 24">
+                        <path fill="none" d="M0 0h24v24H0V0z" />
+                        <path fill="currentcolor"
+                            d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-8-2h2v-4h4v-2h-4V7h-2v4H7v2h4z" />
+                    </svg>
+                </button>
+            </div>
         </div>
     </div>
-    <div [style.max-height.px]="height - 117" [ngClass]="{'locked': _showLoader}" class="np-table-container">
+    <div [style.max-height.px]="height - 107" [ngClass]="{'locked': _showLoader}" class="np-grid-container">
         <table class="np-grid-table">
+            <colgroup>
+                <col style="width: 30px;" *ngIf="_enableMasterChild">
+                <col style="width: 30px;" *ngIf="singleSelectEnable || multiSelectEnable">
+                <col *ngFor="let column of _visibleColumns" [style.width.px]="column.width">
+            </colgroup>
             <thead>
                 <tr class="np-grid-header-row" cdkDropList (cdkDropListDropped)="_resizeColumn($event)" [cdkDropListDisabled]="!allowColumnResize">
-                    <th *ngIf="_enableMasterChild" width="30px;" [ngClass]="{'np-sticky-header' : isStickyHeader}" class="txt-center"></th>
-                    <th *ngIf="singleSelectEnable || multiSelectEnable" width="30px;" [ngClass]="{'np-sticky-header' : isStickyHeader}" class="txt-center">
+                    <th *ngIf="_enableMasterChild" [ngClass]="{'np-sticky-header' : isStickyHeader}" class="txt-center"></th>
+                    <th *ngIf="singleSelectEnable || multiSelectEnable" [ngClass]="{'np-sticky-header' : isStickyHeader}" class="txt-center">
                         <input class="row-selection-input" type="checkbox" *ngIf="multiSelectEnable" title="Select/Unselect All" (change)="_onSelectAll($event)" [(ngModel)]="_isAllSelected">
                     </th>
-                    <th *ngFor="let column of _columns; let j = index" [ngClass]="{'np-sticky-header' : isStickyHeader,'hidden': column.visible == false}" [style.width.px]="column.width" cdkDrag cdkDragLockAxis="x" cdkDragBoundary=".np-grid-header-row">
+                    <th *ngFor="let column of _visibleColumns; let j = index" [ngClass]="{'np-sticky-header' : isStickyHeader,'hidden': column.visible == false}" cdkDrag cdkDragLockAxis="x" cdkDragBoundary=".np-grid-header-row">
                         <span [innerHTML]="column.getCaption()" (click)="_onSort(column)" [ngClass]="{'cursor-pointer': column.sortEnabled}" class="np-grid-header"></span>
                         <button class="np-icon-button" type="button" *ngIf="column.sortDirection != null" (click)="_onSort(column)">
                             <svg class="np-icon asc" viewBox="0 0 24 24"
@@ -110,12 +123,12 @@
                         <div class="np-resizable-handle" cdkDragHandle *ngIf="allowColumnResize"></div>
                     </th>
                 </tr>
-                <tr class="np-grid-header-row-filter" *ngIf="_isFilterAvailable && showFilters">
-                    <th *ngIf="_enableMasterChild" width="30px;" [ngClass]="{'np-sticky-header-filter' : isStickyHeader}" class="txt-center"></th>
-                    <th *ngIf="singleSelectEnable || multiSelectEnable" width="30px;" [ngClass]="{'np-sticky-header-filter' : isStickyHeader}" class="txt-center"> </th>
-                    <th *ngFor="let column of _columns; let j = index" [ngClass]="{'np-sticky-header-filter' : isStickyHeader,'hidden': column.visible == false}">
+                <tr class="np-grid-header-filter" *ngIf="_isFilterAvailable && showFilters">
+                    <th *ngIf="_enableMasterChild" [ngClass]="{'np-sticky-header-filter' : isStickyHeader}" class="txt-center"></th>
+                    <th *ngIf="singleSelectEnable || multiSelectEnable" [ngClass]="{'np-sticky-header-filter' : isStickyHeader}" class="txt-center"> </th>
+                    <th *ngFor="let column of _visibleColumns; let j = index" [ngClass]="{'np-sticky-header-filter' : isStickyHeader,'hidden': column.visible == false}">
                         <div class="filter-group" *ngIf="column.filterEnabled">
-                            <div class="filter-selector">
+                            <div class="filter-type">
                                 <select class="grid-control" [(ngModel)]="column.filterOperator" (change)="_onFilter(column, false)">
                                     <option [value]="undefined" disabled hidden>Select...</option>
                                     <option
@@ -148,12 +161,12 @@
                 <ng-container *ngFor="let data of _currentViewData; let  i = index">
                     <tr id="row_{{i}}" (click)="_rowClick($event,data)" [ngClass]="{'np-row-selected': _isSelected(data[_key])}">
                         <td *ngIf="_enableMasterChild" class="txt-center">
-                            <button class="np-icon-button" type="button" *ngIf="!_isOpen(data[_key])" (click)="_openMasterChild(data[_key])">
+                            <button class="np-icon-button" type="button" *ngIf="!_isOpenChild(data[_key])" (click)="_openMasterChild(data[_key])">
                                 <svg class="np-icon" viewBox="0 0 24 24">
                                     <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="currentcolor" />
                                     <path d="M0 0h24v24H0z" fill="none" /></svg>
                             </button>
-                            <button class="np-icon-button" type="button" *ngIf="_isOpen(data[_key])" (click)="_openMasterChild(data[_key])">
+                            <button class="np-icon-button" type="button" *ngIf="_isOpenChild(data[_key])" (click)="_openMasterChild(data[_key])">
                                 <svg class="np-icon" viewBox="0 0 24 24">
                                     <path d="M19 13H5v-2h14v2z" fill="currentcolor"/>
                                     <path d="M0 0h24v24H0z" fill="none" /></svg>
@@ -162,7 +175,7 @@
                         <td *ngIf="singleSelectEnable || multiSelectEnable" width="30px;" class="txt-center">
                             <input type="checkbox" [checked]="_isSelected(data[_key])" (change)="_onSelectRow(data[_key],$event)">
                         </td>
-                        <td *ngFor="let column of _columns; let j = index" (click)="_onCellClick($event, column, data)" [ngClass]="{'hidden': column.visible == false, 'txt-right-align' : column.rightAlignText}" [class]="column.styleClass">
+                        <td *ngFor="let column of _visibleColumns; let j = index" (click)="_onCellClick($event, column, data)" [ngClass]="{'hidden': column.visible == false, 'txt-right-align' : column.rightAlignText}" [class]="column.styleClass">
                             <ng-container *ngIf="!column.cellTemplate; else customTemplate">
                                 {{data[column.dataField]}}
                             </ng-container>
@@ -170,8 +183,8 @@
                             </ng-template>
                         </td>
                     </tr>
-                    <tr id="row_{{i}}_child" *ngIf="_enableMasterChild && _isOpen(data[_key])">
-                        <td [attr.colspan]="_visibleColumnCount + (singleSelectEnable || multiSelectEnable ? 1 : 0) + 1">
+                    <tr id="row_{{i}}_child" *ngIf="_enableMasterChild && _isOpenChild(data[_key])">
+                        <td [attr.colspan]="_visibleColumns.length + (singleSelectEnable || multiSelectEnable ? 1 : 0) + 1">
                             <ng-container *ngTemplateOutlet="masterChildTemplate;context:{ row: data }">
                             </ng-container>
                         </td>
@@ -182,58 +195,52 @@
         <div *ngIf="_currentViewData && _currentViewData.length == 0 && !_showLoader" class="no-data-message">
             {{noDataMessage}}
         </div>
-        <div class="np-summary" *ngIf="isShowSummary">
+        <div class="np-grid-summary" *ngIf="isShowSummary">
             <ng-container *ngTemplateOutlet="summaryTemplate;context:{ summary: _summaryData }">
             </ng-container>
         </div>
     </div>
-    <div [ngClass]="{'locked': _showLoader}">
-        <div class="np-pagination">
-            <ul *ngIf="_pager.pages && _pager.pages.length > 0">
-                <li>
-                    <button type="button" class="np-icon-button" title="First page" [disabled]="_pager.currentPage === 1" (click)="_getCurrentViewData(1)">
+    <div *ngIf="_pager.pages && _pager.pages.length > 0" class="np-pagination" [ngClass]="{'locked': _showLoader}">
+        <div>
+            <button type="button" class="np-icon-button" title="First page" [disabled]="_pager.currentPage === 1" (click)="_getCurrentViewData(1)">
                         <svg class="np-icon-lg" viewBox="0 0 24 24">
                             <path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z" fill="currentcolor"/>
                             <path d="M0 0h24v24H0z" fill="none" /></svg>
                     </button>
-                </li>
-                <li>
-                    <button type="button" class="np-icon-button" title="Prev page" [disabled]="_pager.currentPage === 1" (click)="_getCurrentViewData(_pager.currentPage - 1)">
+        </div>
+        <div>
+            <button type="button" class="np-icon-button" title="Prev page" [disabled]="_pager.currentPage === 1" (click)="_getCurrentViewData(_pager.currentPage - 1)">
                         <svg class="np-icon-lg" viewBox="0 0 24 24">
                             <path d="M14 7l-5 5 5 5V7z" fill="currentcolor"/>
                             <path fill="none" d="M24 0v24H0V0h24z" /></svg>
                     </button>
-                </li>
-                <li>
-                    <input type="number" class="grid-control " [(ngModel)]="_pager.currentPage" (change)="_getCurrentViewData(_pager.currentPage)"> / {{_pager.totalPages}}
-                </li>
-                <li>
-                    <button type="button" title="Next page" class="np-icon-button" [disabled]="_pager.currentPage === _pager.totalPages" (click)="_getCurrentViewData(_pager.currentPage + 1)">
+        </div>
+        <div>
+            <input type="number" class="grid-control " [(ngModel)]="_pager.currentPage" (change)="_getCurrentViewData(_pager.currentPage)"> / {{_pager.totalPages}}
+        </div>
+        <div>
+            <button type="button" title="Next page" class="np-icon-button" [disabled]="_pager.currentPage === _pager.totalPages" (click)="_getCurrentViewData(_pager.currentPage + 1)">
                         <svg class="np-icon-lg" viewBox="0 0 24 24">
                             <path d="M10 17l5-5-5-5v10z" fill="currentcolor" />
                             <path fill="none" d="M0 24V0h24v24H0z" /></svg></button>
-                </li>
-                <li>
-                    <button type="button" title="Last page" class="np-icon-button" [disabled]="_pager.currentPage === _pager.totalPages" (click)="_getCurrentViewData(_pager.totalPages)">
+        </div>
+        <div>
+            <button type="button" title="Last page" class="np-icon-button" [disabled]="_pager.currentPage === _pager.totalPages" (click)="_getCurrentViewData(_pager.totalPages)">
                         <svg class="np-icon-lg" viewBox="0 0 24 24">
                             <path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z" fill="currentcolor"/>
                             <path d="M0 0h24v24H0z" fill="none" /></svg>
                     </button>
-                </li>
-            </ul>
-            <div class="div-page-size">
-                <div>
-                    <input type="number" class="grid-control" [(ngModel)]="_pager.pageSize" (change)="_onPageSizeChange()"> items per page / {{_pager.startIndex >= 0 ? _pager.startIndex + 1 : 0}} - {{_pager.endIndex + 1}} of {{_pager.totalItems}} items
-                </div>
-                <div>
-                    <button type="button" class="np-icon-button" title="Refresh" (click)="_onRefresh()">
-                        <svg class="np-icon-lg" viewBox="0 0 24 24">
-                            <path fill="currentcolor"
-                                d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />
-                            <path d="M0 0h24v24H0z" fill="none" /></svg>
-                    </button>
-                </div>
-            </div>
+        </div>
+        <div class="align-right hidden-xs">
+            <button type="button" class="np-icon-button" title="Refresh" (click)="_onRefresh()">
+                    <svg class="np-icon-lg" viewBox="0 0 24 24">
+                        <path fill="currentcolor"
+                            d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />
+                        <path d="M0 0h24v24H0z" fill="none" /></svg>
+                </button>
+        </div>
+        <div class="align-right hidden-xs">
+            <input type="number" class="grid-control" [(ngModel)]="_pager.pageSize" (change)="_onPageSizeChange()"> items per page / {{_pager.startIndex >= 0 ? _pager.startIndex + 1 : 0}} - {{_pager.endIndex + 1}} of {{_pager.totalItems}} items
         </div>
     </div>
 </div>
