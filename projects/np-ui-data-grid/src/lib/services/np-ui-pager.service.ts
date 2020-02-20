@@ -1,5 +1,7 @@
 import { Pager } from '../models/pager.model';
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class NpPagerService {
     getPager(totalItems: number, currentPage: number = 1, pageSize: number = 10): Pager {
         // calculate total pages

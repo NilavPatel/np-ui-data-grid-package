@@ -1,5 +1,7 @@
 import { FilterTypes, DataTypes } from '../models/constants';
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class NpFilterService {
     filterData(filterColumns: any[], columns: any[], data: any[]): any[] {
         var that = this;

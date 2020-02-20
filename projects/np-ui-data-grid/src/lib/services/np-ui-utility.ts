@@ -1,5 +1,7 @@
 import { SortDirections } from '../models/constants';
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class NpUtilityService {
     custFilter(arr: any[], fun: any) {
         return arr.filter(fun);
