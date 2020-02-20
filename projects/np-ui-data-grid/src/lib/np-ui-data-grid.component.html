@@ -98,8 +98,8 @@
             </colgroup>
             <thead>
                 <tr class="np-grid-header-row" cdkDropList (cdkDropListDropped)="_resizeColumn($event)" [cdkDropListDisabled]="!allowColumnResize">
-                    <th *ngIf="_enableMasterChild" [ngClass]="{'np-sticky-header' : isStickyHeader}" class="txt-center"></th>
-                    <th *ngIf="singleSelectEnable || multiSelectEnable" [ngClass]="{'np-sticky-header' : isStickyHeader}" class="txt-center">
+                    <th *ngIf="_enableMasterChild" [ngClass]="{'np-sticky-header' : isStickyHeader}"></th>
+                    <th *ngIf="singleSelectEnable || multiSelectEnable" [ngClass]="{'np-sticky-header' : isStickyHeader}">
                         <input class="row-selection-input" type="checkbox" *ngIf="multiSelectEnable" title="Select/Unselect All" (change)="_onSelectAll($event)" [(ngModel)]="_isAllSelected">
                     </th>
                     <th *ngFor="let column of _visibleColumns; let j = index" [ngClass]="{'np-sticky-header' : isStickyHeader,'hidden': column.visible == false}" cdkDrag cdkDragLockAxis="x" cdkDragBoundary=".np-grid-header-row">
@@ -124,8 +124,8 @@
                     </th>
                 </tr>
                 <tr class="np-grid-header-filter" *ngIf="_isFilterAvailable && showFilters">
-                    <th *ngIf="_enableMasterChild" [ngClass]="{'np-sticky-header-filter' : isStickyHeader}" class="txt-center"></th>
-                    <th *ngIf="singleSelectEnable || multiSelectEnable" [ngClass]="{'np-sticky-header-filter' : isStickyHeader}" class="txt-center"> </th>
+                    <th *ngIf="_enableMasterChild" [ngClass]="{'np-sticky-header-filter' : isStickyHeader}"></th>
+                    <th *ngIf="singleSelectEnable || multiSelectEnable" [ngClass]="{'np-sticky-header-filter' : isStickyHeader}"> </th>
                     <th *ngFor="let column of _visibleColumns; let j = index" [ngClass]="{'np-sticky-header-filter' : isStickyHeader,'hidden': column.visible == false}">
                         <div class="filter-group" *ngIf="column.filterEnabled">
                             <div class="filter-type">
@@ -172,10 +172,10 @@
                                     <path d="M0 0h24v24H0z" fill="none" /></svg>
                             </button>
                         </td>
-                        <td *ngIf="singleSelectEnable || multiSelectEnable" width="30px;" class="txt-center">
+                        <td *ngIf="singleSelectEnable || multiSelectEnable" class="txt-center">
                             <input type="checkbox" [checked]="_isSelected(data[_key])" (change)="_onSelectRow(data[_key],$event)">
                         </td>
-                        <td *ngFor="let column of _visibleColumns; let j = index" (click)="_onCellClick($event, column, data)" [ngClass]="{'hidden': column.visible == false, 'txt-right-align' : column.rightAlignText}" [class]="column.styleClass">
+                        <td *ngFor="let column of _visibleColumns; let j = index" (click)="_onCellClick($event, column, data)" [ngClass]="{'hidden': column.visible == false, 'txt-right' : column.rightAlignText}" [class]="column.styleClass">
                             <ng-container *ngIf="!column.cellTemplate; else customTemplate">
                                 {{data[column.dataField]}}
                             </ng-container>

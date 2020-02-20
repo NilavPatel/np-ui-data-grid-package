@@ -18,6 +18,10 @@
     position: relative;
 }
 
+.np-grid-table th {
+    text-align: center;
+}
+
 .np-grid-table tr td:last-child,
 .np-grid-table tr th:last-child {
     border-right: none;
@@ -27,8 +31,8 @@
     border-bottom: none;
 }
 
-th a.sort-by-asc,
-th a.sort-by-desc {
+.np-grid-table th a.sort-by-asc,
+.np-grid-table th a.sort-by-desc {
     padding-right: 18px;
     position: relative;
 }
@@ -91,12 +95,12 @@ input[type="checkbox"] {
     background-color: #ffffff;
 }
 
-.txt-center {
-    text-align: center;
-}
-
 .txt-right {
     text-align: right;
+}
+
+.txt-center {
+    text-align: center;
 }
 
 .np-loader {
@@ -168,10 +172,6 @@ input[type="checkbox"] {
 
 .np-state-store button {
     margin-left: 5px;
-}
-
-.txt-right-align {
-    text-align: right;
 }
 
 .np-grid-header {

@@ -6,7 +6,7 @@
         "email": "nilavpatel1992@gmail.com",
         "url": "http://nilavpatel.github.io"
     },
-    "keywords": ["angular", "angular 8", "angular 9", "table", "data grid", "data table", "custom components"],
+    "keywords": ["angular", "angular 8", "angular 9", "table", "data grid", "data table", "custom components", "data", "grid", "typescript", "datagrid", "datatable"],
     "license": "MIT",
     "repository": {
         "type": "git",
