@@ -17,6 +17,7 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
 * Column drag and drop.
 * Summary in datagrid footer.
 * Resize columns width
+* OData support for server side
 
 ## HTML
 ````html
@@ -127,6 +128,9 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
       
 20. `[allowColumnResize]`: boolean
     Set allow columns resize or not
+
+21. `[isODataOperations]` : boolean
+    Default value is false, if this option is set to true, then in onLoadData argument odataQuery is passed. Which will be used in fetching data using OData.
       
 
 ## Apis
@@ -238,9 +242,9 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
         possible values for sortDirection are asc, desc.  
     Where `filterColumns` is an array of  
     ````javascript
-    { column : string, filterOprator: string, filterValue: string, dataType: string}
+    { column : string, filterOperator: string, filterValue: string, dataType: string}
     ````
-    possible values for **filterOprator** are startsWith, endsWith, contains, gt, ls, gte, lte, equals, notEquals.  
+    possible values for **filterOperator** are startsWith, endsWith, contains, gt, ls, gte, lte, equals, notEquals.  
     possible values for **dataType** are number, string, date, boolean.  
   
 ## Other np-ui components for Angular

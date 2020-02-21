@@ -7,6 +7,7 @@ import { NpFilterTypesPipe } from './pipes/np-ui-filter-types.pipe';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NpFilterService } from './services/np-ui-filter.service';
 import { NpUtilityService } from './services/np-ui-utility';
+import { NpODataService } from './services/np-ui-odata-service';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { NpUtilityService } from './services/np-ui-utility';
   providers: [
     NpPagerService,
     NpFilterService,
-    NpUtilityService
+    NpUtilityService,
+    NpODataService
   ]
 })
 export class NpUiDataGridModule { }

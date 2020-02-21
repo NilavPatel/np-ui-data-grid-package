@@ -3,4 +3,5 @@ export class LoadOptions {
     public pageSize: number;
     public sortColumns: any[];
     public filterColumns: any[];
+    public odataQuery: string;
 }

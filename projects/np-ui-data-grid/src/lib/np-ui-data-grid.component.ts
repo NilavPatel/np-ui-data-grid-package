@@ -10,6 +10,7 @@ import { NpUtilityService } from './services/np-ui-utility';
 import { Pager } from './models/pager.model';
 import { LoadOptions } from './models/load-options.model';
 import { BehaviorSubject } from 'rxjs';
+import { NpODataService } from './services/np-ui-odata-service';
 
 @Component({
   selector: 'np-ui-data-grid',
@@ -108,9 +109,12 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
   @Output() onLoadData: EventEmitter<LoadOptions> = new EventEmitter();
   @Input() isServerOperations: boolean = false;
 
+  @Input() isODataOperations: boolean = false;
+
   constructor(private pagerService: NpPagerService,
     private filterService: NpFilterService,
-    private utilityService: NpUtilityService) {
+    private utilityService: NpUtilityService,
+    private oDataService: NpODataService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
     this._sortColumnList = [];
     this._filtersList = Constants.filters();
@@ -192,10 +196,16 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
     if (this.isServerOperations) {
       this._showLoader = true;
       var loadOpt = new LoadOptions();
-      loadOpt.pageNumber = currentPageNumber;
-      loadOpt.pageSize = this._pager.pageSize;
-      loadOpt.sortColumns = this._sortColumnList;
-      loadOpt.filterColumns = this._filterColumnList;
+      if (this.isODataOperations) {
+        var top = this._pager.pageSize;
+        var skip = currentPageNumber * this._pager.pageSize;
+        loadOpt.odataQuery = this.oDataService.buildQuery(top, skip, this._sortColumnList, this._filterColumnList);
+      } else {
+        loadOpt.pageNumber = currentPageNumber;
+        loadOpt.pageSize = this._pager.pageSize;
+        loadOpt.sortColumns = this._sortColumnList;
+        loadOpt.filterColumns = this._filterColumnList;
+      }
       this.onLoadData.emit(loadOpt);
     } else {
       this._currentViewData = this._dataSource.data.slice(this._pager.startIndex, this._pager.endIndex + 1);
