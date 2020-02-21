@@ -1,16 +1,16 @@
 import { Component, OnInit, Input, SimpleChanges, TemplateRef, EventEmitter, Output, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Column } from './models/column.model';
 import { DataSource } from './models/data-source.model';
-import { NpPagerService } from './services/np-ui-pager.service';
 import { Constants, FilterTypes, DataTypes, SortDirections } from './models/constants';
 import { State } from './models/state.model';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { NpFilterService } from './services/np-ui-filter.service';
-import { NpUtilityService } from './services/np-ui-utility';
 import { Pager } from './models/pager.model';
 import { LoadOptions } from './models/load-options.model';
-import { BehaviorSubject } from 'rxjs';
-import { NpODataService } from './services/np-ui-odata-service';
+import { NpODataService } from './services/np-ui-odata.service';
+import { NpFilterService } from './services/np-ui-filter.service';
+import { NpUtilityService } from './services/np-ui-utility.service';
+import { NpPagerService } from './services/np-ui-pager.service';
 
 @Component({
   selector: 'np-ui-data-grid',
@@ -219,11 +219,11 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
       result.push(new Column(element));
     });
     this._columns = result;
-    this._setColumnsCount();
+    this._setVisibleColumns();
     return;
   }
 
-  _setColumnsCount() {
+  _setVisibleColumns() {
     this._visibleColumns = this.utilityService.custFilter(this._columns, function (element: Column) { if (element.visible === true) { return element } });
     this._isFilterAvailable = this.utilityService.custFilter(this._columns, function (element) { if (element.filterEnabled === true && element.visible === true) { return element } }).length > 0;
   }
@@ -452,7 +452,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
 
   _onColumnChoosing(col: Column) {
     col.visible = !col.visible;
-    this._setColumnsCount();
+    this._setVisibleColumns();
   }
 
   _toggleColumnChooser() {
@@ -462,6 +462,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
   _dropColumn(event: CdkDragDrop<string[]>) {
     this.showLoader();
     moveItemInArray(this._columns, event.previousIndex, event.currentIndex);
+    this._setVisibleColumns();
     this.hideLoader();
   }
 
@@ -483,6 +484,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
     this._openRowKeys = [];
     this._isAllSelected = false;
     this._isOpenColumnChooser = false;
+    this._pager = this.pagerService.getPager(0, 1, 10);
     if (this.isServerOperations) {
       this._getCurrentViewData(1);
     }
@@ -526,7 +528,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
    */
   hideColumnByIndex(idx: number) {
     this._columns[idx].visible = false;
-    this._setColumnsCount();
+    this._setVisibleColumns();
   }
 
   /**
@@ -535,7 +537,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
    */
   showColumnByIndex(idx: number) {
     this._columns[idx].visible = true;
-    this._setColumnsCount();
+    this._setVisibleColumns();
   }
 
   /**
@@ -548,7 +550,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
         element.visible = false;
       }
     });
-    this._setColumnsCount();
+    this._setVisibleColumns();
   }
 
   /**
@@ -561,7 +563,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
         element.visible = true;
       }
     });
-    this._setColumnsCount();
+    this._setVisibleColumns();
   }
 
   /**
@@ -676,7 +678,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
       this._sortDataSource();
     }
     this._getCurrentViewData(1);
-    this._setColumnsCount();
+    this._setVisibleColumns();
     this, this._selectedRowKeys = [];
     this._openRowKeys = [];
   }

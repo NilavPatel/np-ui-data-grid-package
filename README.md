@@ -130,7 +130,8 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
     Set allow columns resize or not
 
 21. `[isODataOperations]` : boolean
-    Default value is false, if this option is set to true, then in onLoadData argument odataQuery is passed. Which will be used in fetching data using OData.
+    Default value is false, if this option is set to true, then in **onLoadData** argument odataQuery is passed.  
+    Which will be used in fetching data using OData.
       
 
 ## Apis
