@@ -104,8 +104,8 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() summaryTemplate: TemplateRef<any>;
   _summaryData: any;
 
-  @Input() allowColumnResize: boolean = true;
-  @Input() allowColumnReorder: boolean = true;
+  @Input() allowColumnResize: boolean = false;
+  @Input() allowColumnReorder: boolean = false;
 
   @Output() onLoadData: EventEmitter<LoadOptions> = new EventEmitter();
   @Input() isServerOperations: boolean = false;

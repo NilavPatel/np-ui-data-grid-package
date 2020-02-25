@@ -7,19 +7,27 @@ import { fakeBackendProvider } from './FakeBackendInterceptor';
 import { HttpClientModule } from '@angular/common/http';
 import { ClientGridComponent } from './client-grid/client-grid.component';
 import { ServerGridComponent } from './server-grid/server-grid.component';
+import { RouterModule } from '@angular/router';
+import { appRoutes } from './app.routes';
+import { SortingGridComponent } from './sorting-grid/sorting-grid.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ClientGridComponent,
-    ServerGridComponent
+    ServerGridComponent,
+    SortingGridComponent,
+    SortingGridComponent
   ],
   imports: [
     BrowserModule,
     NpUiDataGridModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(
+      appRoutes
+    )
   ],
-  providers: [    
+  providers: [
     // provider used to create fake backend
     fakeBackendProvider
   ],

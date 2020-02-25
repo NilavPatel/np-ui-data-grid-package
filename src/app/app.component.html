@@ -1,7 +1,12 @@
-<div>
-    <h1>np-ui-data-grid</h1>
-    <h3>Custom Angular 9 and 9+ data grid component.</h3>
+<div class="main-container">
+    <div class="nav">
+        <ul>
+            <li><a routerLink="/client-grid" routerLinkActive="active">Client Side</a></li>
+            <li><a routerLink="/server-grid" routerLinkActive="active">Server Side</a></li>
+            <li><a routerLink="/sorting" routerLinkActive="active">Sorting</a></li>
+        </ul>
+    </div>
+    <div>
+        <router-outlet></router-outlet>
+    </div>
 </div>
-
-<app-client-grid></app-client-grid>
-<app-server-grid></app-server-grid>

@@ -1,0 +1,8 @@
+<h2>Sorting Example.</h2>
+<div>To add sorting in data grid set <b>sortEnabled</b> to "true" in column definations.</div>
+<div>To set multicolumn sorting, set <b>multiColumnSortEnable</b> to "true" in grid defination.
+    <input type="checkbox" (change)="multiColumnSortEnable = $event.target.checked">Multi column sort</div>
+<div>Default value for <b>multiColumnSortEnable</b> is "false".</div>
+
+<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [multiColumnSortEnable]="multiColumnSortEnable">
+</np-ui-data-grid>
