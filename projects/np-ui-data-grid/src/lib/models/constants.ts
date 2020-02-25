@@ -92,7 +92,8 @@ export enum FilterTypes {
     LessThanOrEquals = "le",
     GreaterThanOrEquals = "ge",
     Equals = "eq",
-    NotEquals = "ne"
+    NotEquals = "ne",
+    Reset = "Reset"
 }
 
 export enum DataTypes {

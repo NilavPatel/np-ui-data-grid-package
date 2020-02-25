@@ -42,12 +42,10 @@
 }
 
 .np-grid-header-row {
-    height: 35px;
     overflow: auto;
 }
 
 .np-grid-header-filter {
-    height: 70px;
     overflow: auto;
 }
 
@@ -55,12 +53,6 @@
     position: sticky !important;
     top: 0px;
     z-index: 1001;
-}
-
-.np-sticky-header-filter {
-    position: sticky !important;
-    top: 35px;
-    z-index: 1002;
 }
 
 .div-page-size select {
@@ -86,8 +78,7 @@ input[type="checkbox"] {
 }
 
 .filter-type {
-    padding-bottom: 5px;
-    display: flex;
+    padding-bottom: 2px;
 }
 
 .grid-control {
@@ -372,4 +363,9 @@ input[type="checkbox"] {
 
 .np-grid-table tbody tr:nth-child(2n-1){
     background-color: #f7f7f7;
+}
+
+.np-grid-header-row th button{
+    float: right;
+    padding: 0px;
 }

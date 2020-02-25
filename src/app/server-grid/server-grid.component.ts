@@ -42,6 +42,7 @@ export class ServerGridComponent implements OnInit {
   }
 
   onLoadData(options: LoadOptions) {
+    console.log(options);
     this.dataService.getDataUsingLoadOptions(options).subscribe((data: any) => {
       var result = new DataSource(data.data, data.total, { totalCount: 1000 }, options.isAllPages);
       this.gridDataSource.next(result);

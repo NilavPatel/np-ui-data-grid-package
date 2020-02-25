@@ -254,11 +254,17 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  // on first click ascending, on second click descending and on third click remove sorting
   _onSort(column: Column) {
     if (!column.sortEnabled) {
       return;
     }
-    var sortOrder = column.sortDirection == SortDirections.Descending ? SortDirections.Ascending : SortDirections.Descending;
+    // if sort direction is descending then remove sorting from column
+    if (column.sortDirection == SortDirections.Descending) {
+      this._removeSortingFromColumn(column);
+      return;
+    }
+    var sortOrder = column.sortDirection == SortDirections.Ascending ? SortDirections.Descending : SortDirections.Ascending;
     if (!this.multiColumnSortEnable) {
       this._removeAllSorting();
     }
@@ -280,6 +286,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
       this._sortDataSource();
     }
     this._getCurrentViewData(1);
+    return;
   }
 
   _sortDataSource() {
@@ -322,6 +329,11 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   _onFilter(column: Column, isForceFilter: boolean) {
+    if (column.filterOperator == FilterTypes.Reset) {
+      this._removeFilterStringFromColumn(column);
+      column.filterOperator = undefined;
+      return;
+    }
     if (!isForceFilter && (column.filterValue == undefined || column.filterValue == null || column.filterValue.length == 0
       || column.filterOperator == undefined || column.filterOperator == null)) {
       return;
