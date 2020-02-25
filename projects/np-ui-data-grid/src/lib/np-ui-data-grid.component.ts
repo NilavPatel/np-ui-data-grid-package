@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges, TemplateRef, EventEmitter, Output, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, TemplateRef, EventEmitter, Output, AfterViewInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Column } from './models/column.model';
@@ -11,6 +11,7 @@ import { NpODataService } from './services/np-ui-odata.service';
 import { NpFilterService } from './services/np-ui-filter.service';
 import { NpUtilityService } from './services/np-ui-utility.service';
 import { NpPagerService } from './services/np-ui-pager.service';
+import { NpFileService } from './services/np-ui-file.service';
 
 @Component({
   selector: 'np-ui-data-grid',
@@ -18,7 +19,7 @@ import { NpPagerService } from './services/np-ui-pager.service';
   styleUrls: ['np-ui-data-grid.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class NpUiDataGridComponent implements OnInit, AfterViewInit {
+export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() columns: Column[];
   _columns: Column[];
@@ -111,10 +112,15 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
 
   @Input() isODataOperations: boolean = false;
 
+  @Input() allowExportToExcel: boolean = false;
+
+  @Input() isShowToolBar: boolean = false;
+
   constructor(private pagerService: NpPagerService,
     private filterService: NpFilterService,
     private utilityService: NpUtilityService,
-    private oDataService: NpODataService) {
+    private oDataService: NpODataService,
+    private fileService: NpFileService) {
     this._pager = this.pagerService.getPager(0, 1, 10);
     this._sortColumnList = [];
     this._filtersList = Constants.filters();
@@ -158,6 +164,11 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
           return;
         }
         if (this.isServerOperations) {
+          // to export to csv, this change has all data
+          if (data.isAllPages) {
+            this.fileService.downloadCSVFile(data.data, this._visibleColumns);
+            return;
+          }
           this._currentViewData = data.data;
           this._summaryData = data.summary;
           this._total = data.total;
@@ -171,7 +182,8 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
           }
           this._pager = this.pagerService.getPager(this._total, this._pager.currentPage, this._pager.pageSize);
           this._showLoader = false;
-        } else {
+        }
+        else {
           var dataSource = new DataSource(data.data, data.data.length, data.summary);
           this._dataSource = dataSource;
           this._total = this._dataSource.total;
@@ -183,6 +195,10 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
         this._getCurrentViewData(1);
       }
     }
+  }
+
+  ngOnDestroy(): void {
+    this.dataSource.unsubscribe();
   }
 
   _getCurrentViewData(currentPageNumber: number) {
@@ -786,6 +802,25 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit {
       currentWidth = $event.item.element.nativeElement.offsetWidth;
     }
     this._columns[$event.previousIndex].width = (isNaN(currentWidth) ? 0 : currentWidth) + $event.distance.x;
+  }
+
+  _exportAsXls() {
+    if (this.isServerOperations) {
+      var loadOpt = new LoadOptions();
+      if (this.isODataOperations) {
+        loadOpt.odataQuery = this.oDataService.buildQuery(0, 0, this._sortColumnList, this._filterColumnList, "allpages");
+        loadOpt.isAllPages = true;
+      } else {
+        loadOpt.pageNumber = 1;
+        loadOpt.pageSize = this._pager.totalItems;
+        loadOpt.sortColumns = this._sortColumnList;
+        loadOpt.filterColumns = this._filterColumnList;
+        loadOpt.isAllPages = true;
+      }
+      this.onLoadData.emit(loadOpt);
+    } else {
+      this.fileService.downloadCSVFile(this._dataSource.data, this._visibleColumns);
+    }
   }
 
   /**

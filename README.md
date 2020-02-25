@@ -132,6 +132,15 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
 21. `[isODataOperations]` : boolean
     Default value is false, if this option is set to true, then in **onLoadData** argument odataQuery is passed.  
     Which will be used in fetching data using OData.
+
+22. `[allowExportToExcel]` : boolean  
+    Default value is false, if this option is set to true, then in toolbar button is visible with excel file icon,  
+    On clicking this button it will download file with all data in .csv format.
+    For Client side => all data is available in file.
+    For Server side => it will call to onLoadData to retrive all data, and then download file with all data.
+
+23. `[isShowToolBar]` : boolean  
+    Default value is false, if this option is set to true, then toolbar will be visible. This property must be set true to utilize export to excel, show/hide filters button, column chooser, and state management.
       
 
 ## Apis
@@ -245,7 +254,7 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
     ````javascript
     { column : string, filterOperator: string, filterValue: string, dataType: string}
     ````
-    possible values for **filterOperator** are startsWith, endsWith, contains, gt, ls, gte, lte, equals, notEquals.  
+    possible values for **filterOperator** are startswith, endswith, contains, gt, lt, ge, le, eq, ne.  
     possible values for **dataType** are number, string, date, boolean.  
   
 ## Other np-ui components for Angular

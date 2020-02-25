@@ -6,6 +6,7 @@ import { NpFilterService } from './services/np-ui-filter.service';
 import { NpUtilityService } from './services/np-ui-utility.service';
 import { NpODataService } from './services/np-ui-odata.service';
 import { NpPagerService } from './services/np-ui-pager.service';
+import { NpFileService } from './services/np-ui-file.service';
 import { NpFilterTypesPipe } from './pipes/np-ui-filter-types.pipe';
 import { NpUiDataGridComponent } from './np-ui-data-grid.component';
 
@@ -26,7 +27,8 @@ import { NpUiDataGridComponent } from './np-ui-data-grid.component';
     NpPagerService,
     NpFilterService,
     NpUtilityService,
-    NpODataService
+    NpODataService,
+    NpFileService
   ]
 })
 export class NpUiDataGridModule { }

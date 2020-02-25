@@ -19,6 +19,7 @@ export class ServerGridComponent implements OnInit {
 
   @ViewChild("actionButtonsTemplate", { static: true }) actionButtonsTemplate: TemplateRef<any>;
   @ViewChild("birthDateColumnTemplate", { static: true }) birthDateColumnTemplate: TemplateRef<any>;
+  @ViewChild("activeColumnTemplate", { static: true }) activeColumnTemplate: TemplateRef<any>;
   @ViewChild("summaryTemplate", { static: true }) summaryTemplate: TemplateRef<any>;
 
   @ViewChild("serverSideGrid", { static: true }) serverSideGrid: NpUiDataGridComponent;
@@ -33,7 +34,7 @@ export class ServerGridComponent implements OnInit {
       { dataField: "LastName", visible: true, caption: "Last Name", dataType: DataTypes.String },
       { dataField: "BirthDate", visible: true, caption: "Birth Date", dataType: DataTypes.Date, filterEnabled: true, cellTemplate: this.birthDateColumnTemplate },
       { dataField: "Age", visible: true, dataType: DataTypes.Number, sortEnabled: true, filterEnabled: true, styleClass: "color-red", rightAlignText: true },
-      { dataField: "Active", visible: true, caption: "Is Active?", dataType: DataTypes.Boolean, filterEnabled: true, },
+      { dataField: "Active", visible: true, caption: "Is Active?", dataType: DataTypes.Boolean, filterEnabled: true, cellTemplate: this.activeColumnTemplate },
       { visible: true, cellTemplate: this.actionButtonsTemplate }];
     this.gridDataSource = new BehaviorSubject(null);
 
@@ -42,7 +43,7 @@ export class ServerGridComponent implements OnInit {
 
   onLoadData(options: LoadOptions) {
     this.dataService.getDataUsingLoadOptions(options).subscribe((data: any) => {
-      var result = new DataSource(data.data, data.total, { totalCount: 1000 });
+      var result = new DataSource(data.data, data.total, { totalCount: 1000 }, options.isAllPages);
       this.gridDataSource.next(result);
     });
   }

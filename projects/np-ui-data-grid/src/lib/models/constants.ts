@@ -84,15 +84,15 @@ export class Constants {
 }
 
 export enum FilterTypes {
-    StartsWith = "startsWith",
-    EndsWith = "endsWith",
+    StartsWith = "startswith",
+    EndsWith = "endswith",
     Contains = "contains",
     GreaterThan = "gt",
     LessThan = "lt",
-    LessThanOrEquals = "lte",
-    GreaterThanOrEquals = "gte",
-    Equals = "equals",
-    NotEquals = "notEquals"
+    LessThanOrEquals = "le",
+    GreaterThanOrEquals = "ge",
+    Equals = "eq",
+    NotEquals = "ne"
 }
 
 export enum DataTypes {

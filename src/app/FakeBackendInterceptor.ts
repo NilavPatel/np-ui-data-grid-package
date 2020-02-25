@@ -10,11 +10,11 @@ let data: any[];
 export class FakeBackendInterceptor implements HttpInterceptor {
 
     constructor() {
-        data = this._getDataList(1000);
+        data = this._getDataList(10000);
     }
 
     _getDataList(count: number) {
-        var names = ["Nilav", "Hemal", "Hardik", "Brijesh"];
+        var names = ["Nilav", "Hemal", "Hardik", "Brijesh", "Shlok", "Shubh", "Kushal", "Aryan", "Nishin", "Vihan"];
         var surNames = ["Patel", "Patidar"];
 
         var data = [];
@@ -25,14 +25,22 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         return data;
 
         function getDataRow(id) {
+            var bday = randomDate(new Date(1950, 10, 28), new Date(2020, 10, 28), 0, 23);
             return {
                 Id: id,
                 FirstName: names[Math.floor(Math.random() * names.length)],
                 LastName: surNames[Math.floor(Math.random() * surNames.length)],
-                Age: Math.floor(Math.random() * 80) + 1,
+                Age: new Date().getFullYear() - bday.getFullYear(),
                 Active: (Math.round(Math.random() % 2) == 0),
-                BirthDate: new Date()
+                BirthDate: bday
             }
+        }
+
+        function randomDate(start, end, startHour, endHour) {
+            var date = new Date(+start + Math.random() * (end - start));
+            var hour = startHour + Math.random() * (endHour - startHour) | 0;
+            date.setHours(hour);
+            return date;
         }
     }
 
@@ -76,7 +84,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
 
             let startIndex = (loadOptions.pageNumber - 1) * loadOptions.pageSize;
-            let endIndex = Math.min(startIndex + loadOptions.pageSize - 1, 1000 - 1);
+            let endIndex = Math.min(startIndex + loadOptions.pageSize - 1, data2.length - 1);
 
             var result = { data: data2.slice(startIndex, endIndex + 1), total: data2.length }
             return ok(result);
@@ -86,11 +94,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function _filterDataSource(data, filterColumns) {
             filterColumns.forEach(element => {
-                if (element.filterOperator == "startsWith") {
+                if (element.filterOperator == "startswith") {
                     data = _.filter(data, function (a) {
                         return _.startsWith(a[element.column].toLowerCase(), element.filterValue.toLowerCase());
                     });
-                } else if (element.filterOperator == "endsWith") {
+                } else if (element.filterOperator == "endswith") {
                     data = _.filter(data, function (a) {
                         return _.endsWith(a[element.column].toLowerCase(), element.filterValue.toLowerCase());
                     });
@@ -108,7 +116,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                             return a[element.column].setHours(0, 0, 0, 0) > new Date(element.filterValue).setHours(0, 0, 0, 0);
                         });
                     }
-                } else if (element.filterOperator == "gte") {
+                } else if (element.filterOperator == "ge") {
                     if (element.dataType == "number") {
                         data = _.filter(data, function (a) {
                             return a[element.column] >= parseInt(element.filterValue);
@@ -128,7 +136,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                             return a[element.column].setHours(0, 0, 0, 0) < new Date(element.filterValue).setHours(0, 0, 0, 0);
                         });
                     }
-                } else if (element.filterOperator == "lte") {
+                } else if (element.filterOperator == "le") {
                     if (element.dataType == "number") {
                         data = _.filter(data, function (a) {
                             return a[element.column] <= parseInt(element.filterValue);
@@ -138,7 +146,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                             return a[element.column].setHours(0, 0, 0, 0) <= new Date(element.filterValue).setHours(0, 0, 0, 0);
                         });
                     }
-                } else if (element.filterOperator == "equals") {
+                } else if (element.filterOperator == "eq") {
                     if (element.dataType == "boolean") {
                         if (element.filterValue == "true") {
                             data = _.filter(data, function (a) {
@@ -159,7 +167,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         });
                     }
                 }
-                else if (element.filterOperator == "notEquals") {
+                else if (element.filterOperator == "ne") {
                     if (element.dataType == "boolean") {
                         if (element.filterValue == "true") {
                             data = _.filter(data, function (a) {

@@ -14,12 +14,16 @@
     border-bottom: 1px solid #000000;
     border-right: 1px solid #000000;
     overflow: hidden;
-    padding: 2px;
+    padding: 2px 5px;
     position: relative;
 }
 
 .np-grid-table th {
-    text-align: center;
+    text-align: left;
+}
+
+.np-grid-table th span {
+    vertical-align: middle;
 }
 
 .np-grid-table tr td:last-child,
@@ -265,20 +269,20 @@ input[type="checkbox"] {
     padding: 2px;
 }
 
-::-webkit-scrollbar {
+.np-grid-component ::-webkit-scrollbar {
     width: 5px;
     height: 5px;
 }
 
-::-webkit-scrollbar-track {
+.np-grid-component ::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
 
-::-webkit-scrollbar-thumb {
+.np-grid-component ::-webkit-scrollbar-thumb {
     background: #888;
 }
 
-::-webkit-scrollbar-thumb:hover {
+.np-grid-component ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
 
@@ -363,5 +367,9 @@ input[type="checkbox"] {
 .np-grid-table th,
 .np-grid-summary,
 .np-pagination {
-    background-color: #ededed;
+    background-color: #e8e8e8;
+}
+
+.np-grid-table tbody tr:nth-child(2n-1){
+    background-color: #f7f7f7;
 }

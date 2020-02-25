@@ -2,8 +2,26 @@
     <legend>
         <h1>2. Server side data grid example</h1>
     </legend>
-    <np-ui-data-grid #serverSideGrid [columns]="gridColumns" [dataSource]="gridDataSource" [singleSelectEnable]="true" [title]="'Server side data grid'" [showColumnChooser]="true" [enableStateStoring]="true" [showFilters]="showFilters" [isShowSummary]="true"
-        [summaryTemplate]="summaryTemplate" (onSelect)="onSelectRow($event)" (onInit)="onInit()" (onAfterInit)="onAfterInit()" [allowColumnReorder]="true" [allowColumnResize]="true" [isServerOperations]=true (onLoadData)="onLoadData($event)">
+
+    <np-ui-data-grid #serverSideGrid 
+        [columns]="gridColumns" 
+        [dataSource]="gridDataSource" 
+        [singleSelectEnable]="true" 
+        [title]="'Server side data grid'" 
+        [showColumnChooser]="true" 
+        [enableStateStoring]="true" 
+        [showFilters]="showFilters" 
+        [isShowSummary]="true"
+        [summaryTemplate]="summaryTemplate"     
+        [allowColumnReorder]="true" 
+        [allowColumnResize]="true" 
+        [isServerOperations]=true     
+        [allowExportToExcel]="true"
+        [isShowToolBar] = "true"
+        (onSelect)="onSelectRow($event)" 
+        (onInit)="onInit()" 
+        (onAfterInit)="onAfterInit()" 
+        (onLoadData)="onLoadData($event)">
     </np-ui-data-grid>
 
     <div class="btn-group">
@@ -28,6 +46,14 @@
 <ng-template #birthDateColumnTemplate let-row="row">
     {{row.BirthDate | date:'dd/MM/yyyy'}}
 </ng-template>
+
+<!-- Template for active column -->
+<ng-template #activeColumnTemplate let-row="row">
+    <div class="text-center">
+        <input type="checkbox" [checked]="row.Active" disabled>
+    </div>
+</ng-template>
+
 
 <!-- Template for summary column -->
 <ng-template #summaryTemplate let-summary="summary">

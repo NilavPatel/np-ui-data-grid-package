@@ -4,4 +4,5 @@ export class LoadOptions {
     public sortColumns: any[];
     public filterColumns: any[];
     public odataQuery: string;
+    public isAllPages: boolean;
 }
