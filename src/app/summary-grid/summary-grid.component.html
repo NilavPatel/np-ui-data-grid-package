@@ -1,0 +1,13 @@
+<h2>Summary Example</h2>
+
+<p>To add summary at footer of data grid, set <b>isShowSummary</b> to "true" in grid defination.</p>
+<p>And set <b>summaryTemplate</b> with template refrence of summary.</p>
+<p>In <b>dataSource</b>, <b>summary</b> object will be passed with data which will be accessed in template.</p>
+
+<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [isShowSummary]="true" [summaryTemplate]="summaryTemplate">
+</np-ui-data-grid>
+
+<!-- Template for summary section -->
+<ng-template #summaryTemplate let-summary="summary">
+    <span>Total:{{summary ? summary.totalCount : 0}}</span>
+</ng-template>

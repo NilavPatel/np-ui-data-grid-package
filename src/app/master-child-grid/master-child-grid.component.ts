@@ -4,10 +4,11 @@ import { DataService } from '../data.service';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
-  selector: 'app-client-grid',
-  templateUrl: './client-grid.component.html'
+  selector: 'app-master-child-grid',
+  templateUrl: './master-child-grid.component.html',
+  styleUrls: ['./master-child-grid.component.css']
 })
-export class ClientGridComponent implements OnInit {
+export class MasterChildGridComponent implements OnInit {
 
   gridColumns: any[];
   gridDataSource: BehaviorSubject<DataSource> = new BehaviorSubject(null);

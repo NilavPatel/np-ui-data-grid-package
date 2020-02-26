@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { DataSource, DataTypes } from 'projects/np-ui-data-grid/src/public-api';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { DataSource, DataTypes, NpUiDataGridComponent } from 'projects/np-ui-data-grid/src/public-api';
 import { DataService } from '../data.service';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
-  selector: 'app-client-grid',
-  templateUrl: './client-grid.component.html'
+  selector: 'app-row-select-grid',
+  templateUrl: './row-select-grid.component.html',
+  styleUrls: ['./row-select-grid.component.css']
 })
-export class ClientGridComponent implements OnInit {
+export class RowSelectGridComponent implements OnInit {
 
   gridColumns: any[];
   gridDataSource: BehaviorSubject<DataSource> = new BehaviorSubject(null);
+
+  @ViewChild("singleSelectGrid", { static: true }) singleSelectGrid: NpUiDataGridComponent;
 
   constructor(private dataService: DataService) {
   }
@@ -30,4 +33,18 @@ export class ClientGridComponent implements OnInit {
       this.gridDataSource.next(dataSource);
     });
   }
+
+  onSelectRow($event) {
+    alert("selected rows:" + $event.data);
+  }
+
+  onDeselectRow($event) {
+    alert("de selected rows:" + $event.data);
+  }
+
+  getSelectedRows() {
+    var selectedRows = this.singleSelectGrid.getSelectedRowKeys();
+    alert(selectedRows);
+  }
+
 }

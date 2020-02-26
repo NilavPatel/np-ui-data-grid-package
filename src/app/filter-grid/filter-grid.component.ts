@@ -1,30 +1,30 @@
-import { Component, OnInit} from '@angular/core';
-import { DataTypes, DataSource, LoadOptions } from 'projects/np-ui-data-grid/src/public-api';
+import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { DataTypes, DataSource, LoadOptions } from 'projects/np-ui-data-grid/src/public-api';
 import { DataService } from '../data.service';
 
 @Component({
-  selector: 'app-sorting-grid',
-  templateUrl: './sorting-grid.component.html'
+  selector: 'app-filter-grid',
+  templateUrl: './filter-grid.component.html'
 })
-export class SortingGridComponent implements OnInit {
+export class FilterGridComponent implements OnInit {
 
   gridColumns: any[];
   gridDataSource: BehaviorSubject<DataSource>;
   serverGridDataSource: BehaviorSubject<DataSource>;
-  multiColumnSortEnable: boolean = false;
+  showFilters: boolean = true;
   currentLoadOptions: LoadOptions;
-  
+
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
     this.gridColumns = [
-      { dataField: "Id", visible: true, caption: "Id", dataType: DataTypes.Number, sortEnabled: true },
-      { dataField: "FirstName", visible: true, caption: "First Name", dataType: DataTypes.String, sortEnabled: true },
-      { dataField: "LastName", visible: true, caption: "Last Name", dataType: DataTypes.String, sortEnabled: true },
-      { dataField: "BirthDate", visible: true, caption: "Birth Date", dataType: DataTypes.Date, sortEnabled: true },
-      { dataField: "Age", visible: true, caption: "Age", dataType: DataTypes.Number, sortEnabled: true },
-      { dataField: "Active", visible: true, caption: "Is Active?", dataType: DataTypes.Boolean, sortEnabled: true }];
+      { dataField: "Id", visible: true, caption: "Id", dataType: DataTypes.Number, filterEnabled: true },
+      { dataField: "FirstName", visible: true, caption: "First Name", dataType: DataTypes.String, filterEnabled: true },
+      { dataField: "LastName", visible: true, caption: "Last Name", dataType: DataTypes.String, filterEnabled: true },
+      { dataField: "BirthDate", visible: true, caption: "Birth Date", dataType: DataTypes.Date, filterEnabled: true },
+      { dataField: "Age", visible: true, caption: "Age", dataType: DataTypes.Number, filterEnabled: true },
+      { dataField: "Active", visible: true, caption: "Is Active?", dataType: DataTypes.Boolean, filterEnabled: true }];
 
     this.gridDataSource = new BehaviorSubject(null);
     this.serverGridDataSource = new BehaviorSubject(null);

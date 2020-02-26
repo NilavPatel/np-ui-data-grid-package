@@ -4,10 +4,11 @@ import { DataService } from '../data.service';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
-  selector: 'app-client-grid',
-  templateUrl: './client-grid.component.html'
+  selector: 'app-summary-grid',
+  templateUrl: './summary-grid.component.html',
+  styleUrls: ['./summary-grid.component.css']
 })
-export class ClientGridComponent implements OnInit {
+export class SummaryGridComponent implements OnInit {
 
   gridColumns: any[];
   gridDataSource: BehaviorSubject<DataSource> = new BehaviorSubject(null);
@@ -26,8 +27,10 @@ export class ClientGridComponent implements OnInit {
 
     this.dataService.getAll().subscribe((data: any) => {
       // for client side data pass total is 0, as it will calculate total from length of array.
+      // Here summary object is passed in data source.
       var dataSource = new DataSource(data, 0, { totalCount: 100000 });
       this.gridDataSource.next(dataSource);
     });
   }
+
 }

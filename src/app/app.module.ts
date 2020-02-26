@@ -10,6 +10,13 @@ import { ServerGridComponent } from './server-grid/server-grid.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { SortingGridComponent } from './sorting-grid/sorting-grid.component';
+import { FilterGridComponent } from './filter-grid/filter-grid.component';
+import { CelltemplateGridComponent } from './celltemplate-grid/celltemplate-grid.component';
+import { ToolbarGridComponent } from './toolbar-grid/toolbar-grid.component';
+import { ColumnsGridComponent } from './columns-grid/columns-grid.component';
+import { RowSelectGridComponent } from './row-select-grid/row-select-grid.component';
+import { MasterChildGridComponent } from './master-child-grid/master-child-grid.component';
+import { SummaryGridComponent } from './summary-grid/summary-grid.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +24,14 @@ import { SortingGridComponent } from './sorting-grid/sorting-grid.component';
     ClientGridComponent,
     ServerGridComponent,
     SortingGridComponent,
-    SortingGridComponent
+    SortingGridComponent,
+    FilterGridComponent,
+    CelltemplateGridComponent,
+    ToolbarGridComponent,
+    ColumnsGridComponent,
+    RowSelectGridComponent,
+    MasterChildGridComponent,
+    SummaryGridComponent
   ],
   imports: [
     BrowserModule,

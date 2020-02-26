@@ -1,0 +1,18 @@
+<h2>Row Selction Example</h2>
+
+<p>To set single row selection, set <b>singleSelectEnable</b> to "true" in grid defination.</p>
+<p>To set multi row selection, set <b>multiSelectEnable</b> to "true" in grid defination.</p>
+<p>In multi row selection, Select All checkbox is given in table header to select/unselect all rows.</p>
+<p>In both single/multi select, <b>onSelect($event)</b>, <b>onDeselect($event)</b> methods can be bound.</p>
+<p>This methods will be run when any row will be selected or de-selected. In $event.data, affected row keys will be passed.</p>
+<p>Here <b>getSelectedRowKeys()</b> API is also available, which will return array of all selected rows keys.</p>
+<p>On reset of data grid, all selected keys will be removed.</p>
+
+<h4>Single Row Selection</h4>
+<np-ui-data-grid #singleSelectGrid [columns]="gridColumns" [dataSource]="gridDataSource" [singleSelectEnable]="true">
+</np-ui-data-grid>
+<button (click)="getSelectedRows()">Get Selected Row</button>
+
+<h4>Multi Row Selection</h4>
+<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [multiSelectEnable]="true" (onSelect)="onSelectRow($event)" (onDeselect)="onDeselectRow($event)">
+</np-ui-data-grid>

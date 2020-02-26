@@ -1,10 +1,10 @@
 <h2>Client side simple data grid example.</h2>
-<div>To set client side operations in datagrid, add <b>columns</b> and <b>datasource</b> in grid defination.</div>
-<div><b>datasource</b> is typeof <b>BehaviorSubject< DataSource ></b>.</div>
-<div>Retrive all data and pass those data to behaviourSubject with next method.</div>
-<div><b>DataSource</b> has below properties:</div>
+<p>To set client side operations in datagrid, add <b>columns</b> and <b>dataSource</b> in grid defination.</p>
+<p><b>dataSource</b> is typeof <b>BehaviorSubject&lt;DataSource&gt;</b>.</p>
+<p>Retrive all data and pass those data to dataSource with "next()" method.</p>
+<p><b>DataSource</b> class has below properties:</p>
 <ul>
-    <li><b>data</b> (Array of data)</li>
+    <li><b>data</b> (Array of all data, total will be calculated from length of data for client side)</li>
     <li><b>total</b> (Only required in server side operations, for client side pass 0)</li>
     <li><b>summary</b> (Pass summary data object if isShowSummary is set to true)</li>
     <li><b>isAllPages</b> (This will be used for server side export to excel functionality, default value is false)</li>

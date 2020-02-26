@@ -1,8 +1,23 @@
 <h2>Sorting Example.</h2>
-<div>To add sorting in data grid set <b>sortEnabled</b> to "true" in column definations.</div>
-<div>To set multicolumn sorting, set <b>multiColumnSortEnable</b> to "true" in grid defination.
-    <input type="checkbox" (change)="multiColumnSortEnable = $event.target.checked">Multi column sort</div>
-<div>Default value for <b>multiColumnSortEnable</b> is "false".</div>
+<p>To add sorting in data grid set <b>sortEnabled</b> to "true" in column definations.</p>
+<p>To set multicolumn sorting, set <b>multiColumnSortEnable</b> to "true" in grid defination.
+    <input type="checkbox" (change)="multiColumnSortEnable = $event.target.checked">Multi column sort</p>
+<p>Default value for <b>multiColumnSortEnable</b> is "false".</p>
 
+<h2>Client side sorting:</h2>
+<p>
+    In Client side data grid all sorting oprations will be done on client side.
+</p>
 <np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [multiColumnSortEnable]="multiColumnSortEnable">
+</np-ui-data-grid>
+
+
+<h2>Server side sorting:</h2>
+<p> In Server side data grid <b>sortColumns</b> will be passed to <b>onLoadData(options:LoadOptions)</b>.
+    Which will contains array of all sorting columns as <q>{{ '{' }} column : string, sortDirection:
+        string {{'}'}}</q>
+</p>
+<p>Possible values for <b>sortDirection</b> are asc, desc.</p>
+<p>options:<code>{{currentLoadOptions | json}}</code></p>
+<np-ui-data-grid [columns]="gridColumns" [dataSource]="serverGridDataSource" [isServerOperations]="true" (onLoadData)="onLoadDataServerGrid($event)" [multiColumnSortEnable]="multiColumnSortEnable">
 </np-ui-data-grid>
