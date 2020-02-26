@@ -14,8 +14,8 @@ export class Column {
         width: number;
         caption: string;
         sortDirection: SortDirections;
-        sortEnabled: boolean;
-        filterEnabled: boolean;
+        sortEnable: boolean;
+        filterEnable: boolean;
         filterValue: string;
         filterOperator: FilterTypes;
         cellTemplate: TemplateRef<any>;
@@ -31,8 +31,8 @@ export class Column {
         this.sortDirection = item.sortDirection;
         this.filterValue = item.filterValue;
         this.filterOperator = item.filterOperator;
-        this.sortEnabled = item.sortEnabled;
-        this.filterEnabled = item.filterEnabled;
+        this.sortEnable = item.sortEnable;
+        this.filterEnable = item.filterEnable;
         this.cellTemplate = item.cellTemplate;
         this.onCellClick = item.onCellClick;
         this.styleClass = item.styleClass;
@@ -47,8 +47,8 @@ export class Column {
     public sortDirection: SortDirections;
     public filterValue: string;
     public filterOperator: FilterTypes;
-    public sortEnabled: boolean;
-    public filterEnabled: boolean;
+    public sortEnable: boolean;
+    public filterEnable: boolean;
     public cellTemplate: TemplateRef<any>;
     public onCellClick: any;
     public styleClass: string;

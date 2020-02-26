@@ -19,12 +19,12 @@ export class FilterGridComponent implements OnInit {
 
   ngOnInit(): void {
     this.gridColumns = [
-      { dataField: "Id", visible: true, caption: "Id", dataType: DataTypes.Number, filterEnabled: true },
-      { dataField: "FirstName", visible: true, caption: "First Name", dataType: DataTypes.String, filterEnabled: true },
-      { dataField: "LastName", visible: true, caption: "Last Name", dataType: DataTypes.String, filterEnabled: true },
-      { dataField: "BirthDate", visible: true, caption: "Birth Date", dataType: DataTypes.Date, filterEnabled: true },
-      { dataField: "Age", visible: true, caption: "Age", dataType: DataTypes.Number, filterEnabled: true },
-      { dataField: "Active", visible: true, caption: "Is Active?", dataType: DataTypes.Boolean, filterEnabled: true }];
+      { dataField: "Id", visible: true, caption: "Id", dataType: DataTypes.Number, filterEnable: true },
+      { dataField: "FirstName", visible: true, caption: "First Name", dataType: DataTypes.String, filterEnable: true },
+      { dataField: "LastName", visible: true, caption: "Last Name", dataType: DataTypes.String, filterEnable: true },
+      { dataField: "BirthDate", visible: true, caption: "Birth Date", dataType: DataTypes.Date, filterEnable: true },
+      { dataField: "Age", visible: true, caption: "Age", dataType: DataTypes.Number, filterEnable: true },
+      { dataField: "Active", visible: true, caption: "Is Active?", dataType: DataTypes.Boolean, filterEnable: true }];
 
     this.gridDataSource = new BehaviorSubject(null);
     this.serverGridDataSource = new BehaviorSubject(null);

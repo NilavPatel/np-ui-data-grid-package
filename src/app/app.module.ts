@@ -15,8 +15,9 @@ import { CelltemplateGridComponent } from './celltemplate-grid/celltemplate-grid
 import { ToolbarGridComponent } from './toolbar-grid/toolbar-grid.component';
 import { ColumnsGridComponent } from './columns-grid/columns-grid.component';
 import { RowSelectGridComponent } from './row-select-grid/row-select-grid.component';
-import { MasterChildGridComponent } from './master-child-grid/master-child-grid.component';
+import { MasterChildGridComponent } from './master-detail-grid/master-detail-grid.component';
 import { SummaryGridComponent } from './summary-grid/summary-grid.component';
+import { StateManagementGridComponent } from './state-management-grid/state-management-grid.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { SummaryGridComponent } from './summary-grid/summary-grid.component';
     ColumnsGridComponent,
     RowSelectGridComponent,
     MasterChildGridComponent,
-    SummaryGridComponent
+    SummaryGridComponent,
+    StateManagementGridComponent
   ],
   imports: [
     BrowserModule,

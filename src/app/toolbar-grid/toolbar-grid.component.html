@@ -1,14 +1,14 @@
 <h2>Toolbar Example</h2>
-<p>To show tool bar in data grid, set <b>isShowToolBar</b> to "true" in grid defination.</p>
+<p>To show tool bar in data grid, set <b>showToolBar</b> to "true" in grid defination.</p>
 <p>To show show Column Chooser in tool bar, set <b>showColumnChooser</b> to "true".</p>
 <p>Column chooser will help to show/hide columns in data grid.</p>
-<p>If any column has <b>filterEnabled</b> set to "true", then toggle filter row button will be visible in tool bar.</p>
+<p>If any column has <b>filterEnable</b> set to "true", then toggle filter row button will be visible in tool bar.</p>
 
 <h4>For Export to csv:</h4>
-<p>To show export to CSV button in tool bar, set <b>allowExportToExcel</b> to "true".</p>
+<p>To show export to CSV button in tool bar, set <b>allowExportToCSV</b> to "true".</p>
 <p>In export to CSV in client side, it will download file with all data.</p>
 <p>In server side it will make an extra call to <b>onLoadData(option:LoadOptions)</b> method.</p>
 <p>In this method's option parameter, <b>isAllPages</b> is passed as true, which needs to be pass in "next()" method of dataSource as "isAllPages = true".</p>
 
-<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [isShowToolBar]="true" [allowExportToExcel]="true" [showColumnChooser]="true">
+<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [showToolBar]="true" [allowExportToCSV]="true" [showColumnChooser]="true">
 </np-ui-data-grid>

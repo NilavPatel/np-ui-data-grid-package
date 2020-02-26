@@ -79,7 +79,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             if (loadOptions.sortColumns && loadOptions.sortColumns.length > 0) {
                 loadOptions.sortColumns.forEach(element => {
-                    data2 = _.orderBy(data2, element.column, element.sortDirection);
+                    data2 = _.orderBy(data2, element.dataField, element.sortDirection);
                 });
             }
 
@@ -96,74 +96,74 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             filterColumns.forEach(element => {
                 if (element.filterOperator == "startswith") {
                     data = _.filter(data, function (a) {
-                        return _.startsWith(a[element.column].toLowerCase(), element.filterValue.toLowerCase());
+                        return _.startsWith(a[element.dataField].toLowerCase(), element.filterValue.toLowerCase());
                     });
                 } else if (element.filterOperator == "endswith") {
                     data = _.filter(data, function (a) {
-                        return _.endsWith(a[element.column].toLowerCase(), element.filterValue.toLowerCase());
+                        return _.endsWith(a[element.dataField].toLowerCase(), element.filterValue.toLowerCase());
                     });
                 } else if (element.filterOperator == "contains") {
                     data = _.filter(data, function (a) {
-                        return a[element.column].toLowerCase().indexOf(element.filterValue.toLowerCase()) !== -1;
+                        return a[element.dataField].toLowerCase().indexOf(element.filterValue.toLowerCase()) !== -1;
                     });
                 } else if (element.filterOperator == "gt") {
                     if (element.dataType == "number") {
                         data = _.filter(data, function (a) {
-                            return a[element.column] > parseInt(element.filterValue);
+                            return a[element.dataField] > parseInt(element.filterValue);
                         });
                     } else if (element.dataType == "date") {
                         data = _.filter(data, function (a) {
-                            return a[element.column].setHours(0, 0, 0, 0) > new Date(element.filterValue).setHours(0, 0, 0, 0);
+                            return a[element.dataField].setHours(0, 0, 0, 0) > new Date(element.filterValue).setHours(0, 0, 0, 0);
                         });
                     }
                 } else if (element.filterOperator == "ge") {
                     if (element.dataType == "number") {
                         data = _.filter(data, function (a) {
-                            return a[element.column] >= parseInt(element.filterValue);
+                            return a[element.dataField] >= parseInt(element.filterValue);
                         });
                     } else if (element.dataType == "date") {
                         data = _.filter(data, function (a) {
-                            return a[element.column].setHours(0, 0, 0, 0) >= new Date(element.filterValue).setHours(0, 0, 0, 0);
+                            return a[element.dataField].setHours(0, 0, 0, 0) >= new Date(element.filterValue).setHours(0, 0, 0, 0);
                         });
                     }
                 } else if (element.filterOperator == "lt") {
                     if (element.dataType == "number") {
                         data = _.filter(data, function (a) {
-                            return a[element.column] < parseInt(element.filterValue);
+                            return a[element.dataField] < parseInt(element.filterValue);
                         });
                     } else if (element.dataType == "date") {
                         data = _.filter(data, function (a) {
-                            return a[element.column].setHours(0, 0, 0, 0) < new Date(element.filterValue).setHours(0, 0, 0, 0);
+                            return a[element.dataField].setHours(0, 0, 0, 0) < new Date(element.filterValue).setHours(0, 0, 0, 0);
                         });
                     }
                 } else if (element.filterOperator == "le") {
                     if (element.dataType == "number") {
                         data = _.filter(data, function (a) {
-                            return a[element.column] <= parseInt(element.filterValue);
+                            return a[element.dataField] <= parseInt(element.filterValue);
                         });
                     } else if (element.dataType == "date") {
                         data = _.filter(data, function (a) {
-                            return a[element.column].setHours(0, 0, 0, 0) <= new Date(element.filterValue).setHours(0, 0, 0, 0);
+                            return a[element.dataField].setHours(0, 0, 0, 0) <= new Date(element.filterValue).setHours(0, 0, 0, 0);
                         });
                     }
                 } else if (element.filterOperator == "eq") {
                     if (element.dataType == "boolean") {
                         if (element.filterValue == "true") {
                             data = _.filter(data, function (a) {
-                                return a[element.column] == true;
+                                return a[element.dataField] == true;
                             });
                         } else {
                             data = _.filter(data, function (a) {
-                                return a[element.column] == false;
+                                return a[element.dataField] == false;
                             });
                         }
                     } else if (element.dataType == "number") {
                         data = _.filter(data, function (a) {
-                            return a[element.column] === parseInt(element.filterValue);
+                            return a[element.dataField] === parseInt(element.filterValue);
                         });
                     } else if (element.dataType == "date") {
                         data = _.filter(data, function (a) {
-                            return a[element.column].setHours(0, 0, 0, 0) == new Date(element.filterValue).setHours(0, 0, 0, 0);
+                            return a[element.dataField].setHours(0, 0, 0, 0) == new Date(element.filterValue).setHours(0, 0, 0, 0);
                         });
                     }
                 }
@@ -171,20 +171,20 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     if (element.dataType == "boolean") {
                         if (element.filterValue == "true") {
                             data = _.filter(data, function (a) {
-                                return a[element.column] != true;
+                                return a[element.dataField] != true;
                             });
                         } else {
                             data = _.filter(data, function (a) {
-                                return a[element.column] != false;
+                                return a[element.dataField] != false;
                             });
                         }
                     } else if (element.dataType == "number") {
                         data = _.filter(data, function (a) {
-                            return a[element.column] !== parseInt(element.filterValue);
+                            return a[element.dataField] !== parseInt(element.filterValue);
                         });
                     } else if (element.dataType == "date") {
                         data = _.filter(data, function (a) {
-                            return a[element.column].setHours(0, 0, 0, 0) != new Date(element.filterValue).setHours(0, 0, 0, 0);
+                            return a[element.dataField].setHours(0, 0, 0, 0) != new Date(element.filterValue).setHours(0, 0, 0, 0);
                         });
                     }
                 }

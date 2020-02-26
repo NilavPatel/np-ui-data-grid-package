@@ -5,7 +5,7 @@
     [ngClass]="{'locked': _showLoader}">
     <div *ngIf="_showLoader" class="np-loader"></div>
     <div *ngIf="title && title.length > 0" class="np-grid-title">{{title}}</div>
-    <div class="np-toolbar" *ngIf="isShowToolBar">
+    <div class="np-toolbar" *ngIf="showToolBar">
         <div class="np-toolbar-item" *ngIf="showColumnChooser">
             <button type="button" title="Column chooser" class="np-icon-button column-chooser" *ngIf="showColumnChooser" (click)="_toggleColumnChooser()">
                 <svg class="np-icon-lg" viewBox="0 0 24 24">
@@ -32,7 +32,7 @@
                             <input type="checkbox" [checked]="column.visible" (change)="_onColumnChoosing(column)">
                             <span>{{column.getCaption()}}</span>
                         </label>
-                        <div class="np-drag-custom-placeholder" *cdkDragPlaceholder></div>
+                        <div class="np-drag-placeholder" *cdkDragPlaceholder></div>
                         <div class="np-drag-handle" cdkDragHandle *ngIf="allowColumnReorder">
                             <svg class="np-icon" viewBox="0 0 24 24">
                                 <path fill="currentcolor" d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z" />
@@ -53,8 +53,8 @@
                 </svg>   
             </button>         
         </div>
-        <div class="np-toolbar-item" *ngIf="allowExportToExcel">
-            <button type="button" title="Export to excel" class="np-icon-button" (click)="_exportAsXls()">                
+        <div class="np-toolbar-item" *ngIf="allowExportToCSV">
+            <button type="button" title="Export to CSV" class="np-icon-button" (click)="_exportAsXls()">                
                 <svg class="np-icon-lg" viewBox="0 0 50 50"><path fill="currentColor" d="M 28.875 0 C 28.855469 0.0078125 28.832031 0.0195313 28.8125 0.03125 L 0.8125 5.34375 C 0.335938 5.433594 -0.0078125 5.855469 0 6.34375 L 0 43.65625 C -0.0078125 44.144531 0.335938 44.566406 0.8125 44.65625 L 28.8125 49.96875 C 29.101563 50.023438 29.402344 49.949219 29.632813 49.761719 C 29.859375 49.574219 29.996094 49.296875 30 49 L 30 44 L 47 44 C 48.09375 44 49 43.09375 49 42 L 49 8 C 49 6.90625 48.09375 6 47 6 L 30 6 L 30 1 C 30.003906 0.710938 29.878906 0.4375 29.664063 0.246094 C 29.449219 0.0546875 29.160156 -0.0351563 28.875 0 Z M 28 2.1875 L 28 6.53125 C 27.867188 6.808594 27.867188 7.128906 28 7.40625 L 28 42.8125 C 27.972656 42.945313 27.972656 43.085938 28 43.21875 L 28 47.8125 L 2 42.84375 L 2 7.15625 Z M 30 8 L 47 8 L 47 42 L 30 42 L 30 37 L 34 37 L 34 35 L 30 35 L 30 29 L 34 29 L 34 27 L 30 27 L 30 22 L 34 22 L 34 20 L 30 20 L 30 15 L 34 15 L 34 13 L 30 13 Z M 36 13 L 36 15 L 44 15 L 44 13 Z M 6.6875 15.6875 L 12.15625 25.03125 L 6.1875 34.375 L 11.1875 34.375 L 14.4375 28.34375 C 14.664063 27.761719 14.8125 27.316406 14.875 27.03125 L 14.90625 27.03125 C 15.035156 27.640625 15.160156 28.054688 15.28125 28.28125 L 18.53125 34.375 L 23.5 34.375 L 17.75 24.9375 L 23.34375 15.6875 L 18.65625 15.6875 L 15.6875 21.21875 C 15.402344 21.941406 15.199219 22.511719 15.09375 22.875 L 15.0625 22.875 C 14.898438 22.265625 14.710938 21.722656 14.5 21.28125 L 11.8125 15.6875 Z M 36 20 L 36 22 L 44 22 L 44 20 Z M 36 27 L 36 29 L 44 29 L 44 27 Z M 36 35 L 36 37 L 44 37 L 44 35 Z"/></svg>
             </button>
         </div>
@@ -94,21 +94,21 @@
             </div>
         </div>
     </div>
-    <div [style.max-height.px]="height - (title && title.length > 0 ? 25 : 0) - (isShowToolBar ? 40 : 0) - 42" class="np-grid-container">
+    <div [style.max-height.px]="height - (title && title.length > 0 ? 25 : 0) - (showToolBar ? 40 : 0) - 42" class="np-grid-container">
         <table class="np-grid-table">
             <colgroup>
                 <col style="width: 30px;" *ngIf="_enableMasterChild">
-                <col style="width: 30px;" *ngIf="singleSelectEnable || multiSelectEnable">
+                <col style="width: 30px;" *ngIf="singleRowSelectEnable || multiRowSelectEnable">
                 <col *ngFor="let column of _visibleColumns" [style.width.px]="column.width">
             </colgroup>
             <thead>
-                <tr class="np-grid-header-row" cdkDropList (cdkDropListDropped)="_resizeColumn($event)" [cdkDropListDisabled]="!allowColumnResize">
+                <tr class="np-grid-header-row">
                     <th *ngIf="_enableMasterChild" [ngClass]="{'np-sticky-header' : isStickyHeader}"></th>
-                    <th *ngIf="singleSelectEnable || multiSelectEnable" [ngClass]="{'np-sticky-header' : isStickyHeader}">
-                        <input class="row-selection-input" type="checkbox" *ngIf="multiSelectEnable" title="Select/Unselect all" (change)="_onSelectAll($event)" [(ngModel)]="_isAllSelected">
+                    <th *ngIf="singleRowSelectEnable || multiRowSelectEnable" [ngClass]="{'np-sticky-header' : isStickyHeader}">
+                        <input class="row-selection-input" type="checkbox" *ngIf="multiRowSelectEnable" title="Select/Unselect all" (change)="_onSelectAll($event)" [(ngModel)]="_isAllSelected">
                     </th>
-                    <th *ngFor="let column of _visibleColumns; let j = index" [ngClass]="{'np-sticky-header' : isStickyHeader,'hidden': column.visible == false}" cdkDrag cdkDragLockAxis="x" cdkDragBoundary=".np-grid-header-row">
-                        <span [innerHTML]="column.getCaption()" (click)="_onSort(column)" [ngClass]="{'cursor-pointer': column.sortEnabled}" class="np-grid-header"></span>
+                    <th *ngFor="let column of _visibleColumns; let j = index" [ngClass]="{'np-sticky-header' : isStickyHeader,'hidden': column.visible == false}">
+                        <span [innerHTML]="column.getCaption()" (click)="_onSort(column)" [ngClass]="{'cursor-pointer': column.sortEnable}" class="np-grid-header"></span>
                         <button class="np-icon-button" type="button" *ngIf="column.sortDirection != null" (click)="_onSort(column)">
                             <svg class="np-icon" viewBox="0 0 24 24"
                                 *ngIf="column.sortDirection == _sortDirections.Ascending">
@@ -119,14 +119,14 @@
                                 <path fill="none" d="M0 0h24v24H0V0z" />
                                 <path fill="currentcolor" d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z" /></svg>
                         </button>                        
-                        <div class="np-resizable-handle" cdkDragHandle *ngIf="allowColumnResize"></div>
+                        <div class="np-resizable-handle" *ngIf="allowColumnResize" cdkDrag cdkDragLockAxis="x" [cdkDragDisabled]="!allowColumnResize" (cdkDragEnded)="_resizeColumn($event, column)"></div>
                     </th>
                 </tr>
                 <tr class="np-grid-header-filter" *ngIf="_isFilterAvailable && showFilters">
                     <th *ngIf="_enableMasterChild"></th>
-                    <th *ngIf="singleSelectEnable || multiSelectEnable"> </th>
+                    <th *ngIf="singleRowSelectEnable || multiRowSelectEnable"> </th>
                     <th *ngFor="let column of _visibleColumns; let j = index" [ngClass]="{'hidden': column.visible == false}">
-                        <div *ngIf="column.filterEnabled">
+                        <div *ngIf="column.filterEnable">
                             <div class="filter-type">
                                 <select class="grid-control" [(ngModel)]="column.filterOperator" (change)="_onFilter(column, false)">
                                     <option [value]="undefined" disabled hidden>Select...</option>
@@ -163,7 +163,7 @@
                                     <path d="M0 0h24v24H0z" fill="none" /></svg>
                             </button>
                         </td>
-                        <td *ngIf="singleSelectEnable || multiSelectEnable" class="txt-center">
+                        <td *ngIf="singleRowSelectEnable || multiRowSelectEnable" class="txt-center">
                             <input type="checkbox" [checked]="_isSelected(data[_key])" (change)="_onSelectRow(data[_key],$event)">
                         </td>
                         <td *ngFor="let column of _visibleColumns; let j = index" (click)="_onCellClick($event, column, data)" 
@@ -176,8 +176,8 @@
                         </td>
                     </tr>
                     <tr id="row_{{i}}_child" *ngIf="_enableMasterChild && _isOpenChild(data[_key])">
-                        <td [attr.colspan]="_visibleColumns.length + (singleSelectEnable || multiSelectEnable ? 1 : 0) + 1">
-                            <ng-container *ngTemplateOutlet="masterChildTemplate;context:{ row: data }">
+                        <td [attr.colspan]="_visibleColumns.length + (singleRowSelectEnable || multiRowSelectEnable ? 1 : 0) + 1">
+                            <ng-container *ngTemplateOutlet="masterDetailTemplate;context:{ row: data }">
                             </ng-container>
                         </td>
                     </tr>
@@ -187,7 +187,7 @@
         <div *ngIf="_currentViewData && _currentViewData.length == 0 && !_showLoader" class="no-data-message">
             {{noDataMessage}}
         </div>
-        <div class="np-grid-summary" *ngIf="isShowSummary">
+        <div class="np-grid-summary" *ngIf="showSummary">
             <ng-container *ngTemplateOutlet="summaryTemplate;context:{ summary: _summaryData }">
             </ng-container>
         </div>

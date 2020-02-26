@@ -1,0 +1,14 @@
+<h2>Master-Detail Example</h2>
+<p>To set Master Detail tables in data grid, create <b>&lt;ng-template&gt;</b> in HTML file and set it in <b>masterDetailTemplate</b> in grid defination.</p>
+
+<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [masterDetailTemplate]="masterDetailTemplate">
+</np-ui-data-grid>
+
+<!-- Template for child section -->
+<ng-template #masterDetailTemplate let-row="row">
+    <span><b>Name:</b>{{row.FirstName}} {{row.LastName}}</span>
+    <br>
+    <span><b>Age:</b>{{row.Age}} years</span>
+    <br>
+    <span><b>Birth Date:</b>{{row.BirthDate | date:'dd/MM/yyyy'}}</span>
+</ng-template>

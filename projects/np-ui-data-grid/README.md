@@ -10,7 +10,7 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
 * Client/Server side Filtering
 * Client/Server side Sorting
 * Single and Multiple row selection
-* Master-child row section
+* Master-Detail row section
 * Get/Set Column configurations
 * Store state of grid and change from dropdown  
 (show/hide column, filters values and sorting is also saved in state).
@@ -25,11 +25,11 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
     [columns]="gridColumns" 
     [dataSource]="gridDataSource" 
     [multiColumnSortEnable]=true
-    [masterChildTemplate]="masterChildTemplate" 
+    [masterDetailTemplate]="masterDetailTemplate" 
     [height]="400" 
     [width]="1000" 
     [isStickyHeader]="true"
-    [multiSelectEnable]="true">
+    [multiRowSelectEnable]="true">
 </np-ui-data-grid>
 ````
 
@@ -38,15 +38,15 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
     Example:
     ````javascript
     [
-        { dataField: "Id", visible: true, width: 100, caption: "Id", dataType: DataTypes.Number, sortEnabled: true, filterEnabled: true, onCellClick: this.cellClicked },
-        { dataField: "FirstName", visible: true, width: 150, caption: "First Name", dataType: DataTypes.String, sortEnabled: true, filterEnabled: true }
+        { dataField: "Id", visible: true, width: 100, caption: "Id", dataType: DataTypes.Number, sortEnable: true, filterEnable: true, onCellClick: this.cellClicked },
+        { dataField: "FirstName", visible: true, width: 150, caption: "First Name", dataType: DataTypes.String, sortEnable: true, filterEnable: true }
     ]
     ````    
     1.1 `dataType` property is for setting type of data. use **DataTypes** to get possible values.  
     ( data types are string, number, boolean, date)  
     1.2 `dataField` is name of the property from datasource array. Needs to be same as it retrived in data source.  
     1.3 `caption` is for setting column header, if not set then "dataField" will be displayed as caption.  
-    1.4 Set `sortEnabled` and `filterEnabled` on column basis (default false)  
+    1.4 Set `sortEnable` and `filterEnable` on column basis (default false)  
     1.5 `cellTemplate` : TemplateRef<any>, pass template to grid column, row data will be bind as let-row="row".  
     1.6 `onCellClick` bind on cell click event, in argument column data is passed for which column is clicked.  
     1.7 `rightAlignText` : boolean , to make text right aligned.  
@@ -62,7 +62,7 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
 3.  `[isServerOperations]` : boolean => Set server opration true or false. Default value is false.    
     
 4.  `[multiColumnSortEnable]`  
-    if set to true then multiple columns can be sorted. Need to set sortEnabled = true in column too.  
+    if set to true then multiple columns can be sorted. Need to set sortEnable = true in column too.  
     Default table is working on single column sort.  
   
 5.  `[height]`: number  
@@ -77,12 +77,12 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
 8.  `[tableId]`: string  
     set html attribute id to component  
   
-9.  `[multiSelectEnable]` : boolean OR `[singleSelectEnable]` : boolean  
+9.  `[multiRowSelectEnable]` : boolean OR `[singleRowSelectEnable]` : boolean  
     Will show checkboxes in first column to select single/multiple rows.  
       
-10.  `[masterChildTemplate]` : TemplateRef<any>  
+10.  `[masterDetailTemplate]` : TemplateRef<any>  
     Pass TemplateRef<any> type object to above attribute to dispay master child grid.  
-    if masterChildTemplate is passed then +, - icons will be displayed to open/close child view.  
+    if masterDetailTemplate is passed then +, - icons will be displayed to open/close child view.  
       
 11. `[isStickyHeader]` : boolean  
     If true then header will stick on top when scroll grid vertically.  
@@ -108,10 +108,10 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
       
 16. `[showFilters]` : boolean  
     default value of show filters is true, this is only used to show/hide row of filters.  
-    If any visible column is defined with filterenabled true then filters will be shown for that column,  
+    If any visible column is defined with filterEnable true then filters will be shown for that column,  
     but using this showFilter property you can show/hide whole row of filters.  
       
-17. `[isShowSummary]`  
+17. `[showSummary]`  
     default value is false. To show/hide summary at footer of datagrid.  
   
 18. `[summaryTemplate]` : TemplateRef<any>  
@@ -133,14 +133,14 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
     Default value is false, if this option is set to true, then in **onLoadData** argument odataQuery is passed.  
     Which will be used in fetching data using OData.
 
-22. `[allowExportToExcel]` : boolean  
-    Default value is false, if this option is set to true, then in toolbar button is visible with excel file icon,  
+22. `[allowExportToCSV]` : boolean  
+    Default value is false, if this option is set to true, then in toolbar button is visible with CSV file icon,  
     On clicking this button it will download file with all data in .csv format.
     For Client side => all data is available in file.
     For Server side => it will call to onLoadData to retrive all data, and then download file with all data.
 
-23. `[isShowToolBar]` : boolean  
-    Default value is false, if this option is set to true, then toolbar will be visible. This property must be set true to utilize export to excel, show/hide filters button, column chooser, and state management.
+23. `[showToolBar]` : boolean  
+    Default value is false, if this option is set to true, then toolbar will be visible. This property must be set true to utilize export to CSV, show/hide filters button, column chooser, and state management.
       
 
 ## Apis
@@ -248,11 +248,11 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
       
 6.  `onLoadData(optaions : loadOptions)` 
     This function has parameters like `pageNumber`, `pageSize`, `sortColumns`, `filterColumns`.  
-    Where `sortColumns` is an array of {column : string, sortDirection: string}.  
+    Where `sortColumns` is an array of {dataField : string, sortDirection: string}.  
         possible values for sortDirection are asc, desc.  
     Where `filterColumns` is an array of  
     ````javascript
-    { column : string, filterOperator: string, filterValue: string, dataType: string}
+    { dataField : string, filterOperator: string, filterValue: string, dataType: string}
     ````
     possible values for **filterOperator** are startsWith, endsWith, contains, gt, lt, ge, le, eq, ne.  
     possible values for **dataType** are number, string, date, boolean.  

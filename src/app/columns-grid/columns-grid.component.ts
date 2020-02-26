@@ -19,8 +19,8 @@ export class ColumnsGridComponent implements OnInit {
 
   ngOnInit() {
     this.gridColumns = [
-      { dataField: "Id", visible: true, caption: "Id", dataType: DataTypes.Number, onCellClick: this.onCellClick },
-      { dataField: "FirstName", visible: true, caption: "First Name", dataType: DataTypes.String },
+      { dataField: "Id", visible: true, caption: "Id", dataType: DataTypes.Number, onCellClick: this.onCellClick, width: 200 },
+      { dataField: "FirstName", visible: true, caption: "First Name", dataType: DataTypes.String, width: 200 },
       { dataField: "LastName", visible: true, caption: "Last Name", dataType: DataTypes.String },
       { dataField: "BirthDate", visible: true, caption: "Birth Date", dataType: DataTypes.Date },
       { dataField: "Age", visible: true, caption: "Age", dataType: DataTypes.Number, rightAlignText: true },

@@ -19,12 +19,12 @@ export class SortingGridComponent implements OnInit {
 
   ngOnInit(): void {
     this.gridColumns = [
-      { dataField: "Id", visible: true, caption: "Id", dataType: DataTypes.Number, sortEnabled: true },
-      { dataField: "FirstName", visible: true, caption: "First Name", dataType: DataTypes.String, sortEnabled: true },
-      { dataField: "LastName", visible: true, caption: "Last Name", dataType: DataTypes.String, sortEnabled: true },
-      { dataField: "BirthDate", visible: true, caption: "Birth Date", dataType: DataTypes.Date, sortEnabled: true },
-      { dataField: "Age", visible: true, caption: "Age", dataType: DataTypes.Number, sortEnabled: true },
-      { dataField: "Active", visible: true, caption: "Is Active?", dataType: DataTypes.Boolean, sortEnabled: true }];
+      { dataField: "Id", visible: true, caption: "Id", dataType: DataTypes.Number, sortEnable: true },
+      { dataField: "FirstName", visible: true, caption: "First Name", dataType: DataTypes.String, sortEnable: true },
+      { dataField: "LastName", visible: true, caption: "Last Name", dataType: DataTypes.String, sortEnable: true },
+      { dataField: "BirthDate", visible: true, caption: "Birth Date", dataType: DataTypes.Date, sortEnable: true },
+      { dataField: "Age", visible: true, caption: "Age", dataType: DataTypes.Number, sortEnable: true },
+      { dataField: "Active", visible: true, caption: "Is Active?", dataType: DataTypes.Boolean, sortEnable: true }];
 
     this.gridDataSource = new BehaviorSubject(null);
     this.serverGridDataSource = new BehaviorSubject(null);

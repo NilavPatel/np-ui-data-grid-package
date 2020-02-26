@@ -7,8 +7,9 @@ import { CelltemplateGridComponent } from './celltemplate-grid/celltemplate-grid
 import { ToolbarGridComponent } from './toolbar-grid/toolbar-grid.component';
 import { ColumnsGridComponent } from './columns-grid/columns-grid.component';
 import { RowSelectGridComponent } from './row-select-grid/row-select-grid.component';
-import { MasterChildGridComponent } from './master-child-grid/master-child-grid.component';
+import { MasterChildGridComponent } from './master-detail-grid/master-detail-grid.component';
 import { SummaryGridComponent } from './summary-grid/summary-grid.component';
+import { StateManagementGridComponent } from './state-management-grid/state-management-grid.component';
 
 export const appRoutes: Routes = [
     { path: 'client-grid', component: ClientGridComponent },
@@ -19,7 +20,8 @@ export const appRoutes: Routes = [
     { path: 'toolbar-grid', component: ToolbarGridComponent },
     { path: 'columns-grid', component: ColumnsGridComponent },
     { path: 'row-select-grid', component: RowSelectGridComponent },
-    { path: 'master-child-grid', component: MasterChildGridComponent },
+    { path: 'master-detail-grid', component: MasterChildGridComponent },
     { path: 'summary-grid', component: SummaryGridComponent },
+    { path: 'state-management-grid', component: StateManagementGridComponent },
     { path: '**', redirectTo: "/client-grid" }
 ];

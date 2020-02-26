@@ -4,9 +4,9 @@ import { DataService } from '../data.service';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
-  selector: 'app-master-child-grid',
-  templateUrl: './master-child-grid.component.html',
-  styleUrls: ['./master-child-grid.component.css']
+  selector: 'app-master-detail-grid',
+  templateUrl: './master-detail-grid.component.html',
+  styleUrls: ['./master-detail-grid.component.css']
 })
 export class MasterChildGridComponent implements OnInit {
 

@@ -4,7 +4,7 @@
 <p>To resize column, drag at the right end of column in left or right direction.(On hover of right end of column cursor will be turned to "col-resize").</p>
 <h4>Column Reorder</h4>
 <p>To add column reorder set <b>allowColumnReorder</b> to "true" in grid defination.</p>
-<p>To set column reorder columns, <b>isShowToolBar</b> and <b>showColumnChooser</b> must be set to "true"</p>
+<p>To set column reorder columns, <b>showToolBar</b> and <b>showColumnChooser</b> must be set to "true"</p>
 <p>To reorder columns, open column chooser and drag "move" icon up and down.</p>
 <h4>Right Aligned Text</h4>
 <p>To set right aligned text in cells, set <b>rightAlignText</b> to "true" in column defination.</p>
@@ -16,6 +16,6 @@
 <p>Bind onCellClick with any function, which will be callback when any column is clicked.</p>
 <p>in onCellClick function, event, column and rowData is passed as parameters.</p>
 
-<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [isShowToolBar]="true" 
+<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [showToolBar]="true" 
 [showColumnChooser]="true" [allowColumnResize]="true" [allowColumnReorder]="true">
 </np-ui-data-grid>

@@ -47,15 +47,15 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
   _filterColumnList: any[];
 
   _enableMasterChild: boolean = false;
-  @Input() masterChildTemplate: TemplateRef<any>;
+  @Input() masterDetailTemplate: TemplateRef<any>;
 
   @Input() isStickyHeader: boolean = false;
 
   _showLoader: boolean = false;
 
-  @Input() singleSelectEnable: boolean = false;
+  @Input() singleRowSelectEnable: boolean = false;
 
-  @Input() multiSelectEnable: boolean = false;
+  @Input() multiRowSelectEnable: boolean = false;
 
   _selectedRowKeys: any[] = [];
 
@@ -100,7 +100,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Output() onAfterInit: EventEmitter<any> = new EventEmitter();
 
-  @Input() isShowSummary: boolean = false;
+  @Input() showSummary: boolean = false;
   @Input() summaryTemplate: TemplateRef<any>;
   _summaryData: any;
 
@@ -112,9 +112,9 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() isODataOperations: boolean = false;
 
-  @Input() allowExportToExcel: boolean = false;
+  @Input() allowExportToCSV: boolean = false;
 
-  @Input() isShowToolBar: boolean = false;
+  @Input() showToolBar: boolean = false;
 
   constructor(private pagerService: NpPagerService,
     private filterService: NpFilterService,
@@ -132,7 +132,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (this.masterChildTemplate != undefined && this.masterChildTemplate != null) {
+    if (this.masterDetailTemplate != undefined && this.masterDetailTemplate != null) {
       this._enableMasterChild = true;
     }
     if (this.key && this.key != null && this.key.length > 0) {
@@ -241,7 +241,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
 
   _setVisibleColumns() {
     this._visibleColumns = this.utilityService.custFilter(this._columns, function (element: Column) { if (element.visible === true) { return element } });
-    this._isFilterAvailable = this.utilityService.custFilter(this._columns, function (element) { if (element.filterEnabled === true && element.visible === true) { return element } }).length > 0;
+    this._isFilterAvailable = this.utilityService.custFilter(this._columns, function (element) { if (element.filterEnable === true && element.visible === true) { return element } }).length > 0;
   }
 
   _onPageSizeChange() {
@@ -256,7 +256,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // on first click ascending, on second click descending and on third click remove sorting
   _onSort(column: Column) {
-    if (!column.sortEnabled) {
+    if (!column.sortEnable) {
       return;
     }
     // if sort direction is descending then remove sorting from column
@@ -272,13 +272,13 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.multiColumnSortEnable) {
       var list = [];
       this._sortColumnList.forEach(function (element) {
-        if (element.column !== column.dataField) {
+        if (element.dataField !== column.dataField) {
           list.push(element);
         }
       });
       this._sortColumnList = list;
     }
-    this._sortColumnList.push({ column: column.dataField, sortDirection: column.sortDirection });
+    this._sortColumnList.push({ dataField: column.dataField, sortDirection: column.sortDirection });
     this._selectedRowKeys = [];
     this._isAllSelected = false;
     this._openRowKeys = [];
@@ -291,7 +291,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
 
   _sortDataSource() {
     this._sortColumnList.forEach(element => {
-      this._dataSource.data = this.utilityService.custSort(this._dataSource.data, element.column, element.sortDirection);
+      this._dataSource.data = this.utilityService.custSort(this._dataSource.data, element.dataField, element.sortDirection);
     });
   }
 
@@ -307,7 +307,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
 
     var list = [];
     this._sortColumnList.forEach(function (element) {
-      if (element.column !== column.dataField) {
+      if (element.dataField !== column.dataField) {
         list.push(element);
       }
     });
@@ -317,7 +317,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
       this._resetDataSource();
       this._filterDataSource();
       this._sortColumnList.forEach(element => {
-        this._dataSource.data = this.utilityService.custSort(this._dataSource.data, element.column, element.sortDirection);
+        this._dataSource.data = this.utilityService.custSort(this._dataSource.data, element.dataField, element.sortDirection);
       });
     }
     this._getCurrentViewData(1);
@@ -342,7 +342,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     this._columns.forEach(element => {
       if (element.filterOperator != undefined && element.filterOperator != null
         && element.filterValue && element.filterValue.toString().length > 0) {
-        this._filterColumnList.push({ column: element.dataField, filterOperator: element.filterOperator, filterValue: element.filterValue, dataType: element.dataType });
+        this._filterColumnList.push({ dataField: element.dataField, filterOperator: element.filterOperator, filterValue: element.filterValue, dataType: element.dataType });
       }
     });
     this._selectedRowKeys = [];
@@ -391,7 +391,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   _onSelectAll(event: any) {
-    if (this.singleSelectEnable) {
+    if (this.singleRowSelectEnable) {
       return;
     }
     if (event.currentTarget.checked) {
@@ -430,7 +430,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   _onSelectRow(keyValue: any, event: any) {
-    if (this.singleSelectEnable) {
+    if (this.singleRowSelectEnable) {
       this._selectedRowKeys = [];
       if (event.currentTarget.checked) {
         this._selectedRowKeys.push(keyValue);
@@ -697,7 +697,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this._sortColumnList = [];
     this._columns.forEach(element => {
-      if (element.sortEnabled && element.sortDirection != null) {
+      if (element.sortEnable && element.sortDirection != null) {
         this._sortColumnList.push({ column: element.dataField, sortDirection: element.sortDirection });
       }
     });
@@ -808,12 +808,13 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     this.reset();
   }
 
-  _resizeColumn($event: CdkDragDrop<string[]>) {
-    var currentWidth = this._columns[$event.previousIndex].width;
+  _resizeColumn($event: any, column: Column) {    
+    var currentWidth = column.width;
     if (isNaN(currentWidth)) {
-      currentWidth = $event.item.element.nativeElement.offsetWidth;
+      currentWidth = $event.source.element.nativeElement.parentElement.offsetWidth;
     }
-    this._columns[$event.previousIndex].width = (isNaN(currentWidth) ? 0 : currentWidth) + $event.distance.x;
+    column.width = (isNaN(currentWidth) ? 0 : currentWidth) + $event.distance.x;
+    $event.source.reset();
   }
 
   _exportAsXls() {
