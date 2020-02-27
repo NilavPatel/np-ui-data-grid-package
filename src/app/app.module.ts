@@ -19,6 +19,8 @@ import { MasterChildGridComponent } from './master-detail-grid/master-detail-gri
 import { SummaryGridComponent } from './summary-grid/summary-grid.component';
 import { StateManagementGridComponent } from './state-management-grid/state-management-grid.component';
 import { OtherGridComponent } from './other-grid/other-grid.component';
+import { ClientGridAllComponent } from './client-grid-all/client-grid-all.component';
+import { ServerGridAllComponent } from './server-grid-all/server-grid-all.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { OtherGridComponent } from './other-grid/other-grid.component';
     MasterChildGridComponent,
     SummaryGridComponent,
     StateManagementGridComponent,
-    OtherGridComponent
+    OtherGridComponent,
+    ClientGridAllComponent,
+    ServerGridAllComponent
   ],
   imports: [
     BrowserModule,

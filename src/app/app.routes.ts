@@ -11,6 +11,8 @@ import { MasterChildGridComponent } from './master-detail-grid/master-detail-gri
 import { SummaryGridComponent } from './summary-grid/summary-grid.component';
 import { StateManagementGridComponent } from './state-management-grid/state-management-grid.component';
 import { OtherGridComponent } from './other-grid/other-grid.component';
+import { ClientGridAllComponent } from './client-grid-all/client-grid-all.component';
+import { ServerGridAllComponent } from './server-grid-all/server-grid-all.component';
 
 export const appRoutes: Routes = [
     { path: 'client-grid', component: ClientGridComponent },
@@ -25,5 +27,7 @@ export const appRoutes: Routes = [
     { path: 'summary-grid', component: SummaryGridComponent },
     { path: 'state-management-grid', component: StateManagementGridComponent },
     { path: 'other-grid', component: OtherGridComponent },
+    { path: 'client-grid-all', component: ClientGridAllComponent },
+    { path: 'server-grid-all', component: ServerGridAllComponent },
     { path: '**', redirectTo: "/client-grid" }
 ];
