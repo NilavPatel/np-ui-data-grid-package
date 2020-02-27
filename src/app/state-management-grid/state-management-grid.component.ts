@@ -18,12 +18,12 @@ export class StateManagementGridComponent implements OnInit {
 
   ngOnInit() {
     this.gridColumns = [
-      { dataField: "Id", visible: true, caption: "Id", dataType: DataTypes.Number },
-      { dataField: "FirstName", visible: true, caption: "First Name", dataType: DataTypes.String },
-      { dataField: "LastName", visible: true, caption: "Last Name", dataType: DataTypes.String },
-      { dataField: "BirthDate", visible: true, caption: "Birth Date", dataType: DataTypes.Date },
-      { dataField: "Age", visible: true, caption: "Age", dataType: DataTypes.Number },
-      { dataField: "Active", visible: true, caption: "Is Active?", dataType: DataTypes.Boolean }];
+      { dataField: "Id", visible: true, caption: "Id", dataType: DataTypes.Number, sortEnable: true, filterEnable: true },
+      { dataField: "FirstName", visible: true, caption: "First Name", dataType: DataTypes.String, sortEnable: true, filterEnable: true },
+      { dataField: "LastName", visible: true, caption: "Last Name", dataType: DataTypes.String, sortEnable: true, filterEnable: true },
+      { dataField: "BirthDate", visible: true, caption: "Birth Date", dataType: DataTypes.Date, sortEnable: true, filterEnable: true },
+      { dataField: "Age", visible: true, caption: "Age", dataType: DataTypes.Number, sortEnable: true, filterEnable: true },
+      { dataField: "Active", visible: true, caption: "Is Active?", dataType: DataTypes.Boolean, sortEnable: true, filterEnable: true }];
 
     this.dataService.getAll().subscribe((data: any) => {
       // for client side data pass total is 0, as it will calculate total from length of array.

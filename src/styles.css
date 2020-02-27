@@ -1,3 +1,63 @@
 .txt-red{
     color: red !important;
 }
+
+header{
+    background-color: lightgray;
+    margin: 0px;
+    padding: 1px 10px;
+}
+
+body{
+    margin: 0px !important;
+}
+
+.content{
+    margin: 10px 5px;    
+}
+
+h2{
+    margin: 5px;
+}
+
+.github-link{
+    float:right;
+}
+
+.github-link img{    
+    height: 50px;
+    width: 50px;
+}
+
+.nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+}
+
+.nav li a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.nav li a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.nav li a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+
+.main-container {
+    display: flex;
+}
+
+.nav {
+    padding-right: 10px;
+}
