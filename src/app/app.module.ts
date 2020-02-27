@@ -18,6 +18,7 @@ import { RowSelectGridComponent } from './row-select-grid/row-select-grid.compon
 import { MasterChildGridComponent } from './master-detail-grid/master-detail-grid.component';
 import { SummaryGridComponent } from './summary-grid/summary-grid.component';
 import { StateManagementGridComponent } from './state-management-grid/state-management-grid.component';
+import { OtherGridComponent } from './other-grid/other-grid.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { StateManagementGridComponent } from './state-management-grid/state-mana
     RowSelectGridComponent,
     MasterChildGridComponent,
     SummaryGridComponent,
-    StateManagementGridComponent
+    StateManagementGridComponent,
+    OtherGridComponent
   ],
   imports: [
     BrowserModule,

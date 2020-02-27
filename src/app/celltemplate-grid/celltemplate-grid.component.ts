@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { DataSource, DataTypes } from 'projects/np-ui-data-grid/src/public-api';
+import { DataSource, DataTypes, Column } from 'projects/np-ui-data-grid/src/public-api';
 import { DataService } from '../data.service';
 
 @Component({
@@ -21,17 +21,18 @@ export class CelltemplateGridComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.gridColumns = [
-      { dataField: "Id", visible: true, caption: "Id", dataType: DataTypes.Number },
-      { dataField: "FirstName", visible: true, caption: "First Name", dataType: DataTypes.String },
-      { dataField: "LastName", visible: true, caption: "Last Name", dataType: DataTypes.String },
-      { dataField: "BirthDate", visible: true, caption: "Birth Date", dataType: DataTypes.Date, cellTemplate: this.birthDateColumnTemplate },
-      { dataField: "Age", visible: true, caption: "Age", dataType: DataTypes.Number },
-      { dataField: "Active", visible: true, caption: "Is Active?", dataType: DataTypes.Boolean, cellTemplate: this.activeColumnTemplate },
-      { visible: true, cellTemplate: this.actionButtonsTemplate }];
+      new Column({ dataField: "Id", visible: true, caption: "Id", dataType: DataTypes.Number, sortEnable: true, filterEnable: true }),
+      new Column({ dataField: "FirstName", visible: true, caption: "First Name", dataType: DataTypes.String, sortEnable: true, filterEnable: true }),
+      new Column({ dataField: "LastName", visible: true, caption: "Last Name", dataType: DataTypes.String, sortEnable: true, filterEnable: true }),
+      new Column({ dataField: "BirthDate", visible: true, caption: "Birth Date", dataType: DataTypes.Date, sortEnable: true, filterEnable: true, cellTemplate: this.birthDateColumnTemplate }),
+      new Column({ dataField: "Age", visible: true, caption: "Age", dataType: DataTypes.Number, sortEnable: true, filterEnable: true }),
+      new Column({ dataField: "Active", visible: true, caption: "Is Active?", dataType: DataTypes.Boolean, sortEnable: true, filterEnable: true, cellTemplate: this.activeColumnTemplate }),
+      new Column({ visible: true, cellTemplate: this.actionButtonsTemplate })];
 
     this.dataService.getAll().subscribe((data: any) => {
-      // for client side data pass total is 0, as it will calculate total from length of array.
+      
       var dataSource = new DataSource(data, 0, { totalCount: 100000 });
       this.gridDataSource.next(dataSource);
     });

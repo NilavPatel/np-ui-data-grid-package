@@ -1,0 +1,19 @@
+<h2>Others</h2>
+
+<h4>key</h4>
+<p>To set key column in data grid, set <b>key</b> property with column's dataField value in grid defination.</p>
+<p>Example: <code>[key]="'Id'"</code></p>
+
+<h4>height</h4>
+<p>To set height of data grid, set <b>height</b> property in grid defination.</p>
+<p>Example: <code>[height]="500"</code>. No need to pass "px" as this value will be considered in pixels only.</p>
+
+<h4>width</h4>
+<p>To set width of data grid, set <b>width</b> property in grid defination.</p>
+<p>Example: <code>[width]="1000"</code>. No need to pass "px" as this value will be considered in pixels only.</p>
+
+<h4>stickyHeader</h4>
+<p>To set sticky headers in data grid set <b>stickyHeader</b> to true.</p>
+
+<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [key]="'Id'" [height]="500" [width]="1000" [stickyHeader]="true">
+</np-ui-data-grid>

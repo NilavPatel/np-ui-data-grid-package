@@ -4,8 +4,16 @@
 
 header{
     background-color: lightgray;
-    margin: 0px;
-    padding: 1px 10px;
+    margin: 0px;    
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 9999;
+    height: 80px;
+}
+
+header h1{
+    padding: 0px 10px;
 }
 
 body{
@@ -13,11 +21,11 @@ body{
 }
 
 .content{
-    margin: 10px 5px;    
+    margin: 10px;    
 }
 
 h2{
-    margin: 5px;
+    margin: 5px 0px;
 }
 
 .github-link{
@@ -35,6 +43,7 @@ h2{
     padding: 0;
     width: 200px;
     background-color: #f1f1f1;
+    height: 100%;
 }
 
 .nav li a {
@@ -56,8 +65,5 @@ h2{
 
 .main-container {
     display: flex;
-}
-
-.nav {
-    padding-right: 10px;
+    margin-top: 80px;
 }

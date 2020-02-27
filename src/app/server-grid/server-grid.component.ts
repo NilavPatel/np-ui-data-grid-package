@@ -1,5 +1,5 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { DataSource, DataTypes, LoadOptions } from 'projects/np-ui-data-grid/src/public-api';
+import { Component, OnInit } from '@angular/core';
+import { DataSource, DataTypes, LoadOptions, Column } from 'projects/np-ui-data-grid/src/public-api';
 import { DataService } from '../data.service';
 import { BehaviorSubject } from 'rxjs';
 
@@ -18,12 +18,12 @@ export class ServerGridComponent implements OnInit {
 
   ngOnInit() {
     this.gridColumns = [
-      { dataField: "Id", visible: true, caption: "Id", dataType: DataTypes.Number },
-      { dataField: "FirstName", visible: true, caption: "First Name", dataType: DataTypes.String },
-      { dataField: "LastName", visible: true, caption: "Last Name", dataType: DataTypes.String },
-      { dataField: "BirthDate", visible: true, caption: "Birth Date", dataType: DataTypes.Date },
-      { dataField: "Age", visible: true, caption: "Age", dataType: DataTypes.Number },
-      { dataField: "Active", visible: true, caption: "Is Active?", dataType: DataTypes.Boolean }];
+      new Column({ dataField: "Id", visible: true, caption: "Id", dataType: DataTypes.Number }),
+      new Column({ dataField: "FirstName", visible: true, caption: "First Name", dataType: DataTypes.String }),
+      new Column({ dataField: "LastName", visible: true, caption: "Last Name", dataType: DataTypes.String }),
+      new Column({ dataField: "BirthDate", visible: true, caption: "Birth Date", dataType: DataTypes.Date }),
+      new Column({ dataField: "Age", visible: true, caption: "Age", dataType: DataTypes.Number }),
+      new Column({ dataField: "Active", visible: true, caption: "Is Active?", dataType: DataTypes.Boolean })];
   }
 
   onLoadData(options: LoadOptions) {

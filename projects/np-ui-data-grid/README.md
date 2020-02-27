@@ -28,7 +28,7 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
     [masterDetailTemplate]="masterDetailTemplate" 
     [height]="400" 
     [width]="1000" 
-    [isStickyHeader]="true"
+    [stickyHeader]="true"
     [multiRowSelectEnable]="true">
 </np-ui-data-grid>
 ````
@@ -84,7 +84,7 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
     Pass TemplateRef<any> type object to above attribute to dispay master child grid.  
     if masterDetailTemplate is passed then +, - icons will be displayed to open/close child view.  
       
-11. `[isStickyHeader]` : boolean  
+11. `[stickyHeader]` : boolean  
     If true then header will stick on top when scroll grid vertically.  
       
 12. `[showColumnChooser]` : boolean  

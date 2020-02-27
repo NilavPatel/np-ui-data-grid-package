@@ -7,36 +7,21 @@ import { FilterTypes, DataTypes, SortDirections } from './constants';
 export class Column {
 
     /**constructor */
-    constructor(item: {
-        dataField: string;
-        dataType: DataTypes;
-        visible: boolean;
-        width: number;
-        caption: string;
-        sortDirection: SortDirections;
-        sortEnable: boolean;
-        filterEnable: boolean;
-        filterValue: string;
-        filterOperator: FilterTypes;
-        cellTemplate: TemplateRef<any>;
-        onCellClick: any;
-        styleClass: string;
-        rightAlignText: boolean;
-    }) {
-        this.dataField = item.dataField;
-        this.dataType = item.dataType == undefined || item.dataType == null ? DataTypes.String : item.dataType;
-        this.visible = item.visible;
-        this.width = item.width;
-        this.caption = item.caption;
-        this.sortDirection = item.sortDirection;
-        this.filterValue = item.filterValue;
-        this.filterOperator = item.filterOperator;
-        this.sortEnable = item.sortEnable;
-        this.filterEnable = item.filterEnable;
-        this.cellTemplate = item.cellTemplate;
-        this.onCellClick = item.onCellClick;
-        this.styleClass = item.styleClass;
-        this.rightAlignText = item.rightAlignText;
+    constructor(item: any) {
+        this.dataField = item["dataField"];
+        this.dataType = item["dataType"] == undefined || item["dataType"] == null ? DataTypes.String : item["dataType"];
+        this.visible = item["visible"];
+        this.width = item["width"];
+        this.caption = item["caption"];
+        this.sortDirection = item["sortDirection"];
+        this.filterValue = item["filterValue"];
+        this.filterOperator = item["filterOperator"];
+        this.sortEnable = item["sortEnable"];
+        this.filterEnable = item["filterEnable"];
+        this.cellTemplate = item["cellTemplate"];
+        this.onCellClick = item["onCellClick"];
+        this.styleClass = item["styleClass"];
+        this.rightAlignText = item["rightAlignText"];
     }
 
     public dataField: string;

@@ -49,7 +49,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
   _enableMasterChild: boolean = false;
   @Input() masterDetailTemplate: TemplateRef<any>;
 
-  @Input() isStickyHeader: boolean = false;
+  @Input() stickyHeader: boolean = false;
 
   _showLoader: boolean = false;
 

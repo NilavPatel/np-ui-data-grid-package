@@ -10,6 +10,7 @@ import { RowSelectGridComponent } from './row-select-grid/row-select-grid.compon
 import { MasterChildGridComponent } from './master-detail-grid/master-detail-grid.component';
 import { SummaryGridComponent } from './summary-grid/summary-grid.component';
 import { StateManagementGridComponent } from './state-management-grid/state-management-grid.component';
+import { OtherGridComponent } from './other-grid/other-grid.component';
 
 export const appRoutes: Routes = [
     { path: 'client-grid', component: ClientGridComponent },
@@ -23,5 +24,6 @@ export const appRoutes: Routes = [
     { path: 'master-detail-grid', component: MasterChildGridComponent },
     { path: 'summary-grid', component: SummaryGridComponent },
     { path: 'state-management-grid', component: StateManagementGridComponent },
+    { path: 'other-grid', component: OtherGridComponent },
     { path: '**', redirectTo: "/client-grid" }
 ];

@@ -103,11 +103,11 @@
             </colgroup>
             <thead>
                 <tr class="np-grid-header-row">
-                    <th *ngIf="_enableMasterChild" [ngClass]="{'np-sticky-header' : isStickyHeader}"></th>
-                    <th *ngIf="singleRowSelectEnable || multiRowSelectEnable" [ngClass]="{'np-sticky-header' : isStickyHeader}">
+                    <th *ngIf="_enableMasterChild" [ngClass]="{'np-sticky-header' : stickyHeader}"></th>
+                    <th *ngIf="singleRowSelectEnable || multiRowSelectEnable" [ngClass]="{'np-sticky-header' : stickyHeader}">
                         <input class="row-selection-input" type="checkbox" *ngIf="multiRowSelectEnable" title="Select/Unselect all" (change)="_onSelectAll($event)" [(ngModel)]="_isAllSelected">
                     </th>
-                    <th *ngFor="let column of _visibleColumns; let j = index" [ngClass]="{'np-sticky-header' : isStickyHeader,'hidden': column.visible == false}">
+                    <th *ngFor="let column of _visibleColumns; let j = index" [ngClass]="{'np-sticky-header' : stickyHeader,'hidden': column.visible == false}">
                         <span [innerHTML]="column.getCaption()" (click)="_onSort(column)" [ngClass]="{'cursor-pointer': column.sortEnable}" class="np-grid-header"></span>
                         <button class="np-icon-button" type="button" *ngIf="column.sortDirection != null" (click)="_onSort(column)">
                             <svg class="np-icon" viewBox="0 0 24 24"
