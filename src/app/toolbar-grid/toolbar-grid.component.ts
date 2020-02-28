@@ -5,8 +5,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-toolbar-grid',
-  templateUrl: './toolbar-grid.component.html',
-  styleUrls: ['./toolbar-grid.component.css']
+  templateUrl: './toolbar-grid.component.html'
 })
 export class ToolbarGridComponent implements OnInit {
 

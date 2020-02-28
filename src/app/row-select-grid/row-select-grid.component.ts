@@ -5,8 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-row-select-grid',
-  templateUrl: './row-select-grid.component.html',
-  styleUrls: ['./row-select-grid.component.css']
+  templateUrl: './row-select-grid.component.html'
 })
 export class RowSelectGridComponent implements OnInit {
 

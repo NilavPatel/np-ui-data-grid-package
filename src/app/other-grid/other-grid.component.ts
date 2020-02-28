@@ -4,8 +4,7 @@ import { DataService } from '../data.service';
 import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-other-grid',
-  templateUrl: './other-grid.component.html',
-  styleUrls: ['./other-grid.component.css']
+  templateUrl: './other-grid.component.html'
 })
 export class OtherGridComponent implements OnInit {
 

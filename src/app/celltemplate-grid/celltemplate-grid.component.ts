@@ -5,8 +5,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-celltemplate-grid',
-  templateUrl: './celltemplate-grid.component.html',
-  styleUrls: ['./celltemplate-grid.component.css']
+  templateUrl: './celltemplate-grid.component.html'
 })
 export class CelltemplateGridComponent implements OnInit {
 

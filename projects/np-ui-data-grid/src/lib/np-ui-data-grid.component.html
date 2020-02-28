@@ -119,7 +119,7 @@
                                 <path fill="none" d="M0 0h24v24H0V0z" />
                                 <path fill="currentcolor" d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z" /></svg>
                         </button>                        
-                        <div class="np-resizable-handle" *ngIf="allowColumnResize" cdkDrag cdkDragLockAxis="x" [cdkDragDisabled]="!allowColumnResize" (cdkDragEnded)="_resizeColumn($event, column)"></div>
+                        <div class="np-resizable-handle" *ngIf="allowColumnResize" cdkDrag cdkDragLockAxis="x" (cdkDragEnded)="_resizeColumn($event, column)"></div>
                     </th>
                 </tr>
                 <tr class="np-grid-header-filter" *ngIf="_isFilterAvailable && showFilters">
@@ -225,7 +225,7 @@
             </button>
         </div>
         <div class="align-right hidden-xs">
-            <button type="button" class="np-icon-button" title="Refresh" (click)="_onRefresh()">
+            <button type="button" *ngIf="isServerOperations" class="np-icon-button" title="Refresh" (click)="_onRefresh()">
                     <svg class="np-icon-lg" viewBox="0 0 24 24">
                         <path fill="currentcolor"
                             d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />

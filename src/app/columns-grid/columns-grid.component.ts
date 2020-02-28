@@ -5,8 +5,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-columns-grid',
-  templateUrl: './columns-grid.component.html',
-  styleUrls: ['./columns-grid.component.css']
+  templateUrl: './columns-grid.component.html'
 })
 export class ColumnsGridComponent implements OnInit {
 

@@ -13,7 +13,6 @@
 .np-grid-table th {
     border-bottom: 1px solid #000000;
     border-right: 1px solid #000000;
-    overflow: hidden;
     padding: 2px 5px;
     position: relative;
 }
@@ -247,10 +246,6 @@ input[type="checkbox"] {
     vertical-align: middle;
 }
 
-.np-row-selected {
-    background-color: #f0f8ff !important;
-}
-
 .np-grid-summary {
     position: sticky;
     bottom: 0px;
@@ -282,7 +277,7 @@ input[type="checkbox"] {
     right: 0;
     top: 0;
     height: 100%;
-    z-index: 1;
+    z-index: 1010;
     position: absolute;
     display: block;
     cursor: col-resize;
@@ -365,7 +360,15 @@ input[type="checkbox"] {
     background-color: #f7f7f7;
 }
 
+.np-row-selected {
+    background-color: #f0f8ff !important;
+}
+
 .np-grid-header-row th button{
     float: right;
     padding: 0px;
+}
+
+.np-resizable-handle.cdk-drag-dragging{
+    background-color: #f5deb3;
 }

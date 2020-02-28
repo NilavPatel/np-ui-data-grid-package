@@ -21,6 +21,8 @@ import { StateManagementGridComponent } from './state-management-grid/state-mana
 import { OtherGridComponent } from './other-grid/other-grid.component';
 import { ClientGridAllComponent } from './client-grid-all/client-grid-all.component';
 import { ServerGridAllComponent } from './server-grid-all/server-grid-all.component';
+import { OdataGridComponent } from './odata-grid/odata-grid.component';
+import { LayoutGridComponent } from './layout-grid/layout-grid.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { ServerGridAllComponent } from './server-grid-all/server-grid-all.compon
     StateManagementGridComponent,
     OtherGridComponent,
     ClientGridAllComponent,
-    ServerGridAllComponent
+    ServerGridAllComponent,
+    OdataGridComponent,
+    LayoutGridComponent
   ],
   imports: [
     BrowserModule,

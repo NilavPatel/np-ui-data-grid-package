@@ -13,6 +13,8 @@ import { StateManagementGridComponent } from './state-management-grid/state-mana
 import { OtherGridComponent } from './other-grid/other-grid.component';
 import { ClientGridAllComponent } from './client-grid-all/client-grid-all.component';
 import { ServerGridAllComponent } from './server-grid-all/server-grid-all.component';
+import { OdataGridComponent } from './odata-grid/odata-grid.component';
+import { LayoutGridComponent } from './layout-grid/layout-grid.component';
 
 export const appRoutes: Routes = [
     { path: 'client-grid', component: ClientGridComponent },
@@ -29,5 +31,7 @@ export const appRoutes: Routes = [
     { path: 'other-grid', component: OtherGridComponent },
     { path: 'client-grid-all', component: ClientGridAllComponent },
     { path: 'server-grid-all', component: ServerGridAllComponent },
+    { path: 'odata-grid', component: OdataGridComponent },
+    { path: 'layout-grid', component: LayoutGridComponent },
     { path: '**', redirectTo: "/client-grid" }
 ];

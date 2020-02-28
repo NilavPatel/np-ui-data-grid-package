@@ -24,7 +24,7 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
 <np-ui-data-grid 
     [columns]="gridColumns" 
     [dataSource]="gridDataSource" 
-    [multiColumnSortEnable]=true
+    [multiColumnSortEnable]="true"
     [masterDetailTemplate]="masterDetailTemplate" 
     [height]="400" 
     [width]="1000" 

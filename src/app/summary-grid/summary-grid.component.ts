@@ -5,8 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-summary-grid',
-  templateUrl: './summary-grid.component.html',
-  styleUrls: ['./summary-grid.component.css']
+  templateUrl: './summary-grid.component.html'
 })
 export class SummaryGridComponent implements OnInit {
 

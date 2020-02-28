@@ -216,7 +216,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
       var loadOpt = new LoadOptions();
       if (this.isODataOperations) {
         var top = this._pager.pageSize;
-        var skip = currentPageNumber * this._pager.pageSize;
+        var skip = (currentPageNumber - 1) * this._pager.pageSize;
         loadOpt.odataQuery = this.oDataService.buildQuery(top, skip, this._sortColumnList, this._filterColumnList);
       } else {
         loadOpt.pageNumber = currentPageNumber;
@@ -228,7 +228,6 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this._currentViewData = this._dataSource.data.slice(this._pager.startIndex, this._pager.endIndex + 1);
     }
-
   }
 
   _setColumns() {

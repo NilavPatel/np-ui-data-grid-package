@@ -1,13 +1,15 @@
-import { Component, TemplateRef, ViewChild, OnInit } from '@angular/core';
+import { Component, TemplateRef, ViewChild, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataSource, DataTypes, Column } from 'projects/np-ui-data-grid/src/public-api';
 import { DataService } from '../data.service';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
-  selector: 'app-client-grid-all',
-  templateUrl: './client-grid-all.component.html'
+  selector: 'app-layout-grid',
+  templateUrl: './layout-grid.component.html',
+  styleUrls: ['layout-grid.component.css'],
+  encapsulation: ViewEncapsulation.ShadowDom
 })
-export class ClientGridAllComponent implements OnInit {
+export class LayoutGridComponent implements OnInit {
 
   gridColumns: any[];
   gridDataSource: BehaviorSubject<DataSource>;
@@ -51,6 +53,5 @@ export class ClientGridAllComponent implements OnInit {
       alert('Delete button click for row: ' + rowData.Id);
     }
   }
-
 
 }

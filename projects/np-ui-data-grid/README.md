@@ -24,7 +24,7 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
 <np-ui-data-grid 
     [columns]="gridColumns" 
     [dataSource]="gridDataSource" 
-    [multiColumnSortEnable]=true
+    [multiColumnSortEnable]="true"
     [masterDetailTemplate]="masterDetailTemplate" 
     [height]="400" 
     [width]="1000" 
@@ -254,7 +254,7 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
     ````javascript
     { dataField : string, filterOperator: string, filterValue: string, dataType: string}
     ````
-    possible values for **filterOperator** are startsWith, endsWith, contains, gt, lt, ge, le, eq, ne.  
+    possible values for **filterOperator** are startswith, endswith, contains, gt, lt, ge, le, eq, ne.  
     possible values for **dataType** are number, string, date, boolean.  
   
 ## Other np-ui components for Angular

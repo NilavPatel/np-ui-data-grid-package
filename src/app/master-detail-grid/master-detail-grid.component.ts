@@ -5,8 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-master-detail-grid',
-  templateUrl: './master-detail-grid.component.html',
-  styleUrls: ['./master-detail-grid.component.css']
+  templateUrl: './master-detail-grid.component.html'
 })
 export class MasterChildGridComponent implements OnInit {
 

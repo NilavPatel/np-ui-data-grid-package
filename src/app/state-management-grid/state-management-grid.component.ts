@@ -5,8 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-state-management-grid',
-  templateUrl: './state-management-grid.component.html',
-  styleUrls: ['./state-management-grid.component.css']
+  templateUrl: './state-management-grid.component.html'
 })
 export class StateManagementGridComponent implements OnInit {
 
