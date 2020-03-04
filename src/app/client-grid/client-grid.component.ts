@@ -26,7 +26,7 @@ export class ClientGridComponent implements OnInit {
 
     this.dataService.getAll().subscribe((data: any) => {
       // for client side pass total as 0, as it will calculate total from length of array.
-      var dataSource = new DataSource(data, 0, { totalCount: 100000 });
+      var dataSource = new DataSource(data, 0, { totalCount: 10000 });
       this.gridDataSource.next(dataSource);
     });
   }

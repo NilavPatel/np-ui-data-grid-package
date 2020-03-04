@@ -29,22 +29,22 @@ export class NpFileService {
     private createCSVData(data: any[], columnList: Column[]) {
         var headersLabels = [];
         var headers = [];
-        columnList.forEach(function (element) {
+        for (let element of columnList) {
             if (element.dataField == undefined) {
-                return;
+                continue;
             }
             headersLabels.push(element.getCaption());
             headers.push(element.dataField);
-        });
+        }
         const head = headersLabels.join(',') + '\r\n';
         const rows = [];
-        data.forEach(function (element) {
+        for (let element of data) {
             var cols = [];
-            headers.forEach(function (column) {
+            for (let column of headers) {
                 cols.push(`"${element[column].toString().replace(/\"/g, '""')}"`);
-            });
+            }
             rows.push(cols.join(","));
-        });
+        }
         return head + rows.join('\r\n');
     }
 

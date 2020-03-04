@@ -1,113 +1,285 @@
 .np-grid-component {
-    border: 1px solid #000000;
-}
-
-.np-grid-table {
-    table-layout: fixed;
-    border-collapse: separate;
-    border-spacing: 0px;
-    width: 100%;
-}
-
-.np-grid-table td,
-.np-grid-table th {
-    border-bottom: 1px solid #000000;
-    border-right: 1px solid #000000;
-    padding: 2px 5px;
+    border: 1px solid black;
+    box-sizing: border-box;
+    overflow: hidden;
     position: relative;
 }
 
-.np-grid-table th {
-    text-align: left;
+.np-grid-title {
+    height: 26px;
+    border-bottom: 1px solid black;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 3px 5px;
 }
 
-.np-grid-table th span {
+.np-grid-toolbar {
+    height: 39px;
+    border-bottom: 1px solid black;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 3px 5px;
+}
+
+.np-grid-toolbar-item {
+    margin: 2px;
+    display: inline-block;
     vertical-align: middle;
 }
 
-.np-grid-table tr td:last-child,
-.np-grid-table tr th:last-child {
-    border-right: none;
+.np-grid-icon-button-lg {
+    box-sizing: border-box;
+    border: 1px solid black;
+    height: 28px;
+    width: 28px;
+    padding: 1px;
+    cursor: pointer;
+    margin: auto;
 }
 
-.np-grid-table tr:last-child td {
+.np-grid-icon-button {
+    box-sizing: border-box;
+    border: 1px solid black;
+    height: 20px;
+    width: 20px;
+    padding: 1px;
+    cursor: pointer;
+    margin: auto;
+}
+
+.np-grid-icon-lg {
+    height: 24px;
+    width: 24px;
+}
+
+.np-grid-icon {
+    height: 16px;
+    width: 16px;
+}
+
+.np-grid-column-chooser {
+    max-height: 250px;
+    width: 250px;
+    display: none;
+    background-color: white;
+    border: 1px solid black;
+    box-sizing: border-box;
+    position: absolute;
+    padding: 5px;
+    z-index: 2;
+    overflow: auto;
+}
+
+.np-grid-column-chooser-open {
+    display: block;
+}
+
+.np-grid-column-chooser-actions {
+    width: 100%;
+    height: 24px
+}
+
+.np-grid-column-chooser-actions .np-grid-icon-button {
+    margin: 2px;
+    display: inline-block;
+}
+
+.np-grid-columns-item.cdk-drag-disabled {
+    background-color: #ccc;
+}
+
+.np-grid-columns-item.cdk-drag-disabled .np-columns-drag-handle {
+    display: none;
+}
+
+.np-grid-state-manager-item {
+    margin: 0px 2px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.np-grid-columns {
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    box-sizing: border-box;
     border-bottom: none;
 }
 
-.np-grid-table th a.sort-by-asc,
-.np-grid-table th a.sort-by-desc {
-    padding-right: 18px;
-    position: relative;
+.np-grid-columns-item {
+    border-bottom: 1px solid black;
+    box-sizing: border-box;
+    height: 25px;
+    padding: 2px;
 }
 
-.np-grid-header-row {
-    overflow: auto;
+.float-right {
+    float: right;
 }
 
-.np-grid-header-filter {
-    overflow: auto;
+.np-columns-drag-placeholder {
+    background-color: #CCC;
+    height: 25px;
 }
 
-.np-sticky-header {
-    position: sticky !important;
-    top: 0px;
-    z-index: 1001;
+.np-columns-drag-handle {
+    float: right;
+    padding: 2px;
+    cursor: move;
 }
 
-.div-page-size select {
-    height: 30px;
-}
-
-input[type="checkbox"] {
-    height: 15px;
-    width: 15px;
-    cursor: pointer;
-}
-
-.child-toggle-link:hover {
-    cursor: pointer;
+.np-grid-columns-item.cdk-drag-preview {
+    border: 1px solid black;
+    box-sizing: border-box;
+    background-color: #ffffff;
 }
 
 .cursor-pointer {
     cursor: pointer;
 }
 
-.remove-icon {
-    cursor: pointer;
+.np-grid-container {
+    overflow: auto;
 }
 
-.filter-type {
-    padding-bottom: 2px;
-}
-
-.grid-control {
+.np-grid-table-header table, .np-grid-table-body table {
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0px;
     width: 100%;
-    border: 1px solid #000000;
-    box-sizing: border-box;
-    padding: 4px;
-    height: 26px;
-    background-color: #ffffff;
 }
 
-.txt-right {
-    text-align: right;
+.np-grid-table-header th {
+    text-align: left;
+    vertical-align: middle;
+    padding: 0px 0px 0px 5px;
+    margin: 0px;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    box-sizing: border-box;
+    line-height: 25px;
+    background-color: white;
+    font-weight: bold;
+}
+
+.np-grid-table-body th {
+    text-align: left;
+    vertical-align: middle;
+    padding: 3px 5px;
+    margin: 0px;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+.np-grid-table-body th div:first-child {
+    margin-bottom: 3px;
+}
+
+.np-grid-table-body td {
+    padding: 0px 5px;
+    margin: 0px;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    box-sizing: border-box;
+    line-height: 24px;
+    background-color: white;
+}
+
+.np-grid-table-header th:last-child, .np-grid-table-body th:last-child, .np-grid-table-body td:last-child {
+    border-right: none;
+}
+
+.np-grid-table-body tr:last-child td {
+    border-bottom: none;
+}
+
+.np-grid-table-header .np-grid-icon-button, .np-grid-table-body .np-grid-icon-button {
+    height: 16px;
+    width: 16px;
+    border: none;
 }
 
 .txt-center {
     text-align: center;
 }
 
-.np-loader {
-    border: 8px solid #f3f3f3;
+.np-grid-pagination {
+    height: 39px;
+    border-top: 1px solid black;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 3px 5px;
+}
+
+.np-grid-pagination-item {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 2px;
+}
+
+.np-grid-control {
+    border: 1px solid black;
+    box-sizing: border-box;
+    padding: 2px;
+    height: 28px;
+}
+
+.np-grid-state-manager .np-grid-control {
+    max-width: 150px;
+}
+
+.np-grid-pagination .np-grid-control {
+    width: 100px;
+}
+
+.np-grid-table-body thead .np-grid-control {
+    width: 100%;
+}
+
+.txt-right {
+    text-align: right;
+}
+
+.np-grid-disabled-div {
+    pointer-events: none;
+    opacity: 0.5;
+    background: #CCC;
+}
+
+.np-grid-column-resize-handle {
+    width: 7px;
+    height: 25px;
+    cursor: col-resize;
+}
+
+.np-grid-column-resize-handle.cdk-drag-dragging {
+    background-color: #f5deb3;
+}
+
+.np-grid-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 3;
+}
+
+.np-grid-loader {
+    position: absolute;
+    top: calc(50% - 25px);
+    left: calc(50% - 25px);
+    border: 8px solid #CCC;
     border-radius: 50%;
     border-top: 8px solid #000000;
-    width: 56px;
-    height: 56px;
+    width: 50px;
+    height: 50px;
     animation: spin 2s linear infinite;
-    position: sticky;
-    margin: -72px auto 0;
-    top: 50%;
-    z-index: 2000;
+    z-index: 4;
 }
 
 @keyframes spin {
@@ -119,256 +291,36 @@ input[type="checkbox"] {
     }
 }
 
-.locked {
-    pointer-events: none;
-    opacity: 0.5;
-}
-
-.np-column-chooser-content {
-    display: none;
-    position: absolute;
-    min-width: 160px;
-    border: 1px solid #000000;
-    padding: 10px;
-    z-index: 1006;
-    background-color: #ffffff;
-}
-
-.np-column-chooser-open {
-    display: block;
-}
-
-.np-column-chooser-content .np-icon-button {
-    margin: 2px;
-}
-
-.hidden {
-    display: none;
-}
-
-.no-data-message {
-    padding: 10px;
-    text-align: center;
+.np-sticky-header {
     position: sticky;
-    bottom: 0px;
+    top: 0px;
+    z-index: 1;
+}
+
+.np-sticky-column-left {
+    position: sticky;
     left: 0px;
 }
 
-.np-grid-title {
-    height: 20px;
-    padding: 2px;
-    border-bottom: 1px solid #000000;
-}
-
-.np-state-store {
-    float: right;
-}
-
-.np-state-store button {
-    margin-left: 5px;
-}
-
-.np-grid-header {
-    padding: 0px 5px;
-}
-
-.np-drag-list {
-    border: solid 1px #000000;
-    min-width: 200px;
-    display: block;
-    overflow: auto;
-    max-height: 250px;
-}
-
-.np-drag-box {
-    border-bottom: solid 1px #000000;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    padding: 2px;
-    height: 25px;
-}
-
-.np-drag-box.cdk-drag-preview {
-    box-sizing: border-box;
-    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
-    z-index: 1007 !important;
-    background-color: #ffffff;
-}
-
-.np-drag-box.cdk-drag-animating {
-    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-.np-drag-box:last-child {
-    border: none;
-}
-
-.np-drag-list.cdk-drop-list-dragging .np-drag-box:not(.cdk-drag-placeholder) {
-    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-.np-drag-placeholder {
-    background: #ededed;
-    min-height: 25px;
-    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-.np-grid-container {
-    overflow: auto;
-}
-
-.np-icon-button {
-    cursor: pointer;
-    padding: 2px;
-    border: none;
-    background-color: transparent;
-}
-
-.np-icon-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.np-icon-lg {
-    height: 24px;
-    width: 24px;
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.np-icon {
-    height: 18px;
-    width: 18px;
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.np-grid-summary {
+.np-sticky-column-right {
     position: sticky;
-    bottom: 0px;
+    right: 0px;
+    border-left: 1px solid black
+}
+
+.np-grid-row-selected td {
+    background-color: aliceblue;
+}
+
+.np-grid-table-summary {
+    border-top: 1px solid black;
+    box-sizing: border-box;
+    padding: 3px 5px;
+}
+
+.np-grid-table-footer {
+    position: sticky;
     left: 0px;
-    z-index: 1001;
-    border-top: 1px solid #000000;
-    padding: 2px;
-}
-
-.np-grid-component ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
-}
-
-.np-grid-component ::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-.np-grid-component ::-webkit-scrollbar-thumb {
-    background: #888;
-}
-
-.np-grid-component ::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-
-.np-resizable-handle {
-    width: 7px;
-    right: 0;
-    top: 0;
-    height: 100%;
-    z-index: 1010;
-    position: absolute;
-    display: block;
-    cursor: col-resize;
-}
-
-.np-drag-handle {
-    cursor: move;
-}
-
-@media (max-width: 767px) {
-    .np-grid-title {
-        overflow: hidden;
-    }
-    .hidden-xs {
-        display: none;
-    }
-}
-
-.np-pagination {
-    border-top: 1px solid #000000;
-    height: 39px;
-    width: calc(100% - 10px);
-    padding: 0px 5px;
-}
-
-.np-pagination div {
-    float: left;
-    padding: 5px 2px;
-}
-
-.np-pagination .np-icon-button {
-    border: 1px solid #000000;
-    padding: 2px;
-}
-
-.np-pagination .grid-control {
-    width: 60px;
-    height: 30px;
-}
-
-.align-right {
-    float: right !important;
-}
-
-.np-toolbar {
-    height: 39px;
-    width: calc(100% - 10px);
-    padding: 0px 5px;
-    border-bottom: 1px solid #000000;
-}
-
-.np-toolbar-item {
-    float: left;
-    padding: 5px 2px;
-}
-
-.np-toolbar .np-icon-button {
-    border: 1px solid #000000;
-    padding: 2px;
-}
-
-.np-state-manager div {
-    float: left;
-    padding-left: 5px;
-}
-
-.np-state-manager select {
-    height: 30px;
-}
-
-.np-grid-title,
-.np-toolbar,
-.np-grid-table th,
-.np-grid-summary,
-.np-pagination {
-    background-color: #e8e8e8;
-}
-
-.np-grid-table tbody tr:nth-child(2n-1){
-    background-color: #f7f7f7;
-}
-
-.np-row-selected {
-    background-color: #f0f8ff !important;
-}
-
-.np-grid-header-row th button{
-    float: right;
-    padding: 0px;
-}
-
-.np-resizable-handle.cdk-drag-dragging{
-    background-color: #f5deb3;
+    bottom: 0px;
+    background-color: white;
 }

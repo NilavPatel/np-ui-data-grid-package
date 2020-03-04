@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, SimpleChanges, TemplateRef, EventEmitter, Output, AfterViewInit, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { BehaviorSubject, of } from 'rxjs';
+import { Component, OnInit, Input, SimpleChanges, TemplateRef, EventEmitter, Output, AfterViewInit, ViewEncapsulation, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Column } from './models/column.model';
 import { DataSource } from './models/data-source.model';
@@ -17,7 +17,8 @@ import { NpFileService } from './services/np-ui-file.service';
   selector: 'np-ui-data-grid',
   templateUrl: 'np-ui-data-grid.component.html',
   styleUrls: ['np-ui-data-grid.component.css'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -167,20 +168,18 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
           // to export to csv, this change has all data
           if (data.isAllPages) {
             this.fileService.downloadCSVFile(data.data, this._visibleColumns);
+            this.hideLoader();
             return;
           }
           this._currentViewData = data.data;
           this._summaryData = data.summary;
           this._total = data.total;
           if (this._isAllSelected) {
-            var key = this._key;
-            var selectedKeys = this._selectedRowKeys;
-            this._currentViewData.forEach(function (element) {
-              if (selectedKeys.indexOf(element[key]) == -1) {
-                selectedKeys.push(element[key]);
+            for (let element of this._currentViewData) {
+              if (this._selectedRowKeys.indexOf(element[this._key]) == -1) {
+                this._selectedRowKeys.push(element[this._key]);
               }
-            });
-            this._selectedRowKeys = selectedKeys;
+            }
           }
           this._pager = this.pagerService.getPager(this._total, this._pager.currentPage, this._pager.pageSize);
           this._showLoader = false;
@@ -218,23 +217,31 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
         var top = this._pager.pageSize;
         var skip = (currentPageNumber - 1) * this._pager.pageSize;
         loadOpt.odataQuery = this.oDataService.buildQuery(top, skip, this._sortColumnList, this._filterColumnList);
+        loadOpt.pageNumber = 0;
+        loadOpt.pageSize = 0;
+        loadOpt.sortColumns = [];
+        loadOpt.filterColumns = [];
+        loadOpt.isAllPages = false;
       } else {
         loadOpt.pageNumber = currentPageNumber;
         loadOpt.pageSize = this._pager.pageSize;
         loadOpt.sortColumns = this._sortColumnList;
         loadOpt.filterColumns = this._filterColumnList;
+        loadOpt.isAllPages = false;
+        loadOpt.odataQuery = "";
       }
       this.onLoadData.emit(loadOpt);
     } else {
       this._currentViewData = this._dataSource.data.slice(this._pager.startIndex, this._pager.endIndex + 1);
     }
+    return;
   }
 
   _setColumns() {
     var result = [];
-    this.columns.forEach(element => {
+    for (let element of this.columns) {
       result.push(new Column(element));
-    });
+    }
     this._columns = result;
     this._setVisibleColumns();
     return;
@@ -272,11 +279,11 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     column.sortDirection = sortOrder;
     if (this.multiColumnSortEnable) {
       var list = [];
-      this._sortColumnList.forEach(function (element) {
+      for (let element of this._sortColumnList) {
         if (element.dataField !== column.dataField) {
           list.push(element);
         }
-      });
+      }
       this._sortColumnList = list;
     }
     this._sortColumnList.push({ dataField: column.dataField, sortDirection: column.sortDirection });
@@ -291,35 +298,36 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   _sortDataSource() {
-    for (var sortCol of this._sortColumnList) {
-      this._dataSource.data = this.utilityService.custSort(this._dataSource.data, sortCol.dataField, sortCol.sortDirection);
+    var data = this._dataSource.data;
+    for (let element of this._sortColumnList) {
+      data = this.utilityService.custSort(data, element.dataField, element.sortDirection);
     }
+    this._dataSource.data = data;
   }
 
   _removeAllSorting() {
-    this._columns.forEach(element => {
+    for (let element of this._columns) {
       element.sortDirection = null;
-    });
+    }
     this._sortColumnList = [];
   }
 
   _removeSortingFromColumn(column: Column) {
     column.sortDirection = null;
-
     var list = [];
-    this._sortColumnList.forEach(function (element) {
+    for (let element of this._sortColumnList) {
       if (element.dataField !== column.dataField) {
         list.push(element);
       }
-    });
+    }
     this._sortColumnList = list;
 
     if (!this.isServerOperations) {
       this._resetDataSource();
       this._filterDataSource();
-      this._sortColumnList.forEach(element => {
+      for (let element of this._sortColumnList) {
         this._dataSource.data = this.utilityService.custSort(this._dataSource.data, element.dataField, element.sortDirection);
-      });
+      }
     }
     this._getCurrentViewData(1);
     return;
@@ -330,23 +338,27 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     this._total = this._dataSource.data.length;
   }
 
-  _onFilter(column: Column, isForceFilter: boolean) {
-    if (column.filterOperator == FilterTypes.Reset) {
-      this._removeFilterStringFromColumn(column);
+  _onFilter(column: Column, isForceFilter: boolean = false) {
+    if (column.filterOperator && column.filterOperator == FilterTypes.Reset) {
       column.filterOperator = undefined;
-      return;
+      column.filterValue = undefined;
+      isForceFilter = true;
     }
     if (!isForceFilter && (column.filterValue == undefined || column.filterValue == null || column.filterValue.length == 0
       || column.filterOperator == undefined || column.filterOperator == null)) {
       return;
     }
-    this._filterColumnList = [];
-    this._columns.forEach(element => {
-      if (element.filterOperator != undefined && element.filterOperator != null
-        && element.filterValue && element.filterValue.toString().length > 0) {
-        this._filterColumnList.push({ dataField: element.dataField, filterOperator: element.filterOperator, filterValue: element.filterValue, dataType: element.dataType });
+    var currentFilterList = [];
+    for (let element of this._columns) {
+      if (element.filterOperator == undefined || element.filterOperator == null
+        || element.filterValue == undefined || element.filterValue == null || element.filterValue.toString().length == 0) {
+        continue;
       }
-    });
+      else {
+        currentFilterList.push({ dataField: element.dataField, filterOperator: element.filterOperator, filterValue: element.filterValue, dataType: element.dataType });
+      }
+    }
+    this._filterColumnList = currentFilterList;
     this._selectedRowKeys = [];
     this._isAllSelected = false;
     this._openRowKeys = [];
@@ -355,25 +367,20 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
       this._sortDataSource();
     }
     this._getCurrentViewData(1);
+    return;
   }
 
   _filterDataSource() {
-    var filterdData = this.filterService.filterData(this._filterColumnList, this.columns, this.dataSource.value.data);
+    var filterdData = this.filterService.filterData(this._filterColumnList, this.dataSource.value.data);
     this._dataSource.data = filterdData;
     this._total = filterdData.length;
   }
 
-  _removeFilterStringFromColumn(column: Column) {
-    column.filterValue = undefined;
-    column.filterOperator = undefined;
-    this._onFilter(column, true);
-  }
-
   _removeAllFilters() {
-    this._columns.forEach(element => {
+    for (let element of this._columns) {
       element.filterOperator = null;
       element.filterValue = null;
-    });
+    }
     this._filterColumnList = [];
   }
 
@@ -383,11 +390,11 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
       this._openRowKeys.push(keyValue)
     } else {
       var list = [];
-      this._openRowKeys.forEach(function (element) {
+      for (let element of this._openRowKeys) {
         if (element != keyValue) {
           list.push(element);
         }
-      });
+      }
       this._openRowKeys = list;
     }
   }
@@ -413,23 +420,33 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   _deSelectAll() {
+    var selectedRows = this._selectedRowKeys;
     this._selectedRowKeys = [];
+    this._isAllSelected = false;
+    if (this.onDeselect != undefined) {
+      var event = { data: selectedRows };
+      this.onDeselect.emit(event);
+    }
   }
 
   _selectAll() {
     var key = this._key;
     if (this.isServerOperations) {
       var selectedKeys = [];
-      this._currentViewData.forEach(function (element) {
+      for (let element of this._currentViewData) {
         selectedKeys.push(element[key]);
-      });
-      this._selectedRowKeys = selectedKeys;
+      }
     } else {
       var selectedKeys = [];
-      this._dataSource.data.forEach(function (element) {
+      for (let element of this._dataSource.data) {
         selectedKeys.push(element[key]);
-      });
-      this._selectedRowKeys = selectedKeys;
+      }
+    }
+    this._selectedRowKeys = selectedKeys;
+    this._isAllSelected = true;
+    if (this.onSelect != undefined) {
+      var event = { data: selectedKeys };
+      this.onSelect.emit(event);
     }
   }
 
@@ -445,11 +462,11 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
       } else {
 
         var list = [];
-        this._selectedRowKeys.forEach(function (element) {
+        for (let element of this._selectedRowKeys) {
           if (element != keyValue) {
             list.push(element);
           }
-        });
+        }
         this._selectedRowKeys = list;
       }
     }
@@ -516,6 +533,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     this._openRowKeys = [];
     this._isAllSelected = false;
     this._isOpenColumnChooser = false;
+    this._currentStateName = "";
     this._pager = this.pagerService.getPager(0, 1, 10);
     if (this.isServerOperations) {
       this._getCurrentViewData(1);
@@ -577,11 +595,11 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param dataField dataField value of column
    */
   hideColumnByDataField(dataField: string) {
-    this._columns.forEach(function (element) {
+    for (let element of this._columns) {
       if (element.dataField == dataField) {
         element.visible = false;
       }
-    });
+    }
     this._setVisibleColumns();
   }
 
@@ -590,11 +608,11 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param dataField dataField value of column
    */
   showColumnByDataField(dataField: string) {
-    this._columns.forEach(function (element) {
+    for (let element of this._columns) {
       if (element.dataField == dataField) {
         element.visible = true;
       }
-    });
+    }
     this._setVisibleColumns();
   }
 
@@ -692,19 +710,21 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   setColumns(columns: Column[]) {
     this._columns = columns;
-    this._filterColumnList = [];
-    this._columns.forEach(element => {
+    var currentFilterColumnList = [];
+    for (let element of this._columns) {
       if (element.filterOperator != undefined && element.filterOperator != null
         && element.filterValue && element.filterValue.toString().length > 0) {
-        this._filterColumnList.push({ dataField: element.dataField, filterOperator: element.filterOperator, filterValue: element.filterValue, dataType: element.dataType });
+        currentFilterColumnList.push({ dataField: element.dataField, filterOperator: element.filterOperator, filterValue: element.filterValue, dataType: element.dataType });
       }
-    });
-    this._sortColumnList = [];
-    this._columns.forEach(element => {
+    }
+    this._filterColumnList = currentFilterColumnList;
+    var currentSortColumnList = [];
+    for (let element of this._columns) {
       if (element.sortEnable && element.sortDirection != null) {
-        this._sortColumnList.push({ dataField: element.dataField, sortDirection: element.sortDirection });
+        currentSortColumnList.push({ dataField: element.dataField, sortDirection: element.sortDirection });
       }
-    });
+    }
+    this._sortColumnList = currentSortColumnList;
     if (!this.isServerOperations) {
       this._filterDataSource();
       this._sortDataSource();
@@ -718,22 +738,25 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
   _saveState() {
     var columns = this._getColumnsArray();
     var currentStateName = this._currentStateName;
-    this._stateList.forEach(function (element) {
+    for (let element of this._stateList) {
       if (element.name == currentStateName) {
         element.columns = columns;
         alert("Saved successfully.");
       }
-    });
+    }
   }
 
   _addState() {
     var name = prompt("Please enter name", "");
-    if (name == undefined || name.trim().length == 0) {
+    if (name == undefined || name == null) {
+      return;
+    }
+    if (name.trim().length == 0) {
       alert("Name is required.");
       return;
     }
     name = name.trim();
-    var state = this._stateList.map(function (element: State) { if (element.name == name) { return element } });
+    var state = this._stateList.filter(function (element: State) { if (element.name == name) { return element } });
     if (state && state.length > 0) {
       alert("Name already exist.");
       return;
@@ -747,11 +770,11 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     var currentStateName = this._currentStateName;
 
     var list = [];
-    this._stateList.forEach(function (element) {
+    for (let element of this._stateList) {
       if (element.name != currentStateName) {
         list.push(element);
       }
-    });
+    }
     this._stateList = list;
 
     if (this._stateList.length > 0) {
@@ -768,7 +791,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
       this.reset();
       return;
     }
-    var state = this._stateList.map(function (element: State) { if (element.name == currentStateName) { return element } });
+    var state = this._stateList.filter(function (element: State) { if (element.name == currentStateName) { return element } });
     if (state && state.length > 0) {
       this.setColumns(state[0].columns);
     }
@@ -776,9 +799,9 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private _getColumnsArray() {
     var result = [];
-    this._columns.forEach(function (element) {
+    for (let element of this._columns) {
       result.push(new Column(element));
-    });
+    }
     return result;
   }
 
@@ -821,7 +844,8 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     $event.source.reset();
   }
 
-  _exportAsXls() {
+  _exportAsCSV() {
+    this.showLoader();
     if (this.isServerOperations) {
       var loadOpt = new LoadOptions();
       if (this.isODataOperations) {
@@ -837,6 +861,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
       this.onLoadData.emit(loadOpt);
     } else {
       this.fileService.downloadCSVFile(this._dataSource.data, this._visibleColumns);
+      this.hideLoader();
     }
   }
 
@@ -854,5 +879,9 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
   removeAllFilters() {
     this._removeAllFilters();
     this._getCurrentViewData(1);
+  }
+
+  _getHeight() {
+    return this.height - (this.title && this.title.length > 0 ? 26 : 0) - (this.showToolBar ? 39 : 0) - 39;
   }
 }

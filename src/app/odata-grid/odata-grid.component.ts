@@ -38,7 +38,7 @@ export class OdataGridComponent implements OnInit {
   onLoadData(options: LoadOptions) {
     this.odataQuery = options.odataQuery;
     this.dataService.getDataUsingLoadOptions(options).subscribe((data: any) => {
-      var result = new DataSource(data.data, data.total, { totalCount: 1000 });
+      var result = new DataSource(data.data, data.total, { totalCount: 10000 });
       this.gridDataSource.next(result);
     });
   }

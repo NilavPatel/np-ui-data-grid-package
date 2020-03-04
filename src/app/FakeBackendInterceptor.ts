@@ -78,9 +78,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
 
             if (loadOptions.sortColumns && loadOptions.sortColumns.length > 0) {
-                loadOptions.sortColumns.forEach(element => {
+                for (let element of loadOptions.sortColumns) {
                     data2 = _.orderBy(data2, element.dataField, element.sortDirection);
-                });
+                }
             }
 
             let startIndex = (loadOptions.pageNumber - 1) * loadOptions.pageSize;
@@ -93,7 +93,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         // helper functions
 
         function _filterDataSource(data, filterColumns) {
-            filterColumns.forEach(element => {
+            for (var element of filterColumns) {
                 if (element.filterOperator == "startswith") {
                     data = _.filter(data, function (a) {
                         return _.startsWith(a[element.dataField].toLowerCase(), element.filterValue.toLowerCase());
@@ -188,7 +188,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         });
                     }
                 }
-            });
+            }
             return data;
         }
 

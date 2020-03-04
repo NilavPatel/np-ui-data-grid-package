@@ -29,7 +29,7 @@ export class ServerGridAllComponent implements OnInit {
       new Column({ dataField: "Id", visible: true, caption: "Id", dataType: DataTypes.Number, sortEnable: true, filterEnable: true, onCellClick: this.cellClicked }),
       new Column({ dataField: "FirstName", visible: true, caption: "First Name", dataType: DataTypes.String, sortEnable: true, filterEnable: true }),
       new Column({ dataField: "LastName", visible: true, caption: "Last Name", dataType: DataTypes.String }),
-      new Column({ dataField: "BirthDate", visible: true, caption: "Birth Date", dataType: DataTypes.Date, filterEnable: true, cellTemplate: this.birthDateColumnTemplate }),
+      new Column({ dataField: "BirthDate", visible: true, caption: "Birth Date", dataType: DataTypes.Date, sortEnable: true, filterEnable: true, cellTemplate: this.birthDateColumnTemplate }),
       new Column({ dataField: "Age", visible: true, dataType: DataTypes.Number, sortEnable: true, filterEnable: true, styleClass: "color-red", rightAlignText: true }),
       new Column({ dataField: "Active", visible: true, caption: "Is Active?", dataType: DataTypes.Boolean, filterEnable: true, }),
       new Column({ visible: true, cellTemplate: this.actionButtonsTemplate })];
@@ -40,7 +40,7 @@ export class ServerGridAllComponent implements OnInit {
 
   onLoadData(options: LoadOptions) {
     this.dataService.getDataUsingLoadOptions(options).subscribe((data: any) => {
-      var result = new DataSource(data.data, data.total, { totalCount: 1000 });
+      var result = new DataSource(data.data, data.total, { totalCount: data.total }, options.isAllPages);
       this.gridDataSource.next(result);
     });
   }

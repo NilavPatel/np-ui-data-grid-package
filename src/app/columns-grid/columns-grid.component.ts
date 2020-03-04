@@ -26,7 +26,7 @@ export class ColumnsGridComponent implements OnInit {
       new Column({ dataField: "Active", visible: true, caption: "Is Active?", dataType: DataTypes.Boolean, sortEnable: true, filterEnable: true, styleClass: "txt-red" })];
 
     this.dataService.getAll().subscribe((data: any) => {
-      var dataSource = new DataSource(data, 0, { totalCount: 100000 });
+      var dataSource = new DataSource(data, 0, { totalCount: 10000 });
       this.gridDataSource.next(dataSource);
     });
   }

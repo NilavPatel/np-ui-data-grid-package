@@ -1,68 +1,30 @@
-h2{
-    margin: 5px 0px;
-}
 .github-link{
-    float:right;
+    float: right;
 }
+
 .github-link img{
     height: 30px;
     width: 30px;
 }
 
+/* To change data grid layout */
 .np-grid-title,
-.np-toolbar,
-.np-grid-table th,
-.np-grid-summary,
-.np-pagination{
-    background-color: #e9fbea !important;    
+.np-grid-toolbar,
+.np-grid-table-header th,
+.np-grid-table-body th,
+.np-grid-table-footer,
+.np-grid-pagination{
+    background-color: lightgray !important;    
 }
 
-.np-row-selected{
-    background-color: #f5f5bb !important;
-}
-
-.np-grid-component ::-webkit-scrollbar-thumb {
-    background-color: #218425 !important;
-}
-
-.np-grid-table,
-.np-icon, .np-icon-lg,
-.np-grid-title,
-.np-toolbar,
-.np-grid-table th,
-.np-grid-summary,
-.np-pagination,
-.grid-control{
-    color: #218425 !important;   
-}
-
-.np-column-chooser-content,
-.np-column-chooser-content .np-icon,
-.np-grid-table tbody .np-icon{
-    color: #218425 !important;
-}
-
-.np-column-chooser-content,
-.np-column-chooser-content .np-icon-button,
-.np-column-chooser-content .np-drag-list,
-.np-column-chooser-content .np-drag-box{
-    border-color: #218425 !important;
-}
-
-.np-grid-component,
-.np-grid-table td,
-.np-grid-table th,
-.grid-control,
-.np-grid-title ,
-.np-icon-button ,
-.np-grid-summary,
-.np-pagination,
-.np-pagination .np-icon-button,
-.np-toolbar,
-.np-toolbar .np-icon-button{
-    border-color: #218425 !important;
+.np-grid-icon-button-lg{
+    background-color: white !important;
 }
 
 .color-red{
-    color: red !important;
+    color: #ff0000;
+}
+
+.np-grid-row-selected td{
+    background-color: #f5f5dc !important;
 }

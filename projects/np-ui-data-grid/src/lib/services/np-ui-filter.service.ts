@@ -3,16 +3,15 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class NpFilterService {
-    filterData(filterColumns: any[], columns: any[], data: any[]): any[] {
-        var that = this;
-        filterColumns.forEach(element => {
+    filterData(filterColumns: any[], data: any[]): any[] {
+        for (let element of filterColumns) {
             if (element.filterOperator === FilterTypes.StartsWith) {
                 data = this._custFilter(data, function (a) {
-                    return that._custStartWith(a[element.dataField].toLowerCase(), element.filterValue.toLowerCase());
+                    return a[element.dataField].toLowerCase().startsWith(element.filterValue.toLowerCase(), 0);
                 });
             } else if (element.filterOperator === FilterTypes.EndsWith) {
                 data = this._custFilter(data, function (a) {
-                    return that._custEndWith(a[element.dataField].toLowerCase(), element.filterValue.toLowerCase());
+                    return a[element.dataField].toLowerCase().endsWith(element.filterValue.toLowerCase());
                 });
             } else if (element.filterOperator === FilterTypes.Contains) {
                 data = this._custFilter(data, function (a) {
@@ -99,19 +98,11 @@ export class NpFilterService {
                     });
                 }
             }
-        });
+        }
         return data;
     }
 
     private _custFilter(arr: any[], fun: any) {
         return arr.filter(fun);
-    }
-
-    private _custStartWith(value: string, searchVal: string) {
-        return value.startsWith(searchVal, 0)
-    }
-
-    private _custEndWith(value: string, searchVal: string) {
-        return value.endsWith(searchVal)
     }
 }

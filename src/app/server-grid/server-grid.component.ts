@@ -11,7 +11,7 @@ export class ServerGridComponent implements OnInit {
 
   gridColumns: any[];
   gridDataSource: BehaviorSubject<DataSource> = new BehaviorSubject(null);
-  currentLoadOptions: LoadOptions;
+  currentLoadOptions: LoadOptions = new LoadOptions();
 
   constructor(private dataService: DataService) {
   }
@@ -29,7 +29,7 @@ export class ServerGridComponent implements OnInit {
   onLoadData(options: LoadOptions) {
     this.currentLoadOptions = options;
     this.dataService.getDataUsingLoadOptions(options).subscribe((data: any) => {
-      var result = new DataSource(data.data, data.total, { totalCount: 1000 }, options.isAllPages);
+      var result = new DataSource(data.data, data.total, { totalCount: 10000 }, options.isAllPages);
       this.gridDataSource.next(result);
     });
   }

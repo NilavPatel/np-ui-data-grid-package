@@ -13,6 +13,7 @@ export class RowSelectGridComponent implements OnInit {
   gridDataSource: BehaviorSubject<DataSource> = new BehaviorSubject(null);
 
   @ViewChild("singleSelectGrid", { static: true }) singleSelectGrid: NpUiDataGridComponent;
+  @ViewChild("multiSelectGrid", { static: true }) multiSelectGrid: NpUiDataGridComponent;
 
   constructor(private dataService: DataService) {
   }
@@ -27,8 +28,8 @@ export class RowSelectGridComponent implements OnInit {
       new Column({ dataField: "Active", visible: true, caption: "Is Active?", dataType: DataTypes.Boolean })];
 
     this.dataService.getAll().subscribe((data: any) => {
-      
-      var dataSource = new DataSource(data, 0, { totalCount: 100000 });
+
+      var dataSource = new DataSource(data, 0, { totalCount: 10000 });
       this.gridDataSource.next(dataSource);
     });
   }
@@ -44,6 +45,19 @@ export class RowSelectGridComponent implements OnInit {
   getSelectedRows() {
     var selectedRows = this.singleSelectGrid.getSelectedRowKeys();
     alert(selectedRows);
+  }
+
+  getMultiSelectedRows() {
+    var selectedRows = this.multiSelectGrid.getSelectedRowKeys();
+    alert(selectedRows);
+  }
+
+  deSelectAll() {
+    this.multiSelectGrid.deSelectAll();
+  }
+
+  selectAll() {
+    this.multiSelectGrid.selectAll();
   }
 
 }

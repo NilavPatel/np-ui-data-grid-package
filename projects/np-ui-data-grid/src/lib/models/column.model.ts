@@ -22,6 +22,8 @@ export class Column {
         this.onCellClick = item["onCellClick"];
         this.styleClass = item["styleClass"];
         this.rightAlignText = item["rightAlignText"];
+        this.stickyColumnLeft = item["stickyColumnLeft"];
+        this.stickyColumnRight = item["stickyColumnRight"];
     }
 
     public dataField: string;
@@ -38,6 +40,8 @@ export class Column {
     public onCellClick: any;
     public styleClass: string;
     public rightAlignText: boolean;
+    public stickyColumnLeft: boolean;
+    public stickyColumnRight: boolean;
 
     /**get caption for column */
     public getCaption() {
