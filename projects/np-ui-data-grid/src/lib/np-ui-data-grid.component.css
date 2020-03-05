@@ -35,6 +35,7 @@
     padding: 1px;
     cursor: pointer;
     margin: auto;
+    user-select: none;
 }
 
 .np-grid-icon-button {
@@ -45,6 +46,7 @@
     padding: 1px;
     cursor: pointer;
     margin: auto;
+    user-select: none;
 }
 
 .np-grid-icon-lg {
@@ -82,10 +84,6 @@
 .np-grid-column-chooser-actions .np-grid-icon-button {
     margin: 2px;
     display: inline-block;
-}
-
-.np-grid-columns-item.cdk-drag-disabled {
-    background-color: #ccc;
 }
 
 .np-grid-columns-item.cdk-drag-disabled .np-columns-drag-handle {
@@ -323,4 +321,12 @@
     left: 0px;
     bottom: 0px;
     background-color: white;
+}
+
+.np-grid-table-body tr:hover td {
+    background-color: aliceblue !important;
+}
+
+.np-grid-child-row td {
+    padding: 5px 10px;
 }

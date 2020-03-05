@@ -212,7 +212,7 @@
                                 </ng-template>
                             </td>
                         </tr>
-                        <tr *ngIf="_enableMasterChild && _isOpenChild(data[_key])" id="row_{{i}}_child">
+                        <tr *ngIf="_enableMasterChild && _isOpenChild(data[_key])" id="row_{{i}}_child" class="np-grid-child-row">
                             <td
                                 [attr.colspan]="_visibleColumns.length + (singleRowSelectEnable || multiRowSelectEnable ? 1 : 0) + 1">
                                 <ng-container *ngTemplateOutlet="masterDetailTemplate;context:{ row: data }">

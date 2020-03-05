@@ -28,3 +28,7 @@
 .np-grid-row-selected td{
     background-color: #f5f5dc !important;
 }
+
+.np-grid-table-body tr:hover td{
+    background-color: lavender !important;
+}

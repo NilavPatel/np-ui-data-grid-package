@@ -1,41 +1,53 @@
-.txt-red{
+.txt-red {
     color: red !important;
 }
 
-header{
+header {
     background-color: lightgray;
-    margin: 0px;    
+    margin: 0px;
     position: fixed;
     top: 0px;
     width: 100%;
     z-index: 9999;
-    height: 80px;
+    height: 70px;
 }
 
-header h1{
-    padding: 0px 10px;
+header h1 {
+    padding: 10px;
+    margin: 0px;
 }
 
-body{
+header div {
+    font-size: 16px;    
+    float: right;
+}
+
+header span {
+    font-size: 16px;
+    padding-left: 10px;
+}
+
+body {
     margin: 0px !important;
 }
 
-.content{
+.content {
     margin: 10px;
     width: 100%;
 }
 
-h2{
+h2 {
     margin: 5px 0px;
 }
 
-.github-link{
-    float:right;
+.github-link {
+    padding-right: 10px;
 }
 
-.github-link img{    
+.github-link img {
     height: 50px;
     width: 50px;
+    vertical-align: middle;
 }
 
 .nav ul {
@@ -50,7 +62,7 @@ h2{
 .nav li a {
     display: block;
     color: #000;
-    padding: 8px 16px;
+    padding: 8px;
     text-decoration: none;
 }
 
@@ -66,10 +78,10 @@ h2{
 
 .main-container {
     display: flex;
-    margin-top: 80px;
+    margin-top: 70px;
 }
 
-.content .github-link img{
+.content .github-link img {
     height: 30px;
     width: 30px;
 }
