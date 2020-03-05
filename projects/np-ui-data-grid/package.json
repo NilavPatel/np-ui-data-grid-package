@@ -6,7 +6,19 @@
         "email": "nilavpatel1992@gmail.com",
         "url": "http://nilavpatel.github.io"
     },
-    "keywords": ["angular", "angular 8", "angular 9", "table", "data grid", "data table", "custom components", "data", "grid", "typescript", "datagrid", "datatable"],
+    "keywords": [
+        "angular",
+        "angular 9",
+        "table",
+        "data grid",
+        "data table",
+        "custom components",
+        "data",
+        "grid",
+        "typescript",
+        "datagrid",
+        "datatable"
+    ],
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -14,16 +26,17 @@
     },
     "private": false,
     "peerDependencies": {
-        "@angular/animations": "~9.0.2",
-        "@angular/cdk": "^9.0.1",
-        "@angular/common": "~9.0.2",
-        "@angular/compiler": "~9.0.2",
-        "@angular/core": "~9.0.2",
-        "@angular/forms": "~9.0.2",
-        "@angular/platform-browser": "~9.0.2",
-        "@angular/platform-browser-dynamic": "~9.0.2",
-        "@angular/router": "~9.0.2",
-        "rxjs": "~6.5.4",        
+        "@angular/animations": "~9.0.5",
+        "@angular/cdk": "^9.1.1",
+        "@angular/common": "~9.0.5",
+        "@angular/compiler": "~9.0.5",
+        "@angular/core": "~9.0.5",
+        "@angular/forms": "~9.0.5",
+        "@angular/platform-browser": "~9.0.5",
+        "@angular/platform-browser-dynamic": "~9.0.5",
+        "@angular/router": "~9.0.5",
+        "rxjs": "~6.5.4",
+        "tslib": "^1.11.1",
         "zone.js": "~0.10.2"
     }
 }
