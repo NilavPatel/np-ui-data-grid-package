@@ -1,17 +1,17 @@
-import { Component, OnInit, Input, SimpleChanges, TemplateRef, EventEmitter, Output, AfterViewInit, ViewEncapsulation, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { Column } from './models/column.model';
+import { Constants, DataTypes, FilterTypes, SortDirections } from './models/constants';
 import { DataSource } from './models/data-source.model';
-import { Constants, FilterTypes, DataTypes, SortDirections } from './models/constants';
-import { State } from './models/state.model';
-import { Pager } from './models/pager.model';
 import { LoadOptions } from './models/load-options.model';
-import { NpODataService } from './services/np-ui-odata.service';
-import { NpFilterService } from './services/np-ui-filter.service';
-import { NpUtilityService } from './services/np-ui-utility.service';
-import { NpPagerService } from './services/np-ui-pager.service';
+import { Pager } from './models/pager.model';
+import { State } from './models/state.model';
 import { NpFileService } from './services/np-ui-file.service';
+import { NpFilterService } from './services/np-ui-filter.service';
+import { NpODataService } from './services/np-ui-odata.service';
+import { NpPagerService } from './services/np-ui-pager.service';
+import { NpUtilityService } from './services/np-ui-utility.service';
 
 @Component({
   selector: 'np-ui-data-grid',
@@ -77,6 +77,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
   _sortDirections = SortDirections;
 
   @Input() tableId: string;
+  _tableId: string;
 
   @Input() showColumnChooser: boolean;
   _isOpenColumnChooser: boolean = false;
@@ -117,12 +118,13 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() showToolBar: boolean = false;
 
+  @Input() pageSize: number = 10;
+
   constructor(private pagerService: NpPagerService,
     private filterService: NpFilterService,
     private utilityService: NpUtilityService,
     private oDataService: NpODataService,
     private fileService: NpFileService) {
-    this._pager = this.pagerService.getPager(0, 1, 10);
     this._sortColumnList = [];
     this._filtersList = Constants.filters();
     this._filterColumnList = [];
@@ -130,20 +132,10 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     this._currentStateName = "";
     this._isFilterAvailable = false;
     this.showFilters = true;
+    this._tableId = "tbl-" + Math.floor(Math.random() * 6 + 1);
   }
 
   ngOnInit() {
-    if (this.masterDetailTemplate != undefined && this.masterDetailTemplate != null) {
-      this._enableMasterChild = true;
-    }
-    if (this.key && this.key != null && this.key.length > 0) {
-      this._key = this.key;
-    } else {
-      this._key = this._columns[0].dataField;
-    }
-    if (this.tableId == undefined) {
-      this.tableId = "tbl-" + Math.floor(Math.random() * 6 + 1);
-    }
     if (this.onInit != undefined) {
       this.onInit.emit();
     }
@@ -156,46 +148,62 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.columns && changes.columns.currentValue) {
-      this._setColumns();
+    if (changes.tableId) {
+      this._tableId = this.tableId;
     }
-    if (changes.dataSource && changes.dataSource.currentValue) {
-      this.dataSource.subscribe((data: DataSource) => {
-        if (data == undefined || data == null) {
-          return;
-        }
-        if (this.isServerOperations) {
-          // to export to csv, this change has all data
-          if (data.isAllPages) {
-            this.fileService.downloadCSVFile(data.data, this._visibleColumns);
-            this.hideLoader();
-            return;
-          }
-          this._currentViewData = data.data;
-          this._summaryData = data.summary;
-          this._total = data.total;
-          if (this._isAllSelected) {
-            for (let element of this._currentViewData) {
-              if (this._selectedRowKeys.indexOf(element[this._key]) == -1) {
-                this._selectedRowKeys.push(element[this._key]);
-              }
-            }
-          }
-          this._pager = this.pagerService.getPager(this._total, this._pager.currentPage, this._pager.pageSize);
-          this._showLoader = false;
-        }
-        else {
-          var dataSource = new DataSource(data.data, data.data.length, data.summary);
-          this._dataSource = dataSource;
-          this._total = this._dataSource.total;
-          this._summaryData = this._dataSource.summary;
-          this._getCurrentViewData(1);
-        }
-      });
-      if (this.isServerOperations) {
-        this._getCurrentViewData(1);
+    if (changes.columns) {
+      this._setColumns();
+      if (this._key == undefined) {
+        this._key = this._columns[0].dataField;
       }
     }
+    if (changes.dataSource) {
+      this.subscribeDataSource();
+    }
+    if (changes.masterDetailTemplate) {
+      this._enableMasterChild = true;
+    }
+    if (changes.key) {
+      this._key = this.key;
+    }
+    if (changes.isServerOperations) {
+      this._getCurrentViewData(1);
+    }
+  }
+
+  private subscribeDataSource() {
+    this.dataSource.subscribe((data: DataSource) => {
+      if (data == undefined || data == null) {
+        return;
+      }
+      if (this.isServerOperations) {
+        // to export to csv, this change has all data
+        if (data.isAllPages) {
+          this.fileService.downloadCSVFile(data.data, this._visibleColumns);
+          this.hideLoader();
+          return;
+        }
+        this._currentViewData = data.data;
+        this._summaryData = data.summary;
+        this._total = data.total;
+        if (this._isAllSelected) {
+          for (let element of this._currentViewData) {
+            if (this._selectedRowKeys.indexOf(element[this._key]) == -1) {
+              this._selectedRowKeys.push(element[this._key]);
+            }
+          }
+        }
+        this._pager = this.pagerService.getPager(this._total, this._pager.currentPage, this.pageSize);
+        this._showLoader = false;
+      }
+      else {
+        var dataSource = new DataSource(data.data, data.data.length, data.summary);
+        this._dataSource = dataSource;
+        this._total = this._dataSource.total;
+        this._summaryData = this._dataSource.summary;
+        this._getCurrentViewData(1);
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -206,16 +214,16 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     if (currentPageNumber == 0) {
       currentPageNumber = 1;
     }
-    if (this._pager.totalPages > 0 && currentPageNumber > this._pager.totalPages) {
+    if (this._pager && this._pager.totalPages > 0 && currentPageNumber > this._pager.totalPages) {
       currentPageNumber = this._pager.totalPages;
     }
-    this._pager = this.pagerService.getPager(this._total, currentPageNumber, this._pager.pageSize);
+    this._pager = this.pagerService.getPager(this._total, currentPageNumber, this.pageSize);
     if (this.isServerOperations) {
       this._showLoader = true;
       var loadOpt = new LoadOptions();
       if (this.isODataOperations) {
-        var top = this._pager.pageSize;
-        var skip = (currentPageNumber - 1) * this._pager.pageSize;
+        var top = this.pageSize;
+        var skip = (currentPageNumber - 1) * this.pageSize;
         loadOpt.odataQuery = this.oDataService.buildQuery(top, skip, this._sortColumnList, this._filterColumnList);
         loadOpt.pageNumber = 0;
         loadOpt.pageSize = 0;
@@ -224,7 +232,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
         loadOpt.isAllPages = false;
       } else {
         loadOpt.pageNumber = currentPageNumber;
-        loadOpt.pageSize = this._pager.pageSize;
+        loadOpt.pageSize = this.pageSize;
         loadOpt.sortColumns = this._sortColumnList;
         loadOpt.filterColumns = this._filterColumnList;
         loadOpt.isAllPages = false;
@@ -534,7 +542,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     this._isAllSelected = false;
     this._isOpenColumnChooser = false;
     this._currentStateName = "";
-    this._pager = this.pagerService.getPager(0, 1, 10);
+    this._pager = this.pagerService.getPager(0, 1, this.pageSize);
     if (this.isServerOperations) {
       this._getCurrentViewData(1);
     }
@@ -666,7 +674,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
    * get page size
    */
   getPageSize() {
-    return this._pager.pageSize;
+    return this.pageSize;
   }
 
   /**

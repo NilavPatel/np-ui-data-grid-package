@@ -61,13 +61,15 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getAll();
                 case url.endsWith('/getDataUsingLoadOptions') && method === 'POST':
                     return getDataUsingLoadOptions(body);
+                case url.endsWith('/updateFirstName') && method === 'POST':
+                    return updateFirstName(body);
             }
         }
 
         // route functions
 
         function getAll() {
-            return ok(data);
+            return ok(JSON.parse(JSON.stringify(data)));
         }
 
         function getDataUsingLoadOptions(loadOptions) {
@@ -86,7 +88,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             let startIndex = (loadOptions.pageNumber - 1) * loadOptions.pageSize;
             let endIndex = Math.min(startIndex + loadOptions.pageSize - 1, data2.length - 1);
 
-            var result = { data: data2.slice(startIndex, endIndex + 1), total: data2.length }
+            var result = { data: JSON.parse(JSON.stringify(data2.slice(startIndex, endIndex + 1))), total: data2.length }
             return ok(result);
         }
 
@@ -198,6 +200,20 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function error(message) {
             return throwError({ error: { message } });
+        }
+
+        function updateFirstName(keys: any[]) {            
+            var records = data.filter(function (element) {
+                if (keys.indexOf(element["Id"]) > -1) {
+                    return element
+                }
+            });
+            if (records) {
+                records.forEach(element => {
+                    element.FirstName = element.FirstName + " updated";
+                });
+            }
+            return ok(true);
         }
     }
 }

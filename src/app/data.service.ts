@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
     providedIn: "root"
@@ -17,5 +17,9 @@ export class DataService {
 
     getDataUsingLoadOptions(loadOptions) {
         return this.httpClient.post('/getDataUsingLoadOptions', loadOptions);
+    }
+
+    updateFirstName(keys) {
+        return this.httpClient.post('/updateFirstName', keys);
     }
 }

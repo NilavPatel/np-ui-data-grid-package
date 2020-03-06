@@ -1,5 +1,5 @@
 import { Injectable, Pipe, PipeTransform } from '@angular/core';
-import { DataTypes, FilterTypes } from '../models/constants';
+import { FilterTypes } from '../models/constants';
 @Pipe({
     name: 'filterTypesPipe'
 })

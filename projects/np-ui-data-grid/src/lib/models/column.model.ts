@@ -1,5 +1,5 @@
 import { TemplateRef } from "@angular/core";
-import { FilterTypes, DataTypes, SortDirections } from './constants';
+import { DataTypes, FilterTypes, SortDirections } from './constants';
 
 /**
  * grid column class

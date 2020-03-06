@@ -1,5 +1,6 @@
 <h2>Others
-    <a class="github-link" title="Go to github repository" target="_blank" href="https://github.com/NilavPatel/np-ui-data-grid-package/tree/master/src/app/other-grid">
+    <a class="github-link" title="Go to github repository" target="_blank"
+        href="https://github.com/NilavPatel/np-ui-data-grid-package/tree/master/src/app/other-grid">
         <img src="../assets/images/GitHub-Mark-64px.png">
     </a>
 </h2>
@@ -32,5 +33,9 @@
 <p>To show message when no records found, set <b>noDataMessage</b> property in grid defination.</p>
 <p>Example <code>[noDataMessage]="'No Employee found.'"</code></p>
 
-<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [key]="'Id'" [height]="500" [width]="1000" [stickyHeader]="true">
+<h4>pageSize</h4>
+<p>To set default pagesize for data grid, set <b>pageSize</b> property.</p>
+
+<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [key]="'Id'" [height]="500" [width]="1000"
+    [stickyHeader]="true" [tableId]="'tblEmployees'" [pageSize]=5>
 </np-ui-data-grid>

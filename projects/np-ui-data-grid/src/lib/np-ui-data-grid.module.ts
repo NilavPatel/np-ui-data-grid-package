@@ -1,14 +1,14 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import { NpUiDataGridComponent } from './np-ui-data-grid.component';
+import { NpFilterTypesPipe } from './pipes/np-ui-filter-types.pipe';
+import { NpFileService } from './services/np-ui-file.service';
 import { NpFilterService } from './services/np-ui-filter.service';
-import { NpUtilityService } from './services/np-ui-utility.service';
 import { NpODataService } from './services/np-ui-odata.service';
 import { NpPagerService } from './services/np-ui-pager.service';
-import { NpFileService } from './services/np-ui-file.service';
-import { NpFilterTypesPipe } from './pipes/np-ui-filter-types.pipe';
-import { NpUiDataGridComponent } from './np-ui-data-grid.component';
+import { NpUtilityService } from './services/np-ui-utility.service';
 
 @NgModule({
   declarations: [

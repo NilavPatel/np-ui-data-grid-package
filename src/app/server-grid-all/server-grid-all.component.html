@@ -7,7 +7,7 @@
 <np-ui-data-grid #serverSideGrid 
     [columns]="gridColumns" 
     [dataSource]="gridDataSource" 
-    [singleRowSelectEnable]="true" 
+    [multiRowSelectEnable]="true" 
     [title]="'Server side data grid'" 
     [showColumnChooser]="true" 
     [showToolBar]="true"
@@ -15,13 +15,13 @@
     [enableStateStoring]="true" 
     [showFilters]="showFilters" 
     [showSummary]="true"
-    [summaryTemplate]="summaryTemplate" 
-    (onSelect)="onSelectRow($event)" 
+    [summaryTemplate]="summaryTemplate"     
     (onInit)="onInit()" 
     (onAfterInit)="onAfterInit()" 
     [allowColumnReorder]="true" 
     [allowColumnResize]="true" 
-    [isServerOperations]=true 
+    [isServerOperations]="true" 
+    [pageSize]=20
     (onLoadData)="onLoadData($event)">
 </np-ui-data-grid>
 
@@ -41,6 +41,8 @@
     <span>Total:{{summary ? summary.totalCount : 0}}</span>
 </ng-template>
 
+<br>
+
 <div class="btn-group">
     <button type="button" (click)="getSelectedRowKeys()">Get Selected Row Keys</button>
     <button type="button" (click)="toggleFirstColumn()">Toggle 1st column</button>
@@ -50,4 +52,6 @@
     <button type="button" (click)="clearFilters()">Clear All Filters</button>
     <button type="button" (click)="clearSortings()">Clear All Sorting</button>
     <button type="button" (click)="reset()">Reset</button>
+    <button type="button" (click)="refresh()">Refresh</button>
+    <button type="button" (click)="updateFirstName()">Update FirstName For Selected Records</button>
 </div>

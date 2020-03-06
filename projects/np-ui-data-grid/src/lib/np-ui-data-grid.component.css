@@ -34,7 +34,6 @@
     width: 28px;
     padding: 1px;
     cursor: pointer;
-    margin: auto;
     user-select: none;
 }
 
@@ -45,7 +44,6 @@
     width: 20px;
     padding: 1px;
     cursor: pointer;
-    margin: auto;
     user-select: none;
 }
 
@@ -194,8 +192,6 @@
 }
 
 .np-grid-table-header .np-grid-icon-button, .np-grid-table-body .np-grid-icon-button {
-    height: 16px;
-    width: 16px;
     border: none;
 }
 
@@ -324,9 +320,20 @@
 }
 
 .np-grid-table-body tr:hover td {
-    background-color: aliceblue !important;
+    background-color: aliceblue;
 }
 
 .np-grid-child-row td {
     padding: 5px 10px;
+}
+
+.np-grid-no-data-message {
+    padding: 0px 5px;
+}
+
+.np-grid-checkbox {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    vertical-align: middle;
 }

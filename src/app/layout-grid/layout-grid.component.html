@@ -1,30 +1,16 @@
-
-<h2>Layout Design
-    <a class="github-link" title="Go to github repository" target="_blank" href="https://github.com/NilavPatel/np-ui-data-grid-package/tree/master/src/app/layout-grid">
-        <img src="../assets/images/GitHub-Mark-64px.png">
+<h2 style="margin: 5px 0px;">Layout Design
+    <a class="github-link" title="Go to github repository" target="_blank"
+        href="https://github.com/NilavPatel/np-ui-data-grid-package/tree/master/src/app/layout-grid">
+        <img height="30px" width="30px" src="../assets/images/GitHub-Mark-64px.png">
     </a>
 </h2>
 
-<np-ui-data-grid 
-    [columns]="gridColumns" 
-    [dataSource]="gridDataSource" 
-    [multiColumnSortEnable]=true 
-    [masterDetailTemplate]="masterChildTemplate" 
-    [height]="600" 
-    [width]="1000" 
-    [stickyHeader]="true" 
-    [enableStateStoring]="true" 
-    [multiRowSelectEnable]="true"
-    [tableId]="'tblClientSide'" 
-    [showColumnChooser]="true" 
-    [showToolBar]="true"
-    [allowExportToCSV]="true"
-    [title]="'Client side data grid'" 
-    [noDataMessage]="'No data available.'" 
-    [showSummary]="true" 
-    [summaryTemplate]="summaryTemplate" 
-    [allowColumnReorder]="true" 
-    [allowColumnResize]="true">
+<np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [multiColumnSortEnable]=true
+    [masterDetailTemplate]="masterChildTemplate" [height]="600" [width]="1000" [stickyHeader]="true"
+    [enableStateStoring]="true" [multiRowSelectEnable]="true" [tableId]="'tblClientSide'" [showColumnChooser]="true"
+    [showToolBar]="true" [allowExportToCSV]="true" [title]="'Client side data grid'"
+    [noDataMessage]="'No data available.'" [showSummary]="true" [summaryTemplate]="summaryTemplate"
+    [allowColumnReorder]="true" [allowColumnResize]="true">
 </np-ui-data-grid>
 
 <!-- Template for action buttons column -->

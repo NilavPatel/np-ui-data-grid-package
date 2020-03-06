@@ -1,34 +1,26 @@
-.github-link{
-    float: right;
-}
-
-.github-link img{
-    height: 30px;
-    width: 30px;
-}
-
 /* To change data grid layout */
-.np-grid-title,
-.np-grid-toolbar,
-.np-grid-table-header th,
-.np-grid-table-body th,
-.np-grid-table-footer,
-.np-grid-pagination{
-    background-color: lightgray !important;    
+
+.np-grid-title, .np-grid-toolbar, .np-grid-table-header th, .np-grid-table-body th, .np-grid-table-footer, .np-grid-pagination {
+    background-color: lightgray !important;
 }
 
-.np-grid-icon-button-lg{
+.np-grid-icon-button-lg {
     background-color: white !important;
 }
 
-.color-red{
+.color-red {
     color: #ff0000;
 }
 
-.np-grid-row-selected td{
+.np-grid-row-selected td {
     background-color: #f5f5dc !important;
 }
 
-.np-grid-table-body tr:hover td{
+.np-grid-table-body tr:hover td {
+    background-color: lavender !important;
+}
+
+
+.np-grid-icon-button-lg:hover {
     background-color: lavender !important;
 }

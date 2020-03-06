@@ -78,15 +78,8 @@ export class ServerGridAllComponent implements OnInit {
     columns[1].visible = false;
     columns[2].visible = false;
     columns[0].sortDirection = SortDirections.Descending;
-    this.serverSideGrid.setColumns(columns);
-  }
-
-  onSelectRow($event) {
-    alert("selected rows:" + $event.data);
-  }
-
-  onDeselectRow($event) {
-    alert("de selected rows:" + $event.data);
+    //this.serverSideGrid.setColumns(columns);
+    this.gridColumns = columns;
   }
 
   setStateForServerSideGrid() {
@@ -126,4 +119,14 @@ export class ServerGridAllComponent implements OnInit {
     this.serverSideGrid.reset();
   }
 
+  updateFirstName() {
+    var keys = this.serverSideGrid.getSelectedRowKeys();
+    if (keys && keys.length > 0) {
+      this.dataService.updateFirstName(keys).subscribe((data: any) => { });;
+    }
+  }
+
+  refresh() {
+    this.serverSideGrid.refresh();
+  }
 }

@@ -142,6 +142,8 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
 23. `[showToolBar]` : boolean  
     Default value is false, if this option is set to true, then toolbar will be visible. This property must be set true to utilize export to CSV, show/hide filters button, column chooser, and state management.
       
+24. `[pageSize]` : number
+    Set pagesize as default.
 
 ## Apis
 1.  `goToPage(pageNumber: number)`  

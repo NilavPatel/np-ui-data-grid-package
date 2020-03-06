@@ -1,5 +1,5 @@
-import { Pager } from '../models/pager.model';
 import { Injectable } from "@angular/core";
+import { Pager } from '../models/pager.model';
 
 @Injectable()
 export class NpPagerService {

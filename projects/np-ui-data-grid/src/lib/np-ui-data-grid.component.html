@@ -1,4 +1,4 @@
-<div class="np-grid-component" [style.max-height.px]="height" [style.max-width.px]="width" [id]="tableId">
+<div class="np-grid-component" [style.max-height.px]="height" [style.max-width.px]="width" [id]="_tableId">
     <div [ngClass]="{'np-grid-loading': _showLoader}">
         <div *ngIf="_showLoader" class="np-grid-loader"></div>
     </div>
@@ -33,7 +33,7 @@
                         cdkDragBoundary=".np-grid-columns"
                         [cdkDragDisabled]="column.stickyColumnLeft || column.stickyColumnRight">
                         <label>
-                            <input type="checkbox" [checked]="column.visible"
+                            <input type="checkbox" [checked]="column.visible" class="np-grid-checkbox"
                                 (change)="_onColumnChoosing(column)">{{column.getCaption()}}
                         </label>
                         <div class="np-columns-drag-placeholder" *cdkDragPlaceholder></div>
@@ -109,7 +109,7 @@
                     <tr>
                         <th *ngIf="_enableMasterChild"></th>
                         <th *ngIf="singleRowSelectEnable || multiRowSelectEnable">
-                            <input *ngIf="multiRowSelectEnable" type="checkbox" title="Select/Unselect all"
+                            <input *ngIf="multiRowSelectEnable" type="checkbox" class="np-grid-checkbox" title="Select/Unselect all"
                                 [(ngModel)]="_isAllSelected" (change)="_onSelectAll($event)">
                         </th>
                         <th *ngFor="let column of _visibleColumns; let j = index"
@@ -198,7 +198,7 @@
                                 </div>
                             </td>
                             <td *ngIf="singleRowSelectEnable || multiRowSelectEnable">
-                                <input type="checkbox" [checked]="_isSelected(data[_key])"
+                                <input type="checkbox" class="np-grid-checkbox" [checked]="_isSelected(data[_key])"
                                     (change)="_onSelectRow(data[_key],$event)">
                             </td>
                             <td *ngFor="let column of _visibleColumns; let j = index"
@@ -234,7 +234,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="_pager.pages && _pager.pages.length > 0" class="np-grid-pagination">
+    <div *ngIf="_pager && _pager.pages && _pager.pages.length > 0" class="np-grid-pagination">
         <div class="np-grid-pagination-item">
             <div class="np-grid-icon-button-lg" title="First page"
                 [ngClass]="{'np-grid-disabled-div':_pager.currentPage === 1}" (click)="_getCurrentViewData(1)">
@@ -284,7 +284,7 @@
             </div>
         </div>
         <div class="np-grid-pagination-item float-right">
-            <input type="number" class="np-grid-control" [(ngModel)]="_pager.pageSize" (change)="_onPageSizeChange()">
+            <input type="number" class="np-grid-control" [(ngModel)]="pageSize" (change)="_onPageSizeChange()">
             per page / {{_pager.startIndex >= 0 ? _pager.startIndex + 1 : 0}} - {{_pager.endIndex + 1}} of
             {{_pager.totalItems}}
         </div>
