@@ -1,6 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { Column } from './models/column.model';
 import { Constants, DataTypes, FilterTypes, SortDirections } from './models/constants';
 import { DataSource } from './models/data-source.model';
@@ -27,6 +27,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() dataSource: BehaviorSubject<DataSource>;
   _dataSource: DataSource;
+  _subscription: Subscription;
 
   /**current view data */
   _currentViewData: any[];
@@ -172,7 +173,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private subscribeDataSource() {
-    this.dataSource.subscribe((data: DataSource) => {
+    this._subscription = this.dataSource.subscribe((data: DataSource) => {
       if (data == undefined || data == null) {
         return;
       }
@@ -207,7 +208,9 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.dataSource.unsubscribe();
+    if (this._subscription) {
+      this._subscription.unsubscribe();
+    }
   }
 
   _getCurrentViewData(currentPageNumber: number) {
@@ -342,7 +345,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   _resetDataSource() {
-    this._dataSource.data = this.dataSource.value.data;
+    this._dataSource.data = this.dataSource.getValue().data;
     this._total = this._dataSource.data.length;
   }
 
@@ -379,7 +382,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   _filterDataSource() {
-    var filterdData = this.filterService.filterData(this._filterColumnList, this.dataSource.value.data);
+    var filterdData = this.filterService.filterData(this._filterColumnList, this.dataSource.getValue().data);
     this._dataSource.data = filterdData;
     this._total = filterdData.length;
   }

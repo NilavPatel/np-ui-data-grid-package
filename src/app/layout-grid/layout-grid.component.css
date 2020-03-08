@@ -1,7 +1,7 @@
 /* To change data grid layout */
 
 .np-grid-title, .np-grid-toolbar, .np-grid-table-header th, .np-grid-table-body th, .np-grid-table-footer, .np-grid-pagination {
-    background-color: lightgray !important;
+    background-color: cadetblue !important;
 }
 
 .np-grid-icon-button-lg {
@@ -12,15 +12,19 @@
     color: #ff0000;
 }
 
+
+.np-grid-child-row td{
+    background-color: lightyellow !important;
+}
+
 .np-grid-row-selected td {
-    background-color: #f5f5dc !important;
+    background-color: lightgreen !important;
 }
 
 .np-grid-table-body tr:hover td {
-    background-color: lavender !important;
+    background-color: lightgreen !important;
 }
 
-
 .np-grid-icon-button-lg:hover {
-    background-color: lavender !important;
+    background-color: lightgreen !important;
 }
