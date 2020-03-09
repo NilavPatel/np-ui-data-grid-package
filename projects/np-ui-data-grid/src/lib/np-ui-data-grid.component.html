@@ -109,8 +109,9 @@
                     <tr>
                         <th *ngIf="_enableMasterChild"></th>
                         <th *ngIf="singleRowSelectEnable || multiRowSelectEnable">
-                            <input *ngIf="multiRowSelectEnable" type="checkbox" class="np-grid-checkbox" title="Select/Unselect all"
-                                [(ngModel)]="_isAllSelected" (change)="_onSelectAll($event)">
+                            <input *ngIf="multiRowSelectEnable" type="checkbox" class="np-grid-checkbox"
+                                title="Select/Unselect all" [(ngModel)]="_isAllSelected"
+                                (change)="_onSelectAll($event)">
                         </th>
                         <th *ngFor="let column of _visibleColumns; let j = index"
                             [ngClass]="{'hidden': column.visible == false,'np-sticky-column-left':column.stickyColumnLeft,'np-sticky-column-right':column.stickyColumnRight}">
@@ -118,7 +119,7 @@
                                 [ngClass]="{'cursor-pointer': column.sortEnable}"></span>
                             <div *ngIf="allowColumnResize" class="np-grid-column-resize-handle float-right" cdkDrag
                                 cdkDragLockAxis="x" (cdkDragEnded)="_resizeColumn($event, column)"></div>
-                            <div *ngIf="column.sortDirection != null" class="np-grid-icon-button float-right"
+                            <div *ngIf="column.sortEnable != null" class="np-grid-icon-button float-right"
                                 (click)="_onSort(column)">
                                 <svg *ngIf="column.sortDirection == _sortDirections.Ascending" class="np-grid-icon"
                                     viewBox="0 0 24 24">
@@ -128,6 +129,12 @@
                                     viewBox="0 0 24 24">
                                     <path fill="currentcolor"
                                         d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z" />
+                                </svg>
+                                <svg *ngIf="!column.sortDirection" class="np-grid-icon np-grid-sort-enable"
+                                    viewBox="0 0 24 24">
+                                    <path d="M9 3L5 6.99h3V14h2V6.99h3L9 3zm7 14.01V10h-2v7.01h-3L15 21l4-3.99h-3z"
+                                        fill="currentcolor" />
+                                    <path d="M0 0h24v24H0z" fill="none" />
                                 </svg>
                             </div>
                         </th>
@@ -212,7 +219,8 @@
                                 </ng-template>
                             </td>
                         </tr>
-                        <tr *ngIf="_enableMasterChild && _isOpenChild(data[_key])" id="row_{{i}}_child" class="np-grid-child-row">
+                        <tr *ngIf="_enableMasterChild && _isOpenChild(data[_key])" id="row_{{i}}_child"
+                            class="np-grid-child-row">
                             <td
                                 [attr.colspan]="_visibleColumns.length + (singleRowSelectEnable || multiRowSelectEnable ? 1 : 0) + 1">
                                 <ng-container *ngTemplateOutlet="masterDetailTemplate;context:{ row: data }">

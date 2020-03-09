@@ -248,6 +248,10 @@
     cursor: col-resize;
 }
 
+.np-grid-column-resize-handle:hover{
+    background-color: #f5deb3;
+}
+
 .np-grid-column-resize-handle.cdk-drag-dragging {
     background-color: #f5deb3;
 }
@@ -336,4 +340,12 @@
     height: 15px;
     width: 15px;
     vertical-align: middle;
+}
+
+.np-grid-sort-enable {
+    display: none;
+}
+
+.np-grid-table-header th:hover .np-grid-sort-enable {
+    display: block;
 }
