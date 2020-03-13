@@ -35,6 +35,7 @@
     padding: 1px;
     cursor: pointer;
     user-select: none;
+    display: block;
 }
 
 .np-grid-icon-button {
@@ -45,6 +46,7 @@
     padding: 1px;
     cursor: pointer;
     user-select: none;
+    display: block;
 }
 
 .np-grid-icon-lg {
@@ -58,10 +60,9 @@
 }
 
 .np-grid-column-chooser {
-    max-height: 250px;
+    max-height: 300px;
     width: 250px;
     display: none;
-    background-color: white;
     border: 1px solid black;
     box-sizing: border-box;
     position: absolute;
@@ -76,12 +77,17 @@
 
 .np-grid-column-chooser-actions {
     width: 100%;
-    height: 24px
+    height: 24px;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .np-grid-column-chooser-actions .np-grid-icon-button {
     margin: 2px;
-    display: inline-block;
+}
+
+.np-grid-container .np-grid-icon-button:hover {
+    background-color: transparent !important;
 }
 
 .np-grid-columns-item.cdk-drag-disabled .np-columns-drag-handle {
@@ -114,7 +120,7 @@
 }
 
 .np-columns-drag-placeholder {
-    background-color: #CCC;
+    background-color: lightgoldenrodyellow;
     height: 25px;
 }
 
@@ -127,7 +133,6 @@
 .np-grid-columns-item.cdk-drag-preview {
     border: 1px solid black;
     box-sizing: border-box;
-    background-color: #ffffff;
 }
 
 .cursor-pointer {
@@ -154,7 +159,6 @@
     border-bottom: 1px solid black;
     box-sizing: border-box;
     line-height: 25px;
-    background-color: white;
     font-weight: bold;
 }
 
@@ -166,7 +170,6 @@
     border-right: 1px solid black;
     border-bottom: 1px solid black;
     box-sizing: border-box;
-    background-color: white;
 }
 
 .np-grid-table-body th div:first-child {
@@ -236,10 +239,9 @@
     text-align: right;
 }
 
-.np-grid-disabled-div {
-    pointer-events: none;
+.np-grid-disabled {
     opacity: 0.5;
-    background: #CCC;
+    pointer-events: none;
 }
 
 .np-grid-column-resize-handle {
@@ -248,12 +250,12 @@
     cursor: col-resize;
 }
 
-.np-grid-column-resize-handle:hover{
-    background-color: #f5deb3;
+.np-grid-column-resize-handle:hover {
+    background-color: lightgoldenrodyellow;
 }
 
 .np-grid-column-resize-handle.cdk-drag-dragging {
-    background-color: #f5deb3;
+    background-color: lightgoldenrodyellow;
 }
 
 .np-grid-loading {
@@ -263,7 +265,7 @@
     width: 100%;
     height: 100%;
     opacity: 0.5;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: #00000066;
     z-index: 3;
 }
 
@@ -271,9 +273,10 @@
     position: absolute;
     top: calc(50% - 25px);
     left: calc(50% - 25px);
-    border: 8px solid #CCC;
+    border: 8px solid #ffffff;
     border-radius: 50%;
-    border-top: 8px solid #000000;
+    border-top: 8px solid lightblue;
+    box-sizing: border-box;
     width: 50px;
     height: 50px;
     animation: spin 2s linear infinite;
@@ -303,11 +306,8 @@
 .np-sticky-column-right {
     position: sticky;
     right: 0px;
-    border-left: 1px solid black
-}
-
-.np-grid-row-selected td {
-    background-color: aliceblue;
+    border-left: 1px solid black;
+    box-sizing: border-box;
 }
 
 .np-grid-table-summary {
@@ -320,11 +320,6 @@
     position: sticky;
     left: 0px;
     bottom: 0px;
-    background-color: white;
-}
-
-.np-grid-table-body tr:hover td {
-    background-color: aliceblue;
 }
 
 .np-grid-child-row td {
@@ -333,6 +328,7 @@
 
 .np-grid-no-data-message {
     padding: 0px 5px;
+    text-align: center;
 }
 
 .np-grid-checkbox {
@@ -348,4 +344,24 @@
 
 .np-grid-table-header th:hover .np-grid-sort-enable {
     display: block;
+}
+
+.np-ui-background, .np-grid-header-row th, .np-grid-body-row:hover td, .np-grid-control, .np-grid-columns-item {
+    background-color: aliceblue;
+}
+
+.np-grid-row-selected td, .np-grid-row-selected:hover td {
+    background-color: lightblue;
+}
+
+.np-grid-child-row td {
+    background-color: lightgoldenrodyellow;
+}
+
+.np-grid-icon-button-lg:hover, .np-grid-icon-button:hover {
+    background-color: lightblue;
+}
+
+.np-grid-filter-columns {
+    padding: 5px;
 }

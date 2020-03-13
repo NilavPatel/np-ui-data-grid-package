@@ -1,30 +1,21 @@
 /* To change data grid layout */
 
-.np-grid-title, .np-grid-toolbar, .np-grid-table-header th, .np-grid-table-body th, .np-grid-table-footer, .np-grid-pagination {
-    background-color: cadetblue !important;
-}
-
-.np-grid-icon-button-lg {
-    background-color: white !important;
-}
-
 .color-red {
     color: #ff0000;
 }
 
-
-.np-grid-child-row td{
-    background-color: lightyellow !important;
+.np-ui-background, .np-grid-header-row th, .np-grid-body-row:hover td, .np-grid-control {
+    background-color: #b2dfdb !important;
 }
 
-.np-grid-row-selected td {
-    background-color: lightgreen !important;
+.np-grid-row-selected td, .np-grid-row-selected:hover td {
+    background-color: #26a69a !important;
 }
 
-.np-grid-table-body tr:hover td {
-    background-color: lightgreen !important;
+.np-grid-icon-button-lg:hover, .np-grid-icon-button:hover {
+    background-color: #26a69a !important;
 }
 
-.np-grid-icon-button-lg:hover {
-    background-color: lightgreen !important;
+.np-grid-child-row td {
+    background-color: lightgoldenrodyellow !important;
 }

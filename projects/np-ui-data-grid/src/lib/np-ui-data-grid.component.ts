@@ -895,4 +895,11 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
   _getHeight() {
     return this.height - (this.title && this.title.length > 0 ? 26 : 0) - (this.showToolBar ? 39 : 0) - 39;
   }
+
+  _showAllColumns() {
+    this._columns.forEach(function (element) {
+      element.visible = true;
+    });
+    this._setVisibleColumns();
+  }
 }
