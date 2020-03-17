@@ -170,6 +170,7 @@
     border-right: 1px solid black;
     border-bottom: 1px solid black;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .np-grid-table-body th div:first-child {
@@ -184,6 +185,7 @@
     box-sizing: border-box;
     line-height: 24px;
     background-color: white;
+    overflow: hidden;
 }
 
 .np-grid-table-header th:last-child, .np-grid-table-body th:last-child, .np-grid-table-body td:last-child {

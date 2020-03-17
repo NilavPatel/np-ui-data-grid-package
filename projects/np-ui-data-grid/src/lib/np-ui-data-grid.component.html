@@ -48,7 +48,7 @@
                         [cdkDragDisabled]="column.stickyColumnLeft || column.stickyColumnRight">
                         <label>
                             <input type="checkbox" [checked]="column.visible" class="np-grid-checkbox"
-                                (change)="_onColumnChoosing(column)">{{column.getCaption()}}
+                                (change)="_onColumnChoosing(column)">{{column.caption}}
                         </label>
                         <div class="np-columns-drag-placeholder" *cdkDragPlaceholder></div>
                         <div *ngIf="allowColumnReorder" class="np-columns-drag-handle" cdkDragHandle>
@@ -129,7 +129,7 @@
                         </th>
                         <th *ngFor="let column of _visibleColumns; let j = index"
                             [ngClass]="{'hidden': column.visible == false,'np-sticky-column-left':column.stickyColumnLeft,'np-sticky-column-right':column.stickyColumnRight}">
-                            <span [innerHTML]="column.getCaption()" (click)="_onSort(column)"
+                            <span [innerHTML]="column.caption" (click)="_onSort(column)"
                                 [ngClass]="{'cursor-pointer': column.sortEnable}"></span>
                             <div *ngIf="allowColumnResize" class="np-grid-column-resize-handle float-right" cdkDrag
                                 cdkDragLockAxis="x" (cdkDragEnded)="_resizeColumn($event, column)"></div>

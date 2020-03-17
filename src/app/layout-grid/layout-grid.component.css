@@ -4,18 +4,22 @@
     color: #ff0000;
 }
 
-.np-ui-background, .np-grid-header-row th, .np-grid-body-row:hover td, .np-grid-control {
-    background-color: #b2dfdb !important;
-}
-
-.np-grid-row-selected td, .np-grid-row-selected:hover td {
-    background-color: #26a69a !important;
+.np-ui-background, .np-grid-header-row th, .np-grid-control {
+    background-color: #80cbc4 !important;
 }
 
 .np-grid-icon-button-lg:hover, .np-grid-icon-button:hover {
-    background-color: #26a69a !important;
+    background-color: #80cbc4 !important;
+}
+
+.np-grid-body-row:hover td {
+    background-color: #e0f2f1 !important;
+}
+
+.np-grid-row-selected td, .np-grid-row-selected:hover td {
+    background-color: #b2dfdb !important;
 }
 
 .np-grid-child-row td {
-    background-color: lightgoldenrodyellow !important;
+    background-color: #f0fffe !important;
 }

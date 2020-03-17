@@ -93,6 +93,8 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
 
   _currentStateName: string;
 
+  @Output() onStatesUpdate: EventEmitter<any> = new EventEmitter();
+
   _isFilterAvailable: boolean;
 
   @Input() noDataMessage: string = "No Data Found.";
@@ -755,6 +757,9 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
         alert("Saved successfully.");
       }
     }
+    if (this.onStatesUpdate) {
+      this.onStatesUpdate.emit();
+    }
   }
 
   _addState() {
@@ -775,6 +780,9 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     var columns = this._getColumnsArray();
     this._stateList.push(new State(name, columns));
     this._currentStateName = name;
+    if (this.onStatesUpdate) {
+      this.onStatesUpdate.emit();
+    }
   }
 
   _deleteState() {
@@ -794,6 +802,9 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
       this._currentStateName = "";
     }
     this._loadState();
+    if (this.onStatesUpdate) {
+      this.onStatesUpdate.emit();
+    }
   }
 
   _loadState() {

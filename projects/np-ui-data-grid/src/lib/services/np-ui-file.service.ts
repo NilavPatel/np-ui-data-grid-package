@@ -33,7 +33,7 @@ export class NpFileService {
             if (element.dataField == undefined) {
                 continue;
             }
-            headersLabels.push(element.getCaption());
+            headersLabels.push(element.caption);
             headers.push(element.dataField);
         }
         const head = headersLabels.join(',') + '\r\n';

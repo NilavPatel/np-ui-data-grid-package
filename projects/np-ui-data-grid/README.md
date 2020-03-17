@@ -259,6 +259,9 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
     possible values for **filterOperator** are startswith, endswith, contains, gt, lt, ge, le, eq, ne.  
     possible values for **dataType** are number, string, date, boolean.  
   
+7.  `onStatesUpdate()`
+    On Add/Save/Delete of state this function will be called.
+  
 ## Other np-ui components for Angular
 1. [Data grid](https://www.npmjs.com/package/np-ui-data-grid)
 2. [Date picker](https://www.npmjs.com/package/np-ui-date-picker)

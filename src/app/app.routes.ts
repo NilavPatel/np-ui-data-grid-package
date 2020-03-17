@@ -15,6 +15,7 @@ import { ClientGridAllComponent } from './client-grid-all/client-grid-all.compon
 import { ServerGridAllComponent } from './server-grid-all/server-grid-all.component';
 import { OdataGridComponent } from './odata-grid/odata-grid.component';
 import { LayoutGridComponent } from './layout-grid/layout-grid.component';
+import { InsideTabGridComponent } from './inside-tab-grid/inside-tab-grid.component';
 
 export const appRoutes: Routes = [
     { path: 'client-grid', component: ClientGridComponent },
@@ -33,5 +34,6 @@ export const appRoutes: Routes = [
     { path: 'server-grid-all', component: ServerGridAllComponent },
     { path: 'odata-grid', component: OdataGridComponent },
     { path: 'layout-grid', component: LayoutGridComponent },
+    { path: 'inside-tab-grid', component: InsideTabGridComponent },
     { path: '**', redirectTo: "/client-grid" }
 ];

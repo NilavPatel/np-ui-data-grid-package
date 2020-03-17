@@ -9,10 +9,10 @@ export class Column {
     /**constructor */
     constructor(item: any) {
         this.dataField = item["dataField"];
-        this.dataType = item["dataType"] == undefined || item["dataType"] == null ? DataTypes.String : item["dataType"];
+        this.dataType = item["dataType"] ? item["dataType"] : DataTypes.String;
         this.visible = item["visible"];
         this.width = item["width"];
-        this.caption = item["caption"];
+        this.caption = item["caption"] ? item["caption"] : item["dataField"];
         this.sortDirection = item["sortDirection"];
         this.filterValue = item["filterValue"];
         this.filterOperator = item["filterOperator"];
@@ -42,24 +42,4 @@ export class Column {
     public rightAlignText: boolean;
     public stickyColumnLeft: boolean;
     public stickyColumnRight: boolean;
-
-    /**get caption for column */
-    public getCaption() {
-        return this.caption ? this.caption : this.dataField;
-    }
-
-    /**get data type of column */
-    public getDataType() {
-        return this.dataType ? this.dataType : DataTypes.String;
-    }
-
-    /**get sorting class */
-    public getSortingClass() {
-        if (this.sortDirection == SortDirections.Ascending) {
-            return "sort-by-asc"
-        }
-        if (this.sortDirection == SortDirections.Descending) {
-            return "sort-by-desc"
-        }
-    }
 }
