@@ -1,5 +1,5 @@
 import { Injectable, Pipe, PipeTransform } from '@angular/core';
-import { Column } from 'np-ui-data-grid/public-api';
+import { Column } from '../models/column.model';
 @Pipe({
     name: 'filterColumnsPipe'
 })

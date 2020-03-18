@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Column } from './models/column.model';
 import { Constants, DataTypes, FilterTypes, SortDirections } from './models/constants';
@@ -123,6 +123,8 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() pageSize: number = 10;
 
+  _filterColumnsKeyword: string;
+
   constructor(private pagerService: NpPagerService,
     private filterService: NpFilterService,
     private utilityService: NpUtilityService,
@@ -150,7 +152,7 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: any) {
     if (changes.tableId) {
       this._tableId = this.tableId;
     }

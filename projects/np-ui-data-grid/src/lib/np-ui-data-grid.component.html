@@ -38,8 +38,9 @@
                     </a>
                 </div>
                 <div class="np-grid-filter-columns">
-                    <lable>Search: <input type="text" placeholder="Search columns..." class="np-grid-control" [(ngModel)]="_filterColumnsKeyword">
-                    </lable>
+                    <label>Search: <input type="text" placeholder="Search columns..." class="np-grid-control"
+                            [(ngModel)]="_filterColumnsKeyword">
+                    </label>
                 </div>
                 <div class="np-grid-columns" cdkDropList [cdkDropListDisabled]="!allowColumnReorder"
                     (cdkDropListDropped)="_dropColumn($event)">
