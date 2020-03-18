@@ -69,7 +69,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         // route functions
 
         function getAll() {
-            return ok(JSON.parse(JSON.stringify(data)));
+            return ok(data);
         }
 
         function getDataUsingLoadOptions(loadOptions) {
@@ -88,7 +88,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             let startIndex = (loadOptions.pageNumber - 1) * loadOptions.pageSize;
             let endIndex = Math.min(startIndex + loadOptions.pageSize - 1, data2.length - 1);
 
-            var result = { data: JSON.parse(JSON.stringify(data2.slice(startIndex, endIndex + 1))), total: data2.length }
+            var result = { data: data2.slice(startIndex, endIndex + 1), total: data2.length }
             return ok(result);
         }
 
@@ -202,7 +202,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return throwError({ error: { message } });
         }
 
-        function updateFirstName(keys: any[]) {            
+        function updateFirstName(keys: any[]) {
             var records = data.filter(function (element) {
                 if (keys.indexOf(element["Id"]) > -1) {
                     return element

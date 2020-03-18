@@ -33,8 +33,7 @@ export class FilterGridComponent implements OnInit {
   }
 
   onLoadData() {
-    this.dataService.getAll().subscribe((data: any) => {
-      
+    this.dataService.getAll().subscribe((data: any) => {      
       var dataSource = new DataSource(data, 0, { totalCount: 10000 });
       this.gridDataSource.next(dataSource);
     });
