@@ -132,9 +132,9 @@
                         <th *ngIf="singleRowSelectEnable || multiRowSelectEnable">
                             <input *ngIf="multiRowSelectEnable" type="checkbox" class="np-dg-checkbox"
                                 title="Select/Unselect all" [(ngModel)]="_isAllSelected"
-                                (change)="_onSelectAll($event)">
+                                (change)="_onClickSelectAll($event)">
                         </th>
-                        <th *ngFor="let column of _visibleColumns; let j = index"
+                        <th *ngFor="let column of _visibleColumns; let k = index"
                             [ngClass]="{'hidden': column.visible === false,'np-sticky-column-left':column.stickyColumnLeft,'np-sticky-column-right':column.stickyColumnRight}">
                             <span [innerHTML]="column.caption" (click)="_onSort(column)"
                                 [ngClass]="{'cursor-pointer': column.sortEnable}"></span>
@@ -174,7 +174,7 @@
                     <tr class="np-dg-header-row">
                         <th *ngIf="_enableMasterChild"></th>
                         <th *ngIf="singleRowSelectEnable || multiRowSelectEnable"></th>
-                        <th *ngFor="let column of _visibleColumns; let j = index"
+                        <th *ngFor="let column of _visibleColumns; let l = index"
                             [ngClass]="{'hidden': column.visible === false, 'np-sticky-column-left':column.stickyColumnLeft, 'np-sticky-column-right':column.stickyColumnRight}">
                             <ng-container *ngIf="column.filterEnable">
                                 <div class="np-dg-filter-oprator">
@@ -213,7 +213,7 @@
                         <tr id="row_{{i}}" (click)="_rowClick($event,data)" class="np-dg-body-row"
                             [ngClass]="{'np-dg-row-selected': _isSelected(data[_key])}">
                             <td *ngIf="_enableMasterChild">
-                                <a class="np-dg-icon-button" (click)="_openMasterChild(data[_key])">
+                                <a class="np-dg-icon-button" (click)="_onClickToggleMasterChild(data[_key])">
                                     <svg *ngIf="!_isOpenChild(data[_key])" class="np-dg-icon" viewBox="0 0 24 24">
                                         <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="currentcolor" />
                                         <path d="M0 0h24v24H0z" fill="none" /></svg>
@@ -224,7 +224,7 @@
                             </td>
                             <td *ngIf="singleRowSelectEnable || multiRowSelectEnable">
                                 <input type="checkbox" class="np-dg-checkbox" [checked]="_isSelected(data[_key])"
-                                    (change)="_onSelectRow(data[_key],$event)">
+                                    (change)="_onClickSelectRow(data[_key],$event)">
                             </td>
                             <td *ngFor="let column of _visibleColumns; let j = index"
                                 (click)="_onCellClick($event, column, data)" [class]="column.styleClass"

@@ -45,32 +45,29 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() multiColumnSortEnable: boolean;
   _sortColumnList: any[];
-
   _filterColumnList: any[];
+  _isFilterAvailable: boolean;
 
   _enableMasterChild: boolean = false;
   @Input() masterDetailTemplate: TemplateRef<any>;
+  @Input() singleRowExpand: boolean = false;
+  @Input() expandRowOnClick: boolean = false;
+  _openRowKeys: any[] = [];
 
   @Input() stickyHeader: boolean = false;
 
   _showLoader: boolean = false;
 
   @Input() singleRowSelectEnable: boolean = false;
-
   @Input() multiRowSelectEnable: boolean = false;
-
+  @Input() selectRowOnClick: boolean = false;
   _selectedRowKeys: any[] = [];
-
-  _openRowKeys: any[] = [];
+  _isAllSelected: boolean;
+  @Output() onSelect: EventEmitter<any> = new EventEmitter();
+  @Output() onDeselect: EventEmitter<any> = new EventEmitter();
 
   @Input() key: string;
   _key: string;
-
-  _isAllSelected: boolean;
-
-  @Output() onSelect: EventEmitter<any> = new EventEmitter();
-
-  @Output() onDeselect: EventEmitter<any> = new EventEmitter();
 
   @Output() onRowClick: EventEmitter<any> = new EventEmitter();
 
@@ -88,21 +85,15 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() title: string = "";
 
   @Input() enableStateStoring: boolean;
-
   _stateList: State[];
-
   _currentStateName: string;
-
   @Output() onStatesUpdate: EventEmitter<any> = new EventEmitter();
-
-  _isFilterAvailable: boolean;
 
   @Input() noDataMessage: string = "No Data Found.";
 
   @Input() showFilters: boolean = true;
 
   @Output() onInit: EventEmitter<any> = new EventEmitter();
-
   @Output() onAfterInit: EventEmitter<any> = new EventEmitter();
 
   @Input() showSummary: boolean = false;
@@ -394,38 +385,34 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     this._filterColumnList = [];
   }
 
-  _openMasterChild(keyValue: any) {
+  _onClickToggleMasterChild(keyValue: any) {
+    if (this.expandRowOnClick === true) {
+      return;
+    }
+    this._toggleMasterChild(keyValue);
+  }
+
+  _toggleMasterChild(keyValue: any) {
     var idx = this._openRowKeys.indexOf(keyValue);
     if (idx === -1) {
-      this._openRowKeys.push(keyValue)
-    } else {
-      var list = [];
-      for (let element of this._openRowKeys) {
-        if (element != keyValue) {
-          list.push(element);
-        }
+      if (this.singleRowExpand) {
+        this._openRowKeys = [keyValue];
+      } else {
+        this._openRowKeys.push(keyValue);
       }
-      this._openRowKeys = list;
+    } else {
+      this._openRowKeys.splice(idx, 1);
     }
   }
 
-  _onSelectAll(event: any) {
+  _onClickSelectAll(event: any) {
     if (this.singleRowSelectEnable) {
       return;
     }
-    if (event.currentTarget.checked) {
+    if (event.target.checked) {
       this._selectAll();
-      if (this.onSelect != undefined) {
-        event.data = this._selectedRowKeys;
-        this.onSelect.emit(event);
-      }
     } else {
-      var deselectedRowKeys = this._selectedRowKeys;
       this._deSelectAll();
-      if (this.onDeselect != undefined) {
-        event.data = deselectedRowKeys;
-        this.onDeselect.emit(event);
-      }
     }
   }
 
@@ -460,27 +447,28 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  _onSelectRow(keyValue: any, event: any) {
+  _onClickSelectRow(keyValue: any, event: any) {
+    if (this.selectRowOnClick === true) {
+      return;
+    }
+    this._selectRow(keyValue, event);
+  }
+
+  _selectRow(keyValue: any, event: any) {
     if (this.singleRowSelectEnable) {
       this._selectedRowKeys = [];
-      if (event.currentTarget.checked) {
+      if (event.target.checked) {
         this._selectedRowKeys.push(keyValue);
       }
     } else {
-      if (event.currentTarget.checked) {
+      if (event.target.checked) {
         this._selectedRowKeys.push(keyValue);
       } else {
-
-        var list = [];
-        for (let element of this._selectedRowKeys) {
-          if (element != keyValue) {
-            list.push(element);
-          }
-        }
-        this._selectedRowKeys = list;
+        var idx = this._selectedRowKeys.indexOf(keyValue);
+        this._selectedRowKeys.splice(idx, 1);
       }
     }
-    if (event.currentTarget.checked) {
+    if (event.target.checked) {
       if (this.onSelect != undefined) {
         event.data = keyValue;
         this.onSelect.emit(event);
@@ -502,7 +490,17 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     return this._openRowKeys.indexOf(keyValue) > -1;
   }
 
-  _rowClick = function (event: any, data: any) {
+  _rowClick(event: any, data: any) {
+    if (this.masterDetailTemplate && this.expandRowOnClick) {
+      this._toggleMasterChild(data[this._key]);
+    }
+    if ((this.singleRowSelectEnable || this.multiRowSelectEnable) && this.selectRowOnClick) {
+      if (this._isSelected(data[this._key])) {
+        this._selectRow(data[this._key], { target: { checked: false } });
+      } else {
+        this._selectRow(data[this._key], { target: { checked: true } });
+      }
+    }
     if (this.onRowClick) {
       event.data = data;
       this.onRowClick.emit(event);
@@ -722,15 +720,14 @@ export class NpUiDataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     this._columns = columns;
     var currentFilterColumnList = [];
     for (let element of this._columns) {
-      if (element.filterOperator != undefined && element.filterOperator != null
-        && element.filterValue && element.filterValue.toString().length > 0) {
+      if (element.filterOperator && element.filterValue && element.filterValue.toString().length > 0) {
         currentFilterColumnList.push({ dataField: element.dataField, filterOperator: element.filterOperator, filterValue: element.filterValue, dataType: element.dataType });
       }
     }
     this._filterColumnList = currentFilterColumnList;
     var currentSortColumnList = [];
     for (let element of this._columns) {
-      if (element.sortEnable && element.sortDirection != null) {
+      if (element.sortEnable && element.sortDirection) {
         currentSortColumnList.push({ dataField: element.dataField, sortDirection: element.sortDirection });
       }
     }

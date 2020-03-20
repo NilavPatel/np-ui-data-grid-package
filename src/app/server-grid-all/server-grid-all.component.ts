@@ -75,17 +75,17 @@ export class ServerGridAllComponent implements OnInit {
 
   changeColumns() {
     var columns = this.serverSideGrid.getColumns();
-    columns[1].visible = false;
-    columns[2].visible = false;
     columns[0].sortDirection = SortDirections.Descending;
-    //this.serverSideGrid.setColumns(columns);
-    this.gridColumns = columns;
+    columns[1].filterOperator = FilterTypes.StartsWith;
+    columns[1].filterValue = "Nilav";
+    columns[2].visible = false;
+    this.serverSideGrid.setColumns(columns);    
   }
 
   setStateForServerSideGrid() {
     var columns = [
       new Column({ dataField: "Id", visible: true, width: 100, caption: "Id", dataType: DataTypes.Number, sortEnable: true, filterEnable: true, onCellClick: this.cellClicked }),
-      new Column({ dataField: "FirstName", visible: true, width: 150, caption: "First Name", dataType: DataTypes.String, sortEnable: true, filterEnable: true, sortDirection: SortDirections.Ascending }),
+      new Column({ dataField: "FirstName", visible: true, width: 150, caption: "First Name", dataType: DataTypes.String, sortEnable: true, filterEnable: true, sortDirection: SortDirections.Descending }),
       new Column({ dataField: "LastName", visible: true, width: 150, caption: "Last Name", dataType: DataTypes.String }),
       new Column({ dataField: "BirthDate", visible: true, width: 150, caption: "Birth Date", dataType: DataTypes.Date, filterEnable: true, cellTemplate: this.birthDateColumnTemplate }),
       new Column({ dataField: "Age", visible: true, width: 100, dataType: DataTypes.Number, sortEnable: true, filterEnable: true, styleClass: "color-red", filterValue: "50", filterOperator: FilterTypes.GreaterThan }),

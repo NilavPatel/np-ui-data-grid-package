@@ -145,6 +145,15 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
       
 24. `[pageSize]` : number
     Set pagesize as default.
+  
+25. `[singleRowExpand]`: boolean  
+    To expand/collapse only single row set this property to true.
+
+26. `[expandRowOnClick]`: boolean  
+    To expand/collapse on row click set this property to true.  
+
+27. `[selectRowOnClick]`: boolean
+    To select/unselect row on click set this property to true.
 
 ## Apis
 1.  `goToPage(pageNumber: number)`  

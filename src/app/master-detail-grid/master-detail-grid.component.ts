@@ -11,6 +11,7 @@ export class MasterChildGridComponent implements OnInit {
 
   gridColumns: any[];
   gridDataSource: BehaviorSubject<DataSource> = new BehaviorSubject(null);
+  singleRowExpand = false;
 
   constructor(private dataService: DataService) {
   }
@@ -25,7 +26,7 @@ export class MasterChildGridComponent implements OnInit {
       new Column({ dataField: "Active", visible: true, caption: "Is Active?", dataType: DataTypes.Boolean })];
 
     this.dataService.getAll().subscribe((data: any) => {
-      
+
       var dataSource = new DataSource(data, 0, { totalCount: 10000 });
       this.gridDataSource.next(dataSource);
     });
