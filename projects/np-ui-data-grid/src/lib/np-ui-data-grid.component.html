@@ -249,12 +249,7 @@
                                 (click)="_onCellClick($event, column, data)" [class]="column.styleClass"
                                 [ngClass]="{'hidden': column.visible === false, 'txt-right' : column.rightAlignText,'np-sticky-column-left': column.stickyColumnLeft,'np-sticky-column-right':column.stickyColumnRight}">
                                 <ng-container *ngIf="!column.cellTemplate; else customTemplate">
-                                    <ng-container *ngIf="column.dataType !== _dataTypes.Date ; else dateColumn">
-                                        {{data[column.dataField]}}
-                                    </ng-container>
-                                    <ng-template #dateColumn>
-                                        {{data[column.dataField] | date: column.format}}
-                                    </ng-template>
+                                    {{data[column.dataField]}}
                                 </ng-container>
                                 <ng-template #customTemplate [ngTemplateOutlet]="column.cellTemplate"
                                     [ngTemplateOutletContext]="{ row: data }">

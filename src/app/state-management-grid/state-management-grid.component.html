@@ -19,7 +19,7 @@
 
 <h4>Methods for state managemenet</h4>
 <p><b>onStatesUpdate()</b> is called on Add/Save/Delete of state for data grid.</p>
-<p>This function will be used to save states in local storage or session storage for data grid, and on load time fetch states from storage and assign back to data grid using <b>setAllState</b></p>
+<p>This function will be used to save states in <b>local storage</b> or <b>session storage</b> for data grid, and on load time fetch states from storage and assign back to data grid using <b>setAllState</b></p>
 
 <np-ui-data-grid #stateManagementGrid [columns]="gridColumns" [dataSource]="gridDataSource" [showToolBar]="true"
     [enableStateStoring]="true" [showToolBar]="true" [showColumnChooser]="true" (onInit)="onInitDataGrid()" (onStatesUpdate)="onStatesUpdate()">

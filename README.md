@@ -51,7 +51,6 @@ Data grid custom component for Angular 9 and 9+, Created using only Angular.
     1.6 `onCellClick` bind on cell click event, in argument column data is passed for which column is clicked.  
     1.7 `rightAlignText` : boolean , to make text right aligned.  
     1.8 Filter event will fired on change event of filter input/filter type.  
-    1.9 `format` : only used for date type column, pass string format like 'dd/MM/yyyy'
   
 2.  `[dataSource]`  : BehaviorSubject<DataSource>
     Where **DataSource** has below properties:  
