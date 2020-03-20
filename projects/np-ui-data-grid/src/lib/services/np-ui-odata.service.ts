@@ -24,8 +24,8 @@ export class NpODataService {
         }
 
         if (filterColumns) {
-            if (filterColumns && filterColumns.length == 1) {
-                if (filterColumns[0].dataType == DataTypes.String) {
+            if (filterColumns && filterColumns.length === 1) {
+                if (filterColumns[0].dataType === DataTypes.String) {
                     queryTmpArray.push("$filter=" + filterColumns[0].filterOperator + "(" + filterColumns[0].dataField + ",'" + filterColumns[0].filterValue + "')");
                 } else {
                     queryTmpArray.push("$filter=" + filterColumns[0].dataField + " " + filterColumns[0].filterOperator + " " + filterColumns[0].filterValue);
@@ -34,7 +34,7 @@ export class NpODataService {
             if (filterColumns && filterColumns.length > 1) {
                 let filterQueue = [];
                 for (let element of filterColumns) {
-                    if (element.dataType == DataTypes.String) {
+                    if (element.dataType === DataTypes.String) {
                         filterQueue.push(element.filterOperator + "(" + element.dataField + ",'" + element.filterValue + "')");
                     } else {
                         filterQueue.push(element.dataField + " " + element.filterOperator + " " + element.filterValue);

@@ -30,7 +30,7 @@ export class NpFileService {
         var headersLabels = [];
         var headers = [];
         for (let element of columnList) {
-            if (element.dataField == undefined) {
+            if (element.dataField === undefined) {
                 continue;
             }
             headersLabels.push(element.caption);
@@ -49,7 +49,7 @@ export class NpFileService {
     }
 
     private normalizeFileName(fileName: string, extension: string) {
-        if (fileName == undefined || fileName == null || fileName.length == 0) {
+        if (fileName === undefined || fileName === null || fileName.length === 0) {
             fileName = "download";
         }
         const suffix = '.' + extension;

@@ -4,22 +4,22 @@
     color: #ff0000;
 }
 
-.np-ui-background, .np-grid-header-row th, .np-grid-control {
+.np-dg-background, .np-dg-header-row th, .np-dg-control {
     background-color: #80cbc4 !important;
 }
 
-.np-grid-icon-button-lg:hover, .np-grid-icon-button:hover {
+.np-dg-icon-button-lg:hover, .np-dg-icon-button:hover {
     background-color: #80cbc4 !important;
 }
 
-.np-grid-body-row:hover td {
+.np-dg-body-row:hover td {
     background-color: #e0f2f1 !important;
 }
 
-.np-grid-row-selected td, .np-grid-row-selected:hover td {
+.np-dg-row-selected td, .np-dg-row-selected:hover td {
     background-color: #b2dfdb !important;
 }
 
-.np-grid-child-row td {
+.np-dg-child-row td {
     background-color: #f0fffe !important;
 }

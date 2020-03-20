@@ -24,6 +24,7 @@ export class Column {
         this.rightAlignText = item["rightAlignText"];
         this.stickyColumnLeft = item["stickyColumnLeft"];
         this.stickyColumnRight = item["stickyColumnRight"];
+        this.format = item["format"];
     }
 
     public dataField: string;
@@ -42,4 +43,5 @@ export class Column {
     public rightAlignText: boolean;
     public stickyColumnLeft: boolean;
     public stickyColumnRight: boolean;
+    public format: string;
 }

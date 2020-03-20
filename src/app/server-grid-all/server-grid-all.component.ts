@@ -122,7 +122,7 @@ export class ServerGridAllComponent implements OnInit {
   updateFirstName() {
     var keys = this.serverSideGrid.getSelectedRowKeys();
     if (keys && keys.length > 0) {
-      this.dataService.updateFirstName(keys).subscribe((data: any) => { });;
+      this.dataService.updateFirstName(keys).subscribe((data: any) => { });
     }
   }
 
