@@ -11,29 +11,29 @@
         <div class="np-dg-toolbar np-dg-background">
             <ng-container *ngIf="showColumnChooser">
                 <div class="np-dg-toolbar-item">
-                    <a title="Column chooser" class="np-dg-icon-button-lg" (click)="_toggleColumnChooser()">
+                    <a title="Column chooser" class="np-dg-icon-btn-lg" (click)="_toggleColumnChooser()">
                         <svg class="np-dg-icon-lg" viewBox="0 0 24 24">
                             <path fill="currentcolor" d="M4 5v13h17V5H4zm10 2v9h-3V7h3zM6 7h3v9H6V7zm13 9h-3V7h3v9z" />
                         </svg>
                     </a>
-                    <div class="np-dg-column-chooser np-dg-background"
-                        [ngClass]="{'np-dg-column-chooser-open':_isOpenColumnChooser}">
-                        <div class="np-dg-column-chooser-actions">
-                            <a class="np-dg-icon-button" title="Show all columns" (click)="_showAllColumns()">
+                    <div class="np-dg-col-chooser np-dg-background"
+                        [ngClass]="{'np-dg-col-chooser-open':_isOpenColumnChooser}">
+                        <div class="np-dg-col-chooser-actions">
+                            <a class="np-dg-icon-btn" title="Show all columns" (click)="_showAllColumns()">
                                 <svg class="np-dg-icon" viewBox="0 0 24 24">
                                     <path d="M0 0h24v24H0z" fill="none" />
                                     <path fill="currentcolor"
                                         d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
                                 </svg>
                             </a>
-                            <a class="np-dg-icon-button" title="Reset all" (click)="_onResetColumns()">
+                            <a class="np-dg-icon-btn" title="Reset all" (click)="_onResetColumns()">
                                 <svg class="np-dg-icon" viewBox="0 0 24 24">
                                     <path fill="currentcolor"
                                         d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z" />
                                     <path d="M0 0h24v24H0z" fill="none" />
                                 </svg>
                             </a>
-                            <a class="np-dg-icon-button" title="Close" (click)="_isOpenColumnChooser = false">
+                            <a class="np-dg-icon-btn" title="Close" (click)="_isOpenColumnChooser = false">
                                 <svg class="np-dg-icon" viewBox="0 0 24 24">
                                     <path fill="currentcolor"
                                         d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
@@ -44,7 +44,7 @@
                         <div class="np-dg-search-columns">
                             <input type="text" placeholder="Search columns..." class="np-dg-control"
                                 [(ngModel)]="_searchColumnsKeyword">
-                            <a class="np-dg-icon-button" title="Clear" (click)="_clearColumnSearch()">
+                            <a class="np-dg-icon-btn" title="Clear" (click)="_clearColumnSearch()">
                                 <svg class="np-dg-icon" viewBox="0 0 24 24">
                                     <path fill="currentcolor"
                                         d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
@@ -61,8 +61,8 @@
                                     <input type="checkbox" [checked]="column.visible" class="np-dg-checkbox"
                                         (change)="_onColumnChoosing(column)">{{column.caption}}
                                 </label>
-                                <div class="np-columns-drag-placeholder" *cdkDragPlaceholder></div>
-                                <div *ngIf="allowColumnReorder" class="np-columns-drag-handle" cdkDragHandle>
+                                <div class="np-dg-col-drag-placeholder" *cdkDragPlaceholder></div>
+                                <div *ngIf="allowColumnReorder" class="np-dg-col-drag-handle" cdkDragHandle>
                                     <svg class="np-dg-icon" viewBox="0 0 24 24">
                                         <path fill="currentcolor"
                                             d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z" />
@@ -75,7 +75,7 @@
             </ng-container>
             <ng-container *ngIf="_isFilterAvailable">
                 <div class="np-dg-toolbar-item">
-                    <a class="np-dg-icon-button-lg" title="Toggle filters" (click)="showFilters = !showFilters">
+                    <a class="np-dg-icon-btn-lg" title="Toggle filters" (click)="showFilters = !showFilters">
                         <svg *ngIf="!showFilters" class="np-dg-icon-lg" viewBox="0 0 24 24">
                             <path fill="currentcolor"
                                 d="M15,19.88C15.04,20.18 14.94,20.5 14.71,20.71C14.32,21.1 13.69,21.1 13.3,20.71L9.29,16.7C9.06,16.47 8.96,16.16 9,15.87V10.75L4.21,4.62C3.87,4.19 3.95,3.56 4.38,3.22C4.57,3.08 4.78,3 5,3V3H19V3C19.22,3 19.43,3.08 19.62,3.22C20.05,3.56 20.13,4.19 19.79,4.62L15,10.75V19.88M7.04,5L11,10.06V15.58L13,17.58V10.05L16.96,5H7.04Z" />
@@ -89,7 +89,7 @@
             </ng-container>
             <ng-container *ngIf="allowExportToCSV">
                 <div class="np-dg-toolbar-item">
-                    <a title="Export to CSV" class="np-dg-icon-button-lg" (click)="_exportAsCSV()">
+                    <a title="Export to CSV" class="np-dg-icon-btn-lg" (click)="_exportAsCSV()">
                         <svg viewBox="0 0 24 24" class="np-dg-icon-lg">
                             <path fill="currentcolor"
                                 d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z" />
@@ -105,21 +105,21 @@
                             <option value="">Select...</option>
                             <option *ngFor="let state of _stateList" [ngValue]="state.name">{{state.name}}</option>
                         </select>
-                        <a *ngIf="_currentStateName.length > 0" class="np-dg-icon-button-lg np-dg-state-manager-item"
+                        <a *ngIf="_currentStateName.length > 0" class="np-dg-icon-btn-lg np-dg-state-manager-item"
                             title="Save state" (click)="_saveState()">
                             <svg class="np-dg-icon-lg" viewBox="0 0 24 24">
                                 <path fill="currentcolor"
                                     d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm2 16H5V5h11.17L19 7.83V19zm-7-7c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3zM6 6h9v4H6z" />
                             </svg>
                         </a>
-                        <a *ngIf="_currentStateName.length > 0" class="np-dg-icon-button-lg np-dg-state-manager-item"
+                        <a *ngIf="_currentStateName.length > 0" class="np-dg-icon-btn-lg np-dg-state-manager-item"
                             title="Delete state" (click)="_deleteState()">
                             <svg class="np-dg-icon-lg" viewBox="0 0 24 24">
                                 <path fill="currentcolor"
                                     d="M14.12 10.47L12 12.59l-2.13-2.12-1.41 1.41L10.59 14l-2.12 2.12 1.41 1.41L12 15.41l2.12 2.12 1.41-1.41L13.41 14l2.12-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4zM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9z" />
                             </svg>
                         </a>
-                        <a class="np-dg-icon-button-lg np-dg-state-manager-item" title="Add state"
+                        <a class="np-dg-icon-btn-lg np-dg-state-manager-item" title="Add state"
                             (click)="_addState()">
                             <svg class="np-dg-icon-lg" viewBox="0 0 24 24">
                                 <path fill="currentcolor"
@@ -132,7 +132,7 @@
         </div>
     </ng-container>
     <div class="np-dg-container" [style.max-height.px]="_getHeight()">
-        <div class="np-dg-table-header np-dg-background" [ngClass]="{'np-sticky-header':stickyHeader}">
+        <div class="np-dg-table-header np-dg-background" [ngClass]="{'np-dg-sticky-header':stickyHeader}">
             <table>
                 <colgroup>
                     <col style="width: 30px;" *ngIf="_enableMasterChild">
@@ -148,12 +148,12 @@
                                 (change)="_onClickSelectAll($event)">
                         </th>
                         <th *ngFor="let column of _visibleColumns; let k = index"
-                            [ngClass]="{'hidden': column.visible === false,'np-sticky-column-left':column.stickyColumnLeft,'np-sticky-column-right':column.stickyColumnRight}">
+                            [ngClass]="{'hidden': column.visible === false,'np-dg-sticky-left':column.stickyColumnLeft,'np-dg-sticky-right':column.stickyColumnRight}">
                             <span [innerHTML]="column.caption" (click)="_onSort(column)"
-                                [ngClass]="{'cursor-pointer': column.sortEnable}"></span>
-                            <div *ngIf="allowColumnResize" class="np-dg-column-resize-handle float-right" cdkDrag
+                                [ngClass]="{'np-dg-cursor-pointer': column.sortEnable}"></span>
+                            <div *ngIf="allowColumnResize" class="np-dg-col-resize-handle float-right" cdkDrag
                                 cdkDragLockAxis="x" (cdkDragEnded)="_resizeColumn($event, column)"></div>
-                            <a *ngIf="column.sortEnable != null" class="np-dg-icon-button float-right"
+                            <a *ngIf="column.sortEnable != null" class="np-dg-icon-btn float-right"
                                 (click)="_onSort(column)">
                                 <svg *ngIf="column.sortDirection === _sortDirections.Ascending" class="np-dg-icon"
                                     viewBox="0 0 24 24">
@@ -189,9 +189,9 @@
                             <th *ngIf="_enableMasterChild"></th>
                             <th *ngIf="singleRowSelectEnable || multiRowSelectEnable"></th>
                             <th *ngFor="let column of _visibleColumns; let l = index"
-                                [ngClass]="{'hidden': column.visible === false, 'np-sticky-column-left':column.stickyColumnLeft, 'np-sticky-column-right':column.stickyColumnRight}">
+                                [ngClass]="{'hidden': column.visible === false, 'np-dg-sticky-left':column.stickyColumnLeft, 'np-dg-sticky-right':column.stickyColumnRight}">
                                 <ng-container *ngIf="column.filterEnable">
-                                    <div class="np-dg-filter-oprator">
+                                    <div class="np-dg-filter-operator">
                                         <select class="np-dg-control" [(ngModel)]="column.filterOperator"
                                             (change)="_onFilter(column, false)">
                                             <option [value]="undefined" disabled hidden>Select...</option>
@@ -231,7 +231,7 @@
                             [ngClass]="{'np-dg-row-selected': _isSelected(data[_key])}">
                             <ng-container *ngIf="_enableMasterChild">
                                 <td>
-                                    <a class="np-dg-icon-button" (click)="_onClickToggleMasterChild(data[_key])">
+                                    <a class="np-dg-icon-btn" (click)="_onClickToggleMasterChild(data[_key])">
                                         <svg *ngIf="!_isOpenChild(data[_key])" class="np-dg-icon" viewBox="0 0 24 24">
                                             <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="currentcolor" />
                                             <path d="M0 0h24v24H0z" fill="none" /></svg>
@@ -249,7 +249,7 @@
                             </ng-container>
                             <td *ngFor="let column of _visibleColumns; let j = index"
                                 (click)="_onCellClick($event, column, data)" [class]="column.styleClass"
-                                [ngClass]="{'hidden': column.visible === false, 'txt-right' : column.rightAlignText,'np-sticky-column-left': column.stickyColumnLeft,'np-sticky-column-right':column.stickyColumnRight}">
+                                [ngClass]="{'hidden': column.visible === false, 'txt-right' : column.rightAlignText,'np-dg-sticky-left': column.stickyColumnLeft,'np-dg-sticky-right':column.stickyColumnRight}">
                                 <ng-container *ngIf="!column.cellTemplate; else customTemplate">
                                     {{data[column.dataField]}}
                                 </ng-container>
@@ -288,7 +288,7 @@
     <ng-container *ngIf="_pager && _pager.pages && _pager.pages.length > 0">
         <div class="np-dg-pagination np-dg-background">
             <div class="np-dg-pagination-item">
-                <a class="np-dg-icon-button-lg" title="First page"
+                <a class="np-dg-icon-btn-lg" title="First page"
                     [ngClass]="{'np-dg-disabled':_pager.currentPage === 1}" (click)="_getCurrentViewData(1)">
                     <svg class="np-dg-icon-lg" viewBox="0 0 24 24">
                         <path fill="currentcolor" d="M18.41 16.59L13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z"></path>
@@ -296,7 +296,7 @@
                 </a>
             </div>
             <div class="np-dg-pagination-item">
-                <a class="np-dg-icon-button-lg" title="Prev page"
+                <a class="np-dg-icon-btn-lg" title="Prev page"
                     [ngClass]="{'np-dg-disabled':_pager.currentPage === 1}"
                     (click)="_getCurrentViewData(_pager.currentPage - 1)">
                     <svg class="np-dg-icon-lg" viewBox="0 0 24 24">
@@ -309,7 +309,7 @@
                     (change)="_getCurrentViewData(_pager.currentPage)"> / {{_pager.totalPages}}
             </div>
             <div class="np-dg-pagination-item">
-                <a title="Next page" class="np-dg-icon-button-lg"
+                <a title="Next page" class="np-dg-icon-btn-lg"
                     [ngClass]="{'np-dg-disabled':_pager.currentPage === _pager.totalPages}"
                     (click)="_getCurrentViewData(_pager.currentPage + 1)">
                     <svg class="np-dg-icon-lg" viewBox="0 0 24 24">
@@ -318,7 +318,7 @@
                 </a>
             </div>
             <div class="np-dg-pagination-item">
-                <a title="Last page" class="np-dg-icon-button-lg"
+                <a title="Last page" class="np-dg-icon-btn-lg"
                     [ngClass]="{'np-dg-disabled':_pager.currentPage === _pager.totalPages}"
                     (click)="_getCurrentViewData(_pager.totalPages)">
                     <svg class="np-dg-icon-lg" viewBox="0 0 24 24">
@@ -327,7 +327,7 @@
                 </a>
             </div>
             <div class="np-dg-pagination-item float-right">
-                <a *ngIf="isServerOperations" class="np-dg-icon-button-lg" title="Refresh" (click)="_onRefresh()">
+                <a *ngIf="isServerOperations" class="np-dg-icon-btn-lg" title="Refresh" (click)="_onRefresh()">
                     <svg class="np-dg-icon-lg" viewBox="0 0 24 24">
                         <path fill="currentcolor"
                             d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />

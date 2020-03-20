@@ -4,11 +4,11 @@
     color: #ff0000;
 }
 
-.np-dg-background, .np-dg-header-row th, .np-dg-control {
+.np-dg-background, .np-dg-header-row th, .np-dg-control, .np-dg-columns-item {
     background-color: #80cbc4 !important;
 }
 
-.np-dg-icon-button-lg:hover, .np-dg-icon-button:hover {
+.np-dg-icon-btn-lg:hover, .np-dg-icon-btn:hover {
     background-color: #80cbc4 !important;
 }
 
