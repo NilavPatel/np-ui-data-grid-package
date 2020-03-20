@@ -9,11 +9,14 @@
 </p>
 <p>Default value for <b>showFilters</b> is "true".</p>
 
+<h4>Reset filters</h4>
+<p>To reset filters, "Reset" option is given in filter operator's dropdown. It will be enabled when any filter operator is selected.</p>
+<p>On selecting "Reset" filter will be removed from that column.</p>
+
 <h2>Client Side Filering:</h2>
 <p>In Client side data grid all filter oprations will be done on client side.</p>
 <np-ui-data-grid [columns]="gridColumns" [dataSource]="gridDataSource" [showFilters]="showFilters">
 </np-ui-data-grid>
-
 
 <h2>Server Side Filering:</h2>
 <p> In Server side data grid <b>filterColumns</b> will be passed to <b>onLoadData(options:LoadOptions)</b>.

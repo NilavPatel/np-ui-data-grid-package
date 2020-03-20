@@ -199,6 +199,8 @@
                                                 *ngFor="let fOperator of _filtersList | filterTypesPipe: column.dataType"
                                                 [value]="fOperator.name">{{fOperator.text}}
                                             </option>
+                                            <option value="Reset" [disabled]="column.filterOperator === undefined">Reset
+                                            </option>
                                         </select>
                                     </div>
                                     <div>

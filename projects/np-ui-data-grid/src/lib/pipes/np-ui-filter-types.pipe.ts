@@ -6,12 +6,6 @@ import { FilterTypes } from '../models/constants';
 @Injectable()
 export class NpFilterTypesPipe implements PipeTransform {
     transform(filterList: any[], args: string): any {
-        var result = filterList.filter(filterType => filterType.forDataType === args);
-        result.push({
-            name: FilterTypes.Reset,
-            text: "Reset",
-            forDataType: null
-        });
-        return result;
+        return filterList.filter(filterType => filterType.forDataType === args);
     }
 }
